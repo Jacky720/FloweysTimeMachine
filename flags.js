@@ -104,5 +104,105 @@ var flags = {
             "Immediate respawn?"
         ]],
     36: ["dojo_failure", "Set when losing Party Dojo battles (i.e. when flag 35 is 1). Affects prize and dialogue.", basicBool],
-    37: ["dojo_active", "Alters battle win text and prevents you from gaining money outside of prizes.", basicBool]
+    37: ["dojo_active", "Alters battle win text and prevents you from gaining money outside of prizes.", basicBool],
+    38: ["no_battle_end_msg", "Disables the battle end message. Used for SnowGraving Berdly and Party Dojo.", basicBool],
+    39: ["dojo_abort?", "Something to do with immediately ending Party Dojo battles.", basicBool],
+    40: ["violences", "Total number of enemies defeated through FIGHTing. Can be reduced by obtaining forgiveness from Rudinn or Hathy."],
+    41: ["spares", "Total number of enemies SPAREd. Unaccessed."],
+    42: ["pacifies", "Total number of enemies Pacify/Sleep Mist-ed. Unaccessed."],
+    43: ["autosusie_violences", "Violences committed by Susie while not under player control. Never set due to a bug, but it would be possible to get the Chapter 1 Overthrow ending even if this is 1."],
+    44: ["kills", "Total number of enemies you killed for realsies. Includes SnowGrave and killing Pipis."],
+    45: ["freezes", "I have no idea?? It looks like nothing sets it, but apparently it's intended for IceShock violences..."],
+    50: ["last_encounter_end", "Volatile. Contains what you did in the last encounter. For multiple enemies, priority is Violence > Spare > Pacify > IceShock.", {
+            0: "Default state",
+            1: "Violenced (includes SnowGrave)",
+            2: "Spared",
+            3: "Pacified",
+            6: "Frozen"
+        }],
+    51: ["last_monster_end_0", "Volatile. What you did you the top monster in the last encounter.", {
+            0: "Default state",
+            1: "Violenced (includes SnowGrave)",
+            2: "Spared",
+            3: "Pacified",
+            6: "Frozen"
+        }],
+    52: ["last_monster_end_1", "Volatile. What you did you the middle monster in the last encounter.", {
+            0: "Default state",
+            1: "Violenced (includes SnowGrave)",
+            2: "Spared",
+            3: "Pacified",
+            6: "Frozen"
+        }],
+    53: ["last_monster_end_2", "Volatile. What you did you the bottom monster in the last encounter.", {
+            0: "Default state",
+            1: "Violenced (includes SnowGrave)",
+            2: "Spared",
+            3: "Pacified",
+            6: "Frozen"
+        }],
+    54: ["encounter_pointer", "Volatile. Contains a numerical value representing the current encounter, which is used to permanently store the outcome of that encounter in a flag."],
+    55: ["enemy_x", "Volatile. Used to return enemies to the correct spot in the overworld when frozen."],
+    56: ["enemy_y", "Volatile. Used to return enemies to the correct spot in the overworld when frozen."],
+    60: ["dojo_next_encounter", "Volatile. Used to chain encounters for the Party Dojo All Stars challenge.", {
+            0: "Default state",
+            90: "Werewires",
+            91: "Smorgasbord",
+            92: "Tasques + Maus",
+            93: "Swatchlings",
+            94: "Werewerewires"
+        }],
+    61: ["disable_recruiting", "Prevents you from recruiting enemies in Party Dojo battles.", basicBool],
+    62: ["nonnarrative_intro_text", "Used when Noelle enters her first battle and when Susie wants to demonstrate UltimateHeal to not use the normal battle introduction typer.", basicBool],
+    63: ["violenced_last", "Volatile. Triggers 'You/Noelle became stronger' when violencing enemies.", basicBool],
+    64: ["storage_size", "The amount of items you can keep in your pockets. Always 24. No idea why this needed to be a flag."],
+    65: ["times_leveled", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
+    66: ["times_gained_at", "The number of times your AT and Magic have increased due to leveling up (every ten encounters). Used to prevent overly increasing them when sealing the fountain."],
+    // lotta unused ones here
+    100: ["got_glowshard", "Whether you obtained the Glowshard. Prevents it from re-appearing.", basicBool],
+    101: ["got_candy", "How much Dark Candy you've taken from the first Dark Candy tree.", [
+            "None",
+            "One candy",
+            "Both candies"
+         ]],
+    102: ["got_candy_2", "How much Dark Candy you've taken from the second Dark Candy tree.", [
+            "None",
+            "One candy",
+            "Both candies"
+         ]],
+    103: ["got_broken_cake", "Whether you took a piece of the Broken Cake.", basicBool],
+    104: ["got_white_ribbon", "Whether you got the White Ribbon."],
+    105: ["got_iron_shackle", "Whether you took the Iron Shackle.", basicBool],
+    106: ["ate_ch1_moss", "Whether you ate the moss in Chapter 1. Allows you to obtain the Moss Finder title.", basicBool],
+    107: ["got_dancer_mint", "Whether you got the Revive Mint from the Scissor Dancers room.", basicBool],
+    108: ["got_ragger", "Whether you got the Ragger. Affects the Royal Coat Rack's dialogue about it.", basicBool],
+    109: ["got_dice_brace", "Whether you got the Dice Brace.", basicBool],
+    110: ["got_bloxer_money", "Whether you got the 40D$ from that room with Bloxers.", basicBool],
+    111: ["got_bloxer_mint", "Whether you got the Revive Mint from that room with Bloxers.", basicBool],
+    112: ["got_jevil_item", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
+    113: ["got_clubswich", "Whether you got the Clubs Sandwich from... take a guess.", basicBool],
+    114: ["got_castle_mint", "Whether you got the Revive Mint from that chest that appears when you interact with the portraits.", basicBool],
+    115: ["got_key_a", "Whether you got the Broken Key A.", basicBool],
+    116: ["got_key_b", "Whether you got the Broken Key B.", basicBool],
+    117: ["got_key_c", "Whether you got the Broken Key C.", basicBool],
+    118: ["got_glowwrist", "Whether you got the first Glow Wrist.", basicBool],
+    119: ["got_nubert_treasure", "Whether you got the Fiber Scarf.", basicBool],
+    120: ["got_glowwrist_2", "Whether you got that other Glow Wrist.", basicBool],
+    121: ["unused", "Suspiciously unused flag."],
+    122: ["got_tension_bit", "Whether you got the Tension Bit.", basicBool],
+    123: ["got_ch2_mint", "Whether you got the THIRD Revive Mint.", basicBool],
+    124: ["unused", "Suspiciously unused flag."],
+    125: ["got_dust_fake", "Unused. Intended for obtaining the Revive Dust, but overwritten by 137."],
+    126: ["got_trash_$20", "Whether you got 20D$ from the twenty-dollar trash can.", basicBool],
+    127: ["got_trash_$80", "Whether you got 80D$ from the eighty-dollar trash can.", basicBool],
+    128: ["got_trash_bagel", "Whether you got a CD Bagel from the CD Bagel trash can.", basicBool],
+    129: ["got_ragger2", "Whether you got the Ragger2.", basicBool],
+    130: ["got_bounce_blade", "Whether you got the Bounce Blade.", basicBool],
+    131: ["got_trash_$20_2", "Whether you got 20D$ from the other twenty-dollar trash can.", basicBool],
+    132: ["got_trash_bagel_2", "Whether you got a CD Bagel from the other CD Bagel trash can.", basicBool],
+    133: ["got_basement_dollar", "Whether you got the $1 from the one-dollar treasure chest.", basicBool],
+    134: ["got_pink_ribbon", "Whether you got the Pink Ribbon.", basicBool],
+    135: ["got_chest_bagel", "Whether you got a CD Bagel from the CD Bagel treasure chest.", basicBool],
+    136: ["got_chest_candy", "Whether you got a Dark Candy from the super secret Dark Candy location. (IDK)", basicBool], // RESEARCH THIS
+    137: ["got_revive_dust", "Whether you got the Revive Dust.", basicBool]
 };
