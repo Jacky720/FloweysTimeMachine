@@ -1,78 +1,4 @@
 var basicBool = "checkbox";
-var simpleDogStates = [
-    "Initial state",
-    "Killed",
-    "Played fetch (Spared)"
-];
-
-var items = [
-    "Empty",
-    "Monster Candy",
-    "Croquet Roll",
-    "Stick",
-    "Bandage",
-    "Rock Candy",
-    "Pumpkin Rings",
-    "Spider Donut",
-    "Stoic Onion",
-    "Ghost Fruit",
-    "Spider Cider",
-    "Butterscotch Pie",
-    "Faded Ribbon",
-    "Toy Knife",
-    "Tough Glove",
-    "Manly Bandana",
-    "Snowman Piece",
-    "Nice Cream",
-    "Puppydough Icecream",
-    "Bisicle",
-    "Unisicle",
-    "Cinnamon Bun",
-    "Temmie Flakes",
-    "Abandoned Quiche",
-    "Old Tutu",
-    "Ballet Shoes",
-    "Punch Card",
-    "Annoying Dog",
-    "Dog Salad",
-    "Dog Residue (1)",
-    "Dog Residue (2)",
-    "Dog Residue (3)",
-    "Dog Residue (4)",
-    "Dog Residue (5)",
-    "Dog Residue (6)",
-    "Astronaut Food",
-    "Instant Noodles",
-    "Crab Apple",
-    "Hot Dog...?",
-    "Hot Cat",
-    "Glamburger",
-    "Sea Tea",
-    "Starfait",
-    "Legendary Hero",
-    "Cloudy Glasses",
-    "Torn Notebook",
-    "Stained Apron",
-    "Burnt Pan",
-    "Cowboy hat",
-    "Empty Gun",
-    "Heart Locket",
-    "Worn Dagger",
-    "Real Knife",
-    "The Locket",
-    "Bad Memory",
-    "Dream",
-    "Undyne's Letter",
-    "Undyne Letter EX",
-    "Potato Chisps",
-    "Junk Food",
-    "Mystery Key",
-    "Face Steak",
-    "Hush Puppy",
-    "Snail Pie",
-    "temy armor",
-    "<invalid>"
-];
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
@@ -158,7 +84,7 @@ var flags = {
     64: ["storage_size", "The amount of items you can keep in your pockets. Always 24. No idea why this needed to be a flag."],
     65: ["times_leveled", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
     66: ["times_gained_at", "The number of times your AT and Magic have increased due to leveling up (every ten encounters). Used to prevent overly increasing them when sealing the fountain."],
-    // lotta unused ones here
+    
     100: ["got_glowshard", "Whether you obtained the Glowshard. Prevents it from re-appearing.", basicBool],
     101: ["got_candy", "How much Dark Candy you've taken from the first Dark Candy tree.", [
             "None",
@@ -179,7 +105,7 @@ var flags = {
     109: ["got_dice_brace", "Whether you got the Dice Brace.", basicBool],
     110: ["got_bloxer_money", "Whether you got the 40D$ from that room with Bloxers.", basicBool],
     111: ["got_bloxer_mint", "Whether you got the Revive Mint from that room with Bloxers.", basicBool],
-    112: ["got_jevil_item", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
+    112: ["got_jevil_chest", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
     113: ["got_clubswich", "Whether you got the Clubs Sandwich from... take a guess.", basicBool],
     114: ["got_castle_mint", "Whether you got the Revive Mint from that chest that appears when you interact with the portraits.", basicBool],
     115: ["got_key_a", "Whether you got the Broken Key A.", basicBool],
@@ -204,5 +130,100 @@ var flags = {
     134: ["got_pink_ribbon", "Whether you got the Pink Ribbon.", basicBool],
     135: ["got_chest_bagel", "Whether you got a CD Bagel from the CD Bagel treasure chest.", basicBool],
     136: ["got_chest_candy", "Whether you got a Dark Candy from the super secret Dark Candy location. (IDK)", basicBool], // RESEARCH THIS
-    137: ["got_revive_dust", "Whether you got the Revive Dust.", basicBool]
+    137: ["got_revive_dust", "Whether you got the Revive Dust.", basicBool],
+    138: ["got_painting_mint", "Whether you got the fourth Revive Mint from a painting.", basicBool],
+    139: ["got_mansion_glowshard", "Whether you got the Glowshard in Queen's Mansion. No, I don't know where it is. Or if it's actually obtainable.", basicBool],
+    140: ["got_trash_candy", "Whether you got a Dark Candy from the Dark Candy trash can.", basicBool],
+    141: ["got_chain_mail", "Whether you got the Chain Mail armor.", basicBool],
+    142: ["got_spamton_chest", "Whether you got the Dealmaker/Puppet Scarf from a chest. There's one immediately after you beat Spamton, and one back at My Castle Town.", basicBool],
+    
+    200: ["ran_in_school", "Whether you ran to Susie in the Chapter 1 school scene. Unaccessed.", basicBool],
+    201: ["solved_eye_puzzle", "Whether you solved the eye puzzle in the ?????? area.", basicBool],
+    202: ["ran_in_dark", "How you proceeded once finding Susie in the ?????? area.", [
+            "Walked",
+            "Ran",
+            "Wrong way"
+         ]],
+    203: ["skipped_prophecy", "Whether you skipped Ralsei's prophecy. Lancer explains it instead.", basicBool],
+    204: ["be_subject_answer", "How you answered Ralsei when he said he had no subjects... that is, unused.", [
+            "Default state",
+            "I'll be your subject",
+            "Keep dreaming"
+         ]],
+    205: ["tutorial_end", "What happened during Ralsei's tutorial.", [
+            "Skipped tutorial",
+            "Success",
+            "Hug Ralsei (in unused version of tutorial)",
+            "Beat up Ralsei",
+            "Beat up dummy",
+            "Continued defending",
+            "Missed dummy"
+         ]],
+    206: ["learned_to_run", "Set to 1 whether Ralsei explains it or you demonstrate. Just prevents him from asking again.", basicBool],
+    207: ["dropped_manual", "Your progress on being a terrible person. Ralsei gives you a trash can for the manual instead of a stand, in case you ever want to trash it again.", [
+            "Default state",
+            "Dropped once",
+            "Dropped twice"
+         ]],
+    208: ["re_convinced_rudinn", "Whether you Convinced Rudinn after failing to do. Unused, since it works first try now.", basicBool],
+    209: ["seen_field_song", "Prevents you from seeing the Field of Hopes and Dreams title every single room.", basicBool],
+    210: ["lancer_thrash_talk", "Alters Lancer's dialogue if interacted with prior to the triple Hathy fight.", [
+            "Default state",
+            "Talked",
+            "Did not talk"
+         ]],
+    211: ["c_round_outcome", "What happened to C. Round. Can skip Ralsei telling Susie not to fight.", [
+            "Default state",
+            "Complimented by Susie",
+            "Warned",
+            "Attacked by Kris/Ralsei"
+         ]],
+    212: ["box_puzzle_state", "Progress on the vandalized box puzzle.", [
+            "Default state",
+            "Initiated puzzle",
+            "Failure (unused)"
+         ]],
+    213: ["unused", "Suspiciously unused flag."],
+    214: ["team_name", "The name of your team.", [
+            "The Guys",
+            "The $!$? Squad",
+            "The Lancer Fan Club",
+            "The Fun Gang"
+         ]],
+    215: ["talked_joe", "Whether you talked to Joe (and were inevitably offered a tutorial). Makes him help with the Warp Door.", basicBool],
+    216: ["donated_to_hole", "Whether you put a dollar in the donation hole.", basicBool],
+    217: ["solved_rouxls_puzz", "Whether you solved Rouxls's first puzzle.", basicBool],
+    218: ["solved_rouxls_puzz_2", "Whether you solved Rouxls's second puzzle.", basicBool],
+    // no 219, but not as suspicious as some of these others
+    220: ["thrash_machine_head", "Your Thrash Machine's head.", {
+            -1: "In design",
+            0: "Laser",
+            1: "Sword",
+            2: "Flame",
+            3: "Duck"
+         }],
+    221: ["thrash_machine_body", "Your Thrash Machine's chassis.", {
+            -1: "In design",
+            0: "Plain",
+            1: "Wheel",
+            2: "Tank",
+            3: "Duck"
+         }],
+    222: ["thrash_machine_shoe", "Your Thrash Machine's... well, there's a lot of variance here.", {
+            -1: "In design",
+            0: "Shoes",
+            1: "Wheels",
+            2: "Treads",
+            3: "Duck"
+         }],
+    223: ["thrash_head_color", "Your Thrash Machine's head color. You should probably just edit it in-game."],
+    224: ["thrash_body_color", "Your Thrash Machine's chassis color. You should probably just edit it in-game."],
+    225: ["thrash_shot_color", "Your Thrash Machine's shoe color. You should probably just edit it in-game."],
+    226: ["made_thrash_machine", "Whether you designed the Thrash Machine yet.", basicBool], // Why is this not a plot value?!
+    // no 227 or 228?
+    229: ["lancer_follow_progress", "How far Lancer has followed you after joining the team.", {
+            0: "Default state",
+            1: "Monogrammed track jackets"
+            // extend
+         }]
 };
