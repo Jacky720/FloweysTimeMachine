@@ -2,7 +2,9 @@ var basicBool = "checkbox";
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
-    // include single digits (I know 6 and 7 are used)
+    // include single digits
+    6: ["disable_text_skip", "Volatile. Prevents you from skipping text in some cutscenes.", basicBool],
+    7: ["disable_menu?", "Seems to prevent you opening the Dark World menu. And affect the music when leaving shops?", basicBool],
     8: ["simplify_vfx", "Self-explanatory. Set in Dark World menu.", basicBool],
     10: ["wrist_protector", "Whether you have the Wrist Protector. Enabled by default since the Chapter 1&2 release.", basicBool],
     11: ["auto_run", "Whether you have enabled auto-run.", basicBool],
@@ -105,7 +107,7 @@ var flags = {
     109: ["got_dice_brace", "Whether you got the Dice Brace.", basicBool],
     110: ["got_bloxer_money", "Whether you got the 40D$ from that room with Bloxers.", basicBool],
     111: ["got_bloxer_mint", "Whether you got the Revive Mint from that room with Bloxers.", basicBool],
-    112: ["got_jevil_chest", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
+    112: ["got_JEVIL_chest", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
     113: ["got_clubswich", "Whether you got the Clubs Sandwich from... take a guess.", basicBool],
     114: ["got_castle_mint", "Whether you got the Revive Mint from that chest that appears when you interact with the portraits.", basicBool],
     115: ["got_key_a", "Whether you got the Broken Key A.", basicBool],
@@ -114,10 +116,10 @@ var flags = {
     118: ["got_glowwrist", "Whether you got the first Glow Wrist.", basicBool],
     119: ["got_nubert_treasure", "Whether you got the Fiber Scarf.", basicBool],
     120: ["got_glowwrist_2", "Whether you got that other Glow Wrist.", basicBool],
-    121: ["unused", "Suspiciously unused flag."],
+    // 121: ["unused", "Suspiciously unused flag."],
     122: ["got_tension_bit", "Whether you got the Tension Bit.", basicBool],
     123: ["got_ch2_mint", "Whether you got the THIRD Revive Mint.", basicBool],
-    124: ["unused", "Suspiciously unused flag."],
+    // 124: ["unused", "Suspiciously unused flag."],
     125: ["got_dust_fake", "Unused. Intended for obtaining the Revive Dust, but overwritten by 137."],
     126: ["got_trash_$20", "Whether you got 20D$ from the twenty-dollar trash can.", basicBool],
     127: ["got_trash_$80", "Whether you got 80D$ from the eighty-dollar trash can.", basicBool],
@@ -183,7 +185,7 @@ var flags = {
             "Initiated puzzle",
             "Failure (unused)"
          ]],
-    213: ["unused", "Suspiciously unused flag."],
+    // 213: ["unused", "Suspiciously unused flag."],
     214: ["team_name", "The name of your team.", [
             "The Guys",
             "The $!$? Squad",
@@ -223,7 +225,127 @@ var flags = {
     // no 227 or 228?
     229: ["lancer_follow_progress", "How far Lancer has followed you after joining the team.", {
             0: "Default state",
-            1: "Monogrammed track jackets"
-            // extend
-         }]
+            1: "Monogrammed track jackets",
+            3: "Just chill with us",
+            4: "Stop making fun of me",
+            5: "Darkberry Teacakes (unused)",
+            6: "A candy tree!",
+            7: "My teeth are disintegrating!",
+            8: "Does your dad seem happy?",
+            9: "I also feel kinda...",
+            10: "...maybe.",
+            11: "That's the FOUNTAIN!",
+            12: "All we gotta do is crush them.",
+            99: "Max value (unused)"
+         }],
+    // no 230
+    231: ["jail_interacts", "The number of times you have interacted with objects while in jail. The cutscene is triggered by talking to Ralsei after 3+ interactions."],
+    232: ["interacted_salsa", "Whether you interacted with the salsa stump. NOT what you actually did; that isn't saved.", basicBool],
+    233: ["talked_about_chest", "Whether you talked to the Royal Coat Rack before taking the Ragger. Changes their dialogue if you take it without asking.", basicBool],
+    234: ["solved_clover_puzzle", "Whether you solved the suits puzzle before the Clover fight.", basicBool],
+    235: ["clover_puzzle_2?", "Unused? If 0, the suits puzzle makes and immediately destroys an (entrance?) barrier."],
+    236: ["interacted_clover?", "Unused? Set to 1 when talking to all of Clover before her fight. Is that even possible? As one NPC. Alters her dialogue.", basicBool],
+    237: ["solved_dark_puzzle", "Whether you solved the puzzle in the darknening room. It does not save if you did it without going in the middle.", basicBool],
+    238: ["susie_bought_snack", "Whether Susie and Lancer bought their Hearts Donut yet.", basicBool],
+    239: ["elevator_floor", "Volatile. Tracks the floor you're currently on when in elevators.", [
+            "Basement B1",
+            "Floor 1F",
+            "Floor 5F",
+            "???? (JEVIL)"
+         ]],
+    240: ["elevator_unlocked", "Whether you have unlocked the Card Castle elevator by going to floor 5F.", basicBool],
+    241: ["JEVIL_plot", "Your progress with JEVIL. Alters Seam's dialogue.", {
+            0: "Default state",
+            1: "Talked to JEVIL",
+            5: "Opened door",
+            6: "Fought",
+            7: "Spared"
+         }],
+    242: ["JEVIL_chest", "The item in the chest outside JEVIL's room, if you don't have enough storage space for it. See also flag 112.", [
+            "Default state",
+            "Devilsknife",
+            "Jevilstail"
+         ]],
+    243: ["talked_to_rudinn", "The status of your talking to Rudinn in Card Castle. Special dialogue if set to 3 but you then hurt Rudinns.", [
+            "Default state",
+            "Apologized",
+            "Did not apologize",
+            "Did not need to apologize"
+         ]],
+    244: ["talked_to_hathy", "Whether you talked to Hathy in Card Castle. Only set if you had two or fewer Hathy kills.", basicBool],
+    245: ["made_bluh_chest", "Whether you interacted with all four Bluh Paintings, summoning the Bluh Chest.", basicBool],
+    246: ["checkers_act", "Whether you Checked K. Round the first time, changing its act to Checkers (including in the second fight).", basicBool],
+    247: ["spared_king", "Whether you exhausted King rather than fighting him.", basicBool],
+    248: ["massacre_end", "Whether you got the bad (beat people up) ending in Chapter 1. Minor dialogue differences in Castle Town.", basicBool],
+    249: ["spared_lancer", "Whether you spared Lancer and Susie.", basicBool],
+    250: ["thrash_repeats", "The number of times you died to Lancer and Susie, thus requiring them to blow up another Thrash Machine. Unique dialogue at 1 and 2."],
+    251: ["shortcut_door_help", "Whether Jigsaw Joe helped restore the Warp Door. No functional change.", basicBool],
+    252: ["inspected_beds_ch1", "Whether you inspected all four beds in Chapter 1, becoming a Bed Inspector.", basicBool],
+    253: ["traded_topcake", "Whether you returned the TopCake, receiving a SpinCake in its place. You can't get any more SpinCakes in Chapter 2...", basicBool],
+    254: ["starwalker", "Whether you talked to the original Starwalker. That's foresight.", basicBool],
+    
+    255: ["talk_rudy_ch1", "Progress talking with Rudolph Holiday in Chapter 1. Not sure how it interacts with Chapter 2.", [
+            "Default state",
+            "Noelle left",
+            "Talked to Rudy"
+         ]],
+    256: ["talked_berdly_window", "Whether you talked to Berdly about visiting the hospital window to have something thrown at him. Slightly alters his dialogue about How to Draw Dragons.", basicBool],
+    257: ["table_hole_fingers", "Whether you tried to put your fingers in the picnic table.", basicBool],
+    258: ["onionsan_ch1", "Onion's status.", [
+            "Default state",
+            "Talking (volatile",
+            "Befriended",
+            "Rejected"
+         ]],
+    259: ["onionsan_your_name", "The name you told Onion was yours.", [
+            "Default state",
+            "Kris",
+            "Hippopotamus"
+         ]],
+    260: ["onionsan_name", "The name you told Onion was theirs.", [
+            "Default state",
+            "Onion",
+            "Beauty",
+            "Asriel II",
+            "Disgusting"
+         ]],
+    261: ["talked_qc_ch1", "Tracks your talking with QC.", [
+            "Default state",
+            "Received Hot Chocolate",
+            "Full inventory"
+         ]],
+    262: ["bouquet_quest_stage", "Progress toward failing to redeem Toriel and Asgore's relationship in Chapter 1.", [
+            "Default state",
+            "In flower shop",
+            "Received bouquet"
+            "Gave to Toriel",
+            "Disposed of"
+         ]],
+    263: ["fridge_egg_status", "The Chapter 1 egg status, with regards to Asgore's fridge. Each stage correlates with an egg quantity in the fridge.", [
+            "(0) Default state",
+            "(1) Egg dropped/fridge inspected eggless",
+            "(2) Egg put in fridge"
+         ]],
+    264: ["asgore_stairs_side", "Volatile. Persists the different door sides when going upstairs in Asgore's fridge via Kris's x-coordinate."],
+    265: ["talked_to_catty", "Whether you talked to Catty in Chapter 1.", basicBool],
+    // no 266
+    267: ["unused_toriel_talk", "Progress talking to Toriel... in an unused variant. The whole thing is thouroughly broken.", {
+            -10: "Kris...?",
+            0: "Headband",
+            1: "Go to bed"
+         }],
+    268: ["called_in_house", "Whether you called Toriel's home phone, while at home. Unaccessed.", basicBool],
+    269: ["talked_to_alphys", "Whether you met Alphys after school in Chapter 1. Alters her dialogue the morning of Chapter 2.", basicBool],
+    270: ["talked_to_undyne", "Whether you met Undyne in Chapter 1.", basicBool],
+    271: ["talk_pizzapants", "Progress chatting with BurgerPizzaSodaCandyPants.", [
+            "Default state",
+            "Mask off",
+            "Talked"
+         ]],
+    272: ["times_called_mom", "The number of times you called Toriel after school."],
+    273: ["talked_to_sans", "Progress chatting up the funny bone man in Chapter 1.", [
+            "Default state",
+            "Talked",
+            "Invited over"
+         ]]
 };
