@@ -2,10 +2,14 @@ var basicBool = "checkbox";
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
-    // include single digits
     6: ["disable_text_skip", "Volatile. Prevents you from skipping text in some cutscenes.", basicBool],
     7: ["disable_menu?", "Seems to prevent you opening the Dark World menu. And affect the music when leaving shops?", basicBool],
     8: ["simplify_vfx", "Self-explanatory. Set in Dark World menu.", basicBool],
+    9: ["battle_music", "Volatile. Allows or prevents the game from playing Rude Buster at the start of an encounter.", [
+            "Default state",
+            "In battle",
+            "Starting boss music"
+       ]],
     10: ["wrist_protector", "Whether you have the Wrist Protector. Enabled by default since the Chapter 1&2 release.", basicBool],
     11: ["auto_run", "Whether you have enabled auto-run.", basicBool],
     12: ["disable_shaking", "Debug variable. Keeps the game screen from shaking. Intended to be set in Dark World menu?", basicBool],
@@ -281,7 +285,7 @@ var flags = {
     250: ["thrash_repeats", "The number of times you died to Lancer and Susie, thus requiring them to blow up another Thrash Machine. Unique dialogue at 1 and 2."],
     251: ["shortcut_door_help", "Whether Jigsaw Joe helped restore the Warp Door. No functional change.", basicBool],
     252: ["inspected_beds_ch1", "Whether you inspected all four beds in Chapter 1, becoming a Bed Inspector.", basicBool],
-    253: ["traded_topcake", "Whether you returned the TopCake, receiving a SpinCake in its place. You can't get any more SpinCakes in Chapter 2...", basicBool],
+    253: ["traded_topcake", "Whether you returned the TopCake, receiving a SpinCake in its place.", basicBool],
     254: ["starwalker", "Whether you talked to the original Starwalker. That's foresight.", basicBool],
     
     255: ["talk_rudy_ch1", "Progress talking with Rudolph Holiday in Chapter 1. Not sure how it interacts with Chapter 2.", [
@@ -347,5 +351,137 @@ var flags = {
             "Default state",
             "Talked",
             "Invited over"
+         ]],
+    274: ["sans_phone", "Your progress toward being called an idiot baby.", [
+            "Default state",
+            "Received number",
+            "Called"
+         ]],
+    275: ["idiot_baby_status", "What you are.", [
+            "None",
+            "Idiot",
+            "Baby",
+            "Idiot Baby"
+         ]],
+    276: ["talked_to_noelle", "Your progress talking to Noelle outside her house in Chapter 1. If 2, she gives Susie the Light Candy in Chapter 2.", [
+            "Default state",
+            "Talked",
+            "Talked about Susie"
+         ]],
+    277: ["times_came_home", "The number of times you have returned home at the end of Chapter 1. Special dialogue at 0, 1, and 7; stops counting at 8."],
+    278: ["used_rudy_sink", "Whether you used the sink in Chapter 1 (of the 1&2 demo). Rudy comments on you 'loving that sink'.", basicBool],
+    279: ["loaded_legacy_file", "Set to 1 while loading a Chapter 1 file (which has different room offsets). If 1 on an old file, you might load into a Chapter 2 room.", basicBool],
+    280: ["used_shadow_ch1", "Your Shadow Crystal usage in Chapter 1. Unique dialogue if less than 2.", [
+            "Default state",
+            "Saw toys",
+            "Not useful"
+         ]],
+    281: ["used_glass_alone", "Your Glass usage without Susie around/in Chapter 1.", [
+            "Default state",
+            "Saw through hand",
+            "Not useful (Ch1)"
+         ]],
+    
+    290: ["solved_ragger_puzzle", "Whether you solved the suits puzzle to obtain Ragger.", basicBool],
+    291: ["maze_progress", "Volatile. Counts the number of correct rooms you've gone through in the maze, or something like that. Find Susie at 4, done at 9."],
+    292: ["maze_fail_count", "Volatile. Counts how much you've taken the wrong choice in the forest maze. Jumps straight to 3 (dead end) if you got lost before or found Susie."],
+    293: ["lancer_deadend", "The number of times you found the Lancer dead end."],
+    294: ["susie_deadend", "The number of times you found the Susie dead end."],
+    295: ["youre_clovers_mom", "Whether you talked to Topchef in the pacifist end after returning the Topcake. He thinks Susie is Clover's mom.", basicBool],
+    296: ["visited_jail", "Whether you visited the jail. No effects in Ch 1&2 demo, but does *something* weird if 0 in the Chapter 1 demo. Seems the cages are supposed to disappear?", basicBool],
+    
+    300: ["hugged_dummy_ch2", "Whether you hugged the dummy in Chapter 2. Some slight dialogue changes.", basicBool],
+    301: ["talked_king_prologue", "Whether you talked to King in jail before visiting Cyber World.", [
+            "Default state",
+            "Talked",
+            "Left"
+         ]],
+    302: ["toy_deliver_progress", "Your progress in delivering Ralsei's first batch of subjects.", [
+            "Default state",
+            "Ball on head",
+            "Toys delivered"
+         ]],
+    303: ["been_called_normal", "Whether you saw Alphys and Toriel talking about you. Alters Toriel's dialogue if called.", basicBool],
+    304: ["susie_ate_cake", "Whether Susie ate Ralsei's entire cake (yet).", basicBool],
+    305: ["told_mom_studying", "Whether you told Toriel you were going to be studying with Susie over the phone, with or without mentioning the trash orb.", basicBool],
+    306: ["told_mom_orb", "Whether you called Toriel while just around the corner with a trash orb on your head. Also sets flag 305.", basicBool],
+    307: ["fave_party_member", "Apparently intended for who you gave the plush to, but- oh my that's a decompiler failure. It's reset to 1 in the acid river ride, right before some really interesting Ralsei dialogue that's cut because of it.", [
+            "Default state",
+            "Ralsei",
+            "Susie",
+            "Noelle",
+            "Berdly"
+         ]],
+    308: ["seen_eggs_husband", "Whether you've seen Asgore make a fool of himself in public.", basicBool],
+    309: ["spamton_plot", "Your progress in learning about the power of NEO.", {
+            0: "Default state",
+            1: "Spared Spamton",
+            3: "Purchased KeyGen",
+            4: "Used KeyGen",
+            5: "Entered basement",
+            7: "Disk Loaded",
+            8: "Disk inserted",
+            9: "Defeated Spamton NEO"
+         ]],
+    310: ["touched_cheese_maze", "Whether you touched the cheese in the maze, triggering an encounter and destroying it.", basicBool],
+    311: ["destroyed_cheese_alone", "Whether you triggered the cheese maze without Noelle, prompting slightly different text when interacting with it; a cruel victory for those who hate cheese.", basicBool],
+    312: ["talked_seam_ch2", "Seems to be set to 1 when you talk to Seam in Chapter 2, preventing them from repeating themselves.", basicBool],
+    313: ["got_spincake_ch2", "Whether you received a fresh Spincake since Chapter 2.", basicBool],
+    314: ["mr_society_left", "Whether Mr. Society, the bishop, flew up the cliff after being talked to.", basicBool],
+    315: ["seen_shelter_scene", "Whether Monster Kid and Snowy fled Susie at the bunker. They go home.", basicBool],
+    316: ["seen_hospital_scene", "Whether Noelle went home in Chapter 2 yet (yes, either route).", basicBool],
+    317: ["seen_police_scene", "Tracks how yoooouuu let the dogs out!", [
+            "Default state",
+            "Dogs escaped",
+            "Alarm playing"
+         ]],
+    // no 318
+    319: ["ferris_scene_plot", "Tracks how Suselle becomes canon. Returns to 2 after the whole scene.", [
+            "Default state",
+            "On Ferris wheel",
+            "Off Ferris wheel",
+            "WHAT? WHAT? WHAT?"
+         ]],
+    320: ["talked_queenie_beanie", "Whether you've seen the touching reunion of King and Queen.", basicBool],
+    // no 321-323
+    324: ["spamton_stress_response", "What you said- made Kris say- after fighting Spamton NEO.", [
+            "Default state",
+            "OK",
+            "Not OK"
+         ]],
+    325: ["ralsei_photo_choice", "The purty picture you took with Ralsei. Affects his title and whether he hugs Kris after Spamton NEO.", [
+            "Default state",
+            "Hugged",
+            "Peace sign",
+            "Rude gesture",
+            "No pose"
+         ]],
+    326: ["rouxls_pirate_hat", "Whether Rouxls Kaard is currently wearing a pirate hat.", basicBool],
+    327: ["interacted_hathyx_www", "Whether you interacted with a Head Hathy or Werewerewire together at the cafe. Alters Werewerewire narration if subsequently moved away from Head Hathy.", basicBool],
+    // no 328
+    329: ["talked_spamton_knight", "Whether you talked with Spamton about the Knight, changing his talk option to Friends.", basicBool],
+    330: ["found_tasque_switch", "Honestly I have no idea but there's a switch here and if you don't flip it it shows a faint hint.", basicBool],
+    331: ["seen_ferris_scene", "Set to 1 after the Ferris wheel scene, even if skipped.", basicBool],
+    332: ["found_maze_switch", "See 330, but this time one of the objects has 'old' in the name, so it might be unused.", basicBool],
+    333: ["solved_agree2all", "Whether you solved the AGREE2ALL puzzle.", basicBool],
+    // no 334
+    335: ["shovel_door_open", "Whether you opened the door to the room filled with 999 shovels.", basicBool],
+    336: ["susie_avoid_alphys", "Whether Susie is waiting due east of you rather than come close to Alphys.", basicBool],
+    337: ["talked_alvin", "Tracks how much you talk to Alvin about his father and the hammer, and whether he mumbles to himself as you leave.", [
+            "Default state",
+            "Talked once",
+            "Talked twice",
+            "Heard mumbling"
+         ]],
+    // no 338
+    339: ["found_basement_switch", "Whether you activated the secret backdoor to the mansion's basement. Alter's Hacker's dialogue.", basicBool],
+    340: ["found_shortcut_out", "Whether you flipped the less-secret switch to connect the basement to the foyer. Also set on entry into the foyer on Snowgrave.", basicBool],
+    341: ["susie_avoid_catti", "Whether Susie has told you she isn't going into the diner (Catti's working there!)", basicBool],
+    342: ["chocolates_who_gave", "Who did you give the Box of Heart-Shaped Chocolates to?", [
+            "Default value",
+            "Ate alone",
+            "Shared with Susie",
+            "Gave to Alphys",
+            "Returned to Sans"
          ]]
 };
