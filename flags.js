@@ -483,5 +483,89 @@ var flags = {
             "Shared with Susie",
             "Gave to Alphys",
             "Returned to Sans"
+         ]],
+    343: ["made_high_five", "Whether you pulled the lever to make a giant high-five and progress the swan ride.", basicBool],
+    344: ["solved_saucer_puzzle?", "Looks to be set to 1 when completing the first shell game-style saucer puzzle.", basicBool],
+    345: ["seen_toilet_statue", "Whether you interacted with the Berdly statue in the toilet. Spawns the NPC outside waiting for the statue to finish in there.", basicBool],
+    346: ["solved_saucer_shortcut", "Whether you've unlocked a shortcut in Mansion by doing a saucer puzzle. I don't know which.", basicBool],
+    347: ["times_seen_statue", "The number of times you interacted with the Berdly statue with Noelle with you. She has unique comments up to 8 on how obsessed you are with it."],
+    // no 348
+    349: ["frozen_chicken", "Whether there is a large ice crystal you cannot see into blocking the way.", basicBool],
+    350: ["hatboy_plugged", "Whether you walked far enough away for the fedora'd Plugboy to get Werewired offscreen.", basicBool],
+    351: ["maze_hint_debug?", "Seems to be an unset flag that would make a little hint popup in room_dw_cyber_maze_queenscreen.", basicBool],
+    352: ["solved_viro_dodge", "Whether you got the key in room_dw_cyber_viro_ring.", basicBool],
+    353: ["talk_two_crystals", "How much you've talked to Seam since obtaining both Shadow Crystals.", [
+            "Default state",
+            "Gave both",
+            "Talked about mantle"
+         ]],
+    354: ["bagels_purchased", "The number of CD Bagels you purchased from K_K. He stops selling them at six, in case somebody orders 400."],
+    // no 355
+    356: ["lancer_cared_for", "Whether statue-Lancer has been pushed to the table and given his adorable bib.", basicBool],
+    357: ["recruited_hacker", "Whether you collected all three Blue Checksmarks for Hacker.", basicBool],
+    358: ["entered_basement", "Tracks how many times you entered the basement, and whether you can see Susie stealing Ralsei's glasses. Might max out at 2?"],
+    359: ["met_hacker", "Whether you talked to Hacker. Note that the 2 state isn't directly used; see flag 357.", [
+            "Default state",
+            "Talked",
+            "Recruited"
+         ]],
+    360: ["did_cheese_fight", "Whether you triggered the cheese maze, destroying the cheese.", basicBool],
+    361: ["did_right_cheese_fight", "Apparently like 360 but only for the right cheese, and unaccessed.", basicBool],
+    362: ["mauswheel_defeated", "Whether you defeated Mauswheel on the normal route, freeing the Swatchlings.", basicBool],
+    // no 363, 364, 365
+    366: ["tasque_released", "Makes one particular Tasque persist leaving the wall screen in Field?", basicBool],
+    367: ["got_chestmark", "Whether you got the Blue Checksmark from a treasure chest.", basicBool],
+    368: ["solved_mice_2", "Progress on solving the second mice puzzle.", {
+            0: "Default state",
+            0.5: "Mice in hole",
+            1: "Forcefield down"
+         ]],
+    369: ["saw_ralsusie", "Whether Noelle gave her one-time dialogue about seeing Ralsei and Susie having fun.", basicBool],
+    370: ["solved_mansion_traffic", "There was traffic in the mansion?? And this disables it? Are mice involved?", basicBool],
+    371: ["fought_tasque_manager", "Whether you fought Tasque Manager.", basicBool],
+    // no 372
+    373: ["unlocked_east_basement", "Whether you disabled the forcefield in the basement with the final boss. Yeah, the teacups.", basicBool],
+    374: ["mice_got_$20", "Whether the mice got $20. Alters Mousemillian's dialogue.", basicBool],
+    375: ["mice_got_$1", "Whether the mice got $1. Alters Mousemillian's dialogue.", basicBool],
+    376: ["funny_butler_progress", "Progress in the room with the Swatchling and the bridges and the unavoidable vase.", [
+            "Default state",
+            "Swatchling freed",
+            "Vase spawned"
+         ]],
+    377: ["mouselottery_solved", "Whether you put the mice in, uh, one of the mansion mouse holes.", basicBool],
+    378: ["mouselottery_solved_2", "The status of the other mice. No, I don't know which is which.", basicBool],
+    379: ["noelle_beat_fear", "Whether Noelle stopped being afraid of mice.", basicBool],
+    380: ["called_mom_after_lab", "Whether you called Toriel after leaving the computer lab. Prevents her from repeating her dialogue.", basicBool],
+    381: ["dog_opened_door", "Whether the dog, ah, forced open the double door in the bajillion platters room in the mansion.", basicBool],
+    382: ["dining_hall_complete", "Whether you finished the ultimate dining hall puzzle.", basicBool],
+    383: ["solved_forcefield_1", "Whether you successfully activated both switches in the first forcefield puzzle, disabling it forever.", basicBool],
+    384: ["fought_cheese_something?", "WHY ARE THERE SO MANY FLAGS FOR CHEESE??", basicBool],
+    385: ["balance_pot_status", "What happened in the vase-balancing minigame.", [
+            "Default state",
+            "Dropped pot",
+            "Success"
+         ]],
+    386: ["visited_spamton", "Prevents you from getting repeat dialogue every single time you visit Spamton's shop.", [
+            "Default state",
+            "First time in shop",
+            "Exited"
+         ]],
+    387: ["returned_castle_town", "Whether you've seen Queen introduce herself to Castle Town.", basicBool],
+    388: ["got_no_recruits", "Whether you sealed the Fountain with no recruits at all, on the normal route anyway.", basicBool],
+    389: ["fought_bridge_werewire", "Whether you fought the Werewire in the acid lake bridge room, unlocking the Revive Dust chest.", basicBool],
+    390: ["solved_apple_puzzle", "Whether you unlocked the way to NUBERT'S TREASURE.", basicBool],
+    391: ["fought_maze_viro", "I think this is unused? It prevents a Virovirokun from respawning... somewhere.", basicBool],
+    392: ["3f_bookcase_override", "Seems to unlock a mansion shortcut early on the Snowgrave Route.", basicBool],
+    393: ["stole_susie_statue", "Whether you stole the Susie statue from Noelle's room.", basicBool],
+    394: ["stole_ice_e_statue", "Whether you stole the Ice-E statue from Noelle's room.", basicBool],
+    395: ["opened_sidea_painting", "Not a reference to Side B (alt route). Seems a painting opens a passageway.", basicBool],
+    396: ["opened_sideb_painting", "Not a reference to Side B (alt route). Seems a painting opens a passageway.", basicBool],
+    397: ["paintings_active", "Whether Queen warned you not to take your eyes off her paintings, and activated the painting fireballs.", basicBool],
+    398: ["activated_mint_painting", "Whether you activated the Revive Mint painting with a different painting.", basicBool],
+    399: ["activated_painting_exit", "Whether you disabled a fire painting blocking the exit by interacting with a different painting.", basicBool],
+    400: ["vase_intro_status", "Your progress in learning the basics of Queen's Mansion.", [
+            "Default state",
+            "Learned rules",
+            "Broke vase"
          ]]
 };
