@@ -45,6 +45,7 @@ var flags = {
     43: ["autosusie_violences", "Violences committed by Susie while not under player control. Never set due to a bug, but it would be possible to get the Chapter 1 Overthrow ending even if this is 1."],
     44: ["kills", "Total number of enemies you killed for realsies. Includes SnowGrave and killing Pipis."],
     45: ["freezes", "I have no idea?? It looks like nothing sets it, but apparently it's intended for IceShock violences..."],
+    // no 46-49
     50: ["last_encounter_end", "Volatile. Contains what you did in the last encounter. For multiple enemies, priority is Violence > Spare > Pacify > IceShock.", {
             0: "Default state",
             1: "Violenced (includes SnowGrave)",
@@ -658,5 +659,33 @@ var flags = {
             "Default state",
             "Read sign",
             "Rode teacups"
-         ]]
+         ]],
+    451: ["talked_about_pap", "Whether you talked to Sans about Papyrus in both chapters 1 and 2; talking in Chapter 2 only isn't saved.", basicBool],
+    452: ["told_wrongway", "Whether Noele questioned if you were going the right way while backtracking further into the trash zone.", basicBool],
+    453: ["talked_snowgrave_neo", "Whether you talked to Spamton through the basement door while he was changing forms. He doesn't repeat himself.", basicBool],
+    454: ["got_dealmaker", "Whether you spared Spamton NEO. What, you thought that would be in flag 309?", basicBool],
+    455: ["ride_with_me", "Whether you said 'Noelle will ride with me' on Snowgrave. Unaccessed.", basicBool],
+    456: ["beat_snowgrave_neo", "Whether you defeated Spamton NEO on Snowgrave. Unaccessed.", basicBool],
+    457: ["spared_berdly", "Whether you spared Berdly all three times, keeping him from breaking his arm.", basicBool],
+    458: ["houses_hit", "The number of houses you hit with the swan boat, converted to TP at the start of the Rouxls fight. Maximum 7?"],
+    459: ["put_disk_mannequin", "Whether you tried to put the LoadedDisk into the Mannequin. It doesn't repeat.", basicBool],
+    460: ["got_jevil_hole", "Whether you got the Jevil item from the Castle Town hole. Accessed, but not necessary.", basicBool],
+    461: ["interacted_sink_ch2", "Whether you interacted with Rudy's sink in Chapter 2. See also flag 278.", basicBool],
+    462: ["cars_hit", "The number of cars you hit. If less than 3 and you're otherwise pacifistic enough, you get the Castle Town tiny car."],
+    463: ["read_cyberpedia", "Whether you read Ralsei's editable Cyberpedia entry. Is Wikipedia actually trademarked?", basicBool],
+    464: ["talked_swatch", "Whether you talked to Swatch in the Castle Town Cafe about removing Topchef. Poor man.", basicBool],
+    465: ["car_part_completed", "Whether you completed the car sequence. You can't get the tiny car on Snowgrave, even with all recruits, because of this.", basicBool],
+    466: ["junkball_dropped", "Whether you dropped the Ball of Junk at any point. Unaccessed.", basicBool],
+    467: ["chestmark_opened", "HOW MANY FLAGS DO YOU NEED FOR THIS? It keeps you from opening the chest multiple times.", basicBool],
+    468: ["spamton_no_room", "Whether you had no room after defeating Spamton NEO. Spawns the chest.", [
+            "Default state",
+            "No room Pacifist",
+            "No room Snowgrave"
+         ]],
+    469: ["cant_go_back_tip", "Whether the save point reminded you that you can't go back to the Cyber World if you overwrite your save in Castle Town. Consider this carefully!", basicBool],
+    // no 470-499
+    
+    500: ["times_rudinn_fought", "The number of times you've fought the first Rudinn. Changes its encounter text."],
+    501: ["triple_hathy_outcome", "Seems to be intended for some other, non-Hathy fight in room_field2. Changes the dialogue of... a nonexistent NPC in the room. And it's only set by enemies that don't appear in that room.", basicBool],
+    502: ["times_ponman_fought", "The number of times you fought Ponmen. Minor changes to the overworld chasing Ponmen."]
 };
