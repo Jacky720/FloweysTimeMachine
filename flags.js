@@ -567,5 +567,41 @@ var flags = {
             "Default state",
             "Learned rules",
             "Broke vase"
+         ]],
+    // no 401-406
+    407: ["got_chestmark_2", "Whether you got the second Chest-Checksmark.", basicBool],
+    408: ["seen_djs_flyby", "Whether you saw Sweet Cap'n Cakes fly by after fighting them?", basicBool],
+    409: ["inspected_kris_bed", "Whether you inspected your own bed. Necessary to retain your Bed Inspector title.", basicBool],
+    410: ["inspected_susie_bed", "Whether you inspected Susie's bed. Necessary to retain your Bed Inspector title.", basicBool],
+    411: ["inspected_lancer_bed", "Whether you inspected Lancer's bed. Necessary to retain your Bed Inspector title.", basicBool],
+    412: ["inspected_clover_bed", "Whether you inspected Clover's bed. Necessary to retain your Bed Inspector title.", basicBool],
+    413: ["inspected_noelle_bed", "Whether you inspected Noelle's bed. Necessary to retain your Bed Inspector title.", basicBool],
+    414: ["bed_inspector_ch2", "Whether you retained your Bed Inspector title. That is, got slightly different Noelle bed dialogue.", basicBool],
+    415: ["mice_attack_reason", "What you told Noelle about the mice attacking her. The question was, 'What do I look like, the girl from the Nutcracker?'", [
+            "Default state",
+            "They like you",
+            "Unknown",
+            "You look like her"
+         ]],
+    416: ["field_tempsave", "Whether you returned to the Cyber Field hub after defeating Sweet Cap'n Cakes and triggered a tempsave.", basicBool],
+    417: ["trash_tempsave", "Whether you reached Cyber City by falling into the dump and triggered a tempsave.", basicBool],
+    418: ["got_shoe", "Whether you got a free sample from Cyber Shoes. Alters Lancer's dialogue and prevents a Mansion tempsave from happening (reused flag).", basicBool],
+    419: ["tasque_manager_response", "Whether you got all or most of Tasque Manager's questions correct. She starts with 100% if all, 50% if you miss the last due to her phrasing.", [
+            "Default state",
+            "All correct",
+            "Thought alphabetical"
+         ]],
+    420: ["giasfelfebrehber", "Whether you solved the Giasfclfebrebrebrebehr typing puzzle, earning the third Blue Checksmark.", basicBool],
+    421: ["noelle_friend", "Whether you told Noelle you were 'something else.' Necessary for Snowgrave.", [
+            "Friends",
+            "Something else"
+         ]],
+    422: ["talked_mettaton", "Whether you talked to Mettaton in Chapter 2. They don't repeat themselves.", basicBool],
+    423: ["stolen_bagels", "How many CD Bagels you stole on the Snowgrave Route (0-4)."],
+    424: ["talked_onion_ch2", "Whether you talked to Onionsan in Chapter 2. Probably kinda important, you know.", basicBool],
+    425: ["onion_was_missed", "What you told Onion. Probably kinda important, especially if you didn't miss them.", [
+            "Default state",
+            "Missed",
+            "Did not miss"
          ]]
 };
