@@ -1,4 +1,12 @@
 var basicBool = "checkbox";
+var enemyStates = {
+    0: "Default state",
+    1: "Violenced (includes SnowGrave)",
+    2: "Spared",
+    3: "Pacified",
+    5: "Susie (unused)",
+    6: "Frozen"
+}
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
@@ -46,34 +54,10 @@ var flags = {
     44: ["kills", "Total number of enemies you killed for realsies. Includes SnowGrave and killing Pipis."],
     45: ["freezes", "I have no idea?? It looks like nothing sets it, but apparently it's intended for IceShock violences..."],
     // no 46-49
-    50: ["last_encounter_end", "Volatile. Contains what you did in the last encounter. For multiple enemies, priority is Violence > Spare > Pacify > IceShock.", {
-            0: "Default state",
-            1: "Violenced (includes SnowGrave)",
-            2: "Spared",
-            3: "Pacified",
-            6: "Frozen"
-        }],
-    51: ["last_monster_end_0", "Volatile. What you did you the top monster in the last encounter.", {
-            0: "Default state",
-            1: "Violenced (includes SnowGrave)",
-            2: "Spared",
-            3: "Pacified",
-            6: "Frozen"
-        }],
-    52: ["last_monster_end_1", "Volatile. What you did you the middle monster in the last encounter.", {
-            0: "Default state",
-            1: "Violenced (includes SnowGrave)",
-            2: "Spared",
-            3: "Pacified",
-            6: "Frozen"
-        }],
-    53: ["last_monster_end_2", "Volatile. What you did you the bottom monster in the last encounter.", {
-            0: "Default state",
-            1: "Violenced (includes SnowGrave)",
-            2: "Spared",
-            3: "Pacified",
-            6: "Frozen"
-        }],
+    50: ["last_encounter_end", "Volatile. Contains what you did in the last encounter. For multiple enemies, priority is Violence > Spare > Pacify > IceShock.", enemyStates],
+    51: ["last_monster_end_0", "Volatile. What you did you the top monster in the last encounter.", enemyStates],
+    52: ["last_monster_end_1", "Volatile. What you did you the middle monster in the last encounter.", enemyStates],
+    53: ["last_monster_end_2", "Volatile. What you did you the bottom monster in the last encounter.", enemyStates],
     54: ["encounter_pointer", "Volatile. Contains a numerical value representing the current encounter, which is used to permanently store the outcome of that encounter in a flag."],
     55: ["enemy_x", "Volatile. Used to return enemies to the correct spot in the overworld when frozen."],
     56: ["enemy_y", "Volatile. Used to return enemies to the correct spot in the overworld when frozen."],
@@ -687,5 +671,18 @@ var flags = {
     
     500: ["times_rudinn_fought", "The number of times you've fought the first Rudinn. Changes its encounter text."],
     501: ["triple_hathy_outcome", "Seems to be intended for some other, non-Hathy fight in room_field2. Changes the dialogue of... a nonexistent NPC in the room. And it's only set by enemies that don't appear in that room.", basicBool],
-    502: ["times_ponman_fought", "The number of times you fought Ponmen. Minor changes to the overworld chasing Ponmen."]
+    502: ["times_ponman_fought", "The number of times you fought Ponmen. Minor changes to the overworld chasing Ponmen."],
+    503: ["susie_complimented", "Whether Susie has attempted to compliment Rudinn Ranger. Free ham sandwich day does not repeat.", basicBool],
+    504: ["susie_flirted", "The number of times you used X-Flirt on Head Hathy. She tries the first time, makes Ralsei try the second, and you take over from the third."],
+    505: ["fought_rabbick", "Whether you fought any Rabbicks. If so, they run slower in the forest maze.", basicBool],
+    506: ["fought_bloxer", "Whether you fought Bloxer. If so, they don't chase you as diligently.", basicBool],
+    507: ["fought_rudinn_ranger", "Whether you fought Rudinn Ranger. If so, they don't chase you at all.", basicBool],
+    508: ["fought_hathyx", "Whether you fought Head Hathy. If so, they don't chase you at all.", basicBool],
+    // no 509-519?
+    520: ["rudinn_violences", "The number of Rudinns you have beat up. Subtracted from flag 40 if you apologize."],
+    521: ["hathy_violences", "The number of Hathys you have beat up. Subtracted from flag 40 if 2 or less and you apologize."],
+    522: ["clover_violence", "Whether you beat up Clover the first time. You can't apologize.", basicBool],
+    523: ["rudinn_susie_whacks", "Intended for Susie beating up Rudinns, but unset. See flag 43."],
+    524: ["hathy_susie_whacks", "Intended for Susie beating up Hathys, but unset. See flag 43."]
+    // here be encounter flags
 };
