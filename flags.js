@@ -603,5 +603,21 @@ var flags = {
             "Default state",
             "Missed",
             "Did not miss"
-         ]]
+         ]],
+    426: ["swatchling_combo", "Volatile. The current combination of Swatchlings you are fighting. Later ones are harder, generally.", {
+            -1: "RRB",
+            0: "ROB",
+            1: "BGY",
+            2: "ROY",
+            3: "BYR",
+            4: "RBY",
+            5: "BYG",
+            6: "RYB",
+            7: "BRY",
+            8: "YGO"
+         }],
+    427: ["unlocked_mint_chest", "Whether Virovirokun triggered the hidden path to the Revive Mint chest.", basicBool],
+    428: ["finished_sweet_dodging", "Whether you... finished... the part where Sweet attacks you? Which one?", basicBool],
+    429: ["statue_sink_progress", "The amount by which the statue of Queen has sunk into the acid, in frames, so it persists even if you leave."],
+    430: ["took_azzy_money", "Whether you took five bucks from Asriel's drawer.", basicBool]
 };
