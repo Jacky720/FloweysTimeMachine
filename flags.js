@@ -619,5 +619,44 @@ var flags = {
     427: ["unlocked_mint_chest", "Whether Virovirokun triggered the hidden path to the Revive Mint chest.", basicBool],
     428: ["finished_sweet_dodging", "Whether you... finished... the part where Sweet attacks you? Which one?", basicBool],
     429: ["statue_sink_progress", "The amount by which the statue of Queen has sunk into the acid, in frames, so it persists even if you leave."],
-    430: ["took_azzy_money", "Whether you took five bucks from Asriel's drawer.", basicBool]
+    430: ["took_azzy_money", "Whether you took five bucks from Asriel's drawer.", basicBool],
+    431: ["talked_joe_ch2", "Whether you talked to Jigsaw Joe yet in the Party Dojo, which he introduces.", basicBool],
+    432: ["told_to_explore", "Whether Ralsei told you and Susie to explore the Castle Town yet.", basicBool],
+    433: ["told_to_run_ch2", "Whether Susie reminded you that you can run in this game (if you fail to do so in the chapter).", basicBool],
+    434: ["talked_our_deal", "Whether Spamton told you about our deal and the machine in the basement. Prevents him from skipping it if you buy KeyGen first.", basicBool],
+    435: ["house_game_winner", "Who won Rouxls's house minigame.", [
+            "Default state",
+            "Rouxls",
+            "Kris",
+            "Draw"
+         ]],
+    436: ["called_mom_busy", "Whether you called home during the end sequence. Unique dialogue the first time, then everyone's too busy to pick it up.", basicBool],
+    437: ["fave_party_member_2", "Who you told Susie you would take to the festival in the end cutscene. Unaccessed.", [
+            "Default state",
+            "Noelle",
+            "Ralsei",
+            "Susie",
+            "..."
+         ]],
+    438: ["tutor_viro_location", "Where you fought the tutorial Virovirokun. Persists its ice statue in Snowgrave. VERIFY WHICH!", [
+            "Default state",
+            "Progressed",
+            "Backtracked"
+         ]],
+    439: ["deposited_ch2_egg", "Whether you put the egg in the egg basket in Sans's store. It also works if you interact with any object on the northeast side of the store lol.", basicBool],
+    440: ["interacted_ferris_poster", "Whether you interacted with the Ferris wheel poster with Noelle. One-time event.", basicBool],
+    441: ["talked_friend_addison", "Whether you talked to the Addison selling Dating Shoes. One-time event. See also flag 421.", basicBool],
+    442: ["learned_teacups", "Whether you've taken your first teacup ride and possibly gotten a tutorial on operating it.", basicBool],
+    443: ["told_save_town", "Whether Ralsei told you to feel free to SAVE and take a break in Castl- RALSEI KNOWS ABOUT SAVING??", basicBool],
+    444: ["told_visit_town", "Whether Susie told you to go back and check out Castle Town, if you went down south first.", basicBool],
+    445: ["read_cleaning_poster", "Whether you interacted with the poster for Queen Cleaning Agent with Noelle behind you. Interesting dialogue exclusive to non-Snowgrave.", basicBool],
+    446: ["went_weird_door", "Whether you brought Noelle all the way back to the gray door. Unique dialogue about its creepiness, but not required for Snowgrave.", basicBool],
+    447: ["broke_balloon_cheese", "I don't remember where this is but when a forcefield pops the balloon on some cheese, balloon cheese stops spawning?", basicBool],
+    448: ["finished_big_forcefield", "Whether you finished and disabled the right-side forcefields in that room where Noelle stands on a button forever.", basicBool],
+    449: ["easter_egg_forcefield", "Whether you disabled the Easter egg forcefield (with the balloons) by all getting in one teacup.", basicBool],
+    450: ["easter_teacup_plot", "Progress in the balloon-teacup Easter egg.", [
+            "Default state",
+            "Read sign",
+            "Rode teacups"
+         ]]
 };
