@@ -6,7 +6,7 @@ var enemyStates = {
     3: "Pacified",
     5: "Susie (unused)",
     6: "Frozen"
-}
+};
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
@@ -683,6 +683,13 @@ var flags = {
     521: ["hathy_violences", "The number of Hathys you have beat up. Subtracted from flag 40 if 2 or less and you apologize."],
     522: ["clover_violence", "Whether you beat up Clover the first time. You can't apologize.", basicBool],
     523: ["rudinn_susie_whacks", "Intended for Susie beating up Rudinns, but unset. See flag 43."],
-    524: ["hathy_susie_whacks", "Intended for Susie beating up Hathys, but unset. See flag 43."]
+    524: ["hathy_susie_whacks", "Intended for Susie beating up Hathys, but unset. See flag 43."],
     // here be encounter flags
+    525: ["encount_first_ww", "Tracks the state of the first random Werewire encounter.", enemyStates],
+    526: ["encount_first_tasq", "Tracks the state of the first random Tasque encounter, the one that jumps out at you.", enemyStates],
+    527: ["encount_first_viro", "Tracks the state of the first Virovirokun encounter, the one en route to AGREE2ALL.", enemyStates],
+    
+    539: ["encount_glowwrist_tasq", "Tracks the state of the second random Tasque encounter, in the room with the Glow Wrist and checksmark.", enemyStates],
+    
+    552: ["encount_scripted", "Tracks the state of various scripted encounters that are non-repeatable anyway.", enemyStates],
 };
