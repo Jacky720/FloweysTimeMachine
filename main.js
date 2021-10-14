@@ -108,6 +108,25 @@ var lightItems = [
     "Wristwatch"
 ];
 
+var keyItems = [
+    "Empty",
+    "Cell Phone",
+    "Egg",
+    "Broken Cake",
+    "Broken Key A",
+    "Door Key",
+    "Broken Key B",
+    "Broken Key C",
+    "Lancer",
+    "Rouxls Kaard",
+    "Empty Disk",
+    "Loaded Disk",
+    "KeyGen",
+    "Shadow Crystal",
+    "Starwalker",
+    "Pure Crystal"
+];
+
 var cellOpts = {
     "0": "Empty",
     "201": "Call Home",
