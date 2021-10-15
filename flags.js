@@ -1,13 +1,35 @@
-var basicBool = "checkbox";
-var enemyStates = [
-    "Default state",
-    "Violenced (includes SnowGrave)",
-    "Spared",
-    "Pacified",
-    "In combat (Ch. 1)",
-    "Susie (unused)",
-    "Frozen"
-];
+var basicBool = "checkbox",
+    enemyStates = [
+        "Default state",
+        "Violenced (includes SnowGrave)",
+        "Spared",
+        "Pacified",
+        "In combat (Ch. 1)",
+        "Susie (unused)",
+        "Frozen"
+    ],
+    recruits = {
+        1: "Invalid (1)",
+        5: "Rudinn",
+        6: "Hathy",
+        11: "Ponman",
+        13: "Rabbick",
+        14: "Bloxer",
+        15: "Jigsawry",
+        20: "JEVIL",
+        22: "Rudinn Ranger",
+        23: "Head Hathy",
+        30: "Ambyu-Lance",
+        31: "Poppup",
+        32: "Tasque",
+        33: "Werewire",
+        34: "Maus",
+        35: "Virovirokun",
+        36: "Swatchling",
+        40: "Werewerewire",
+        42: "Tasque Manager",
+        44: "Mauswheel"
+    };
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
@@ -688,7 +710,7 @@ var flags = {
     
     // here be encounter flags
     525: ["encount_first_ww", "Tracks the state of the first random Werewire encounter.", enemyStates],
-    526: ["encount_first_tasq", "Tracks the state of the first random Tasque encounter, the one that jumps out at you.", enemyStates],
+    526: ["encount_first_tasq", "Tracks the state of the first random Tasque encounter, the one that jumps out at you. Then it's reused for like Giga Queen deaths or something, which is a little broken."], // shoutout to Colinator27 for finding the reuse
     527: ["encount_first_viro", "Tracks the state of the first Virovirokun encounter, the one en route to AGREE2ALL.", enemyStates],
     528: ["encount_smorgas_2", "Tracks the state of the Smorgasboard 2 encounter.", enemyStates],
     529: ["encount_berdly_1", "Tracks the state of the first Berdly battle. Used to determine if he breaks his arm.", enemyStates],
@@ -737,17 +759,32 @@ var flags = {
     571: ["encount_spamton_neo", "For some reason doesn't use 'encounterflag' but tracks the state of Spamton NEO in case that's ever needed later. There are already like 2 flags for him anyway.", enemyStates],
     572: ["encount_vase_poppup", "Tracks the state of the Poppup under the vase near where Susie and Ralsei leave you.", enemyStates],
     
-    // woo buncha empty space
-    605: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    606: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    611: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    613: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    614: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    615: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    622: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    623: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
-    
     // recruits, can take fractional values but the checkbox is alongside a number box anyway so whatever
+    601: ["recruit_enemy", "Whether you recruited the Chapter 1 placeholder enemy. Unused x2.", basicBool],
+    602: ["recruit_lancer", "Unused. He doesn't have recruit info anyway.", basicBool],
+    603: ["recruit_dummy", "Unused. It doesn't have recruit info anyway.", basicBool],
+    604: ["recruit_ralsei", "Recruit entry for tutorial Ralsei. Unused.", basicBool],
+    605: ["recruit_rudinn", "Set at the start of Chapter 2. You NEED at least one recruit.", basicBool],
+    606: ["recruit_hathy", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    607: ["recruit_clover_old", "Unused, both for the enemy and the recruiting.", basicBool],
+    608: ["recruit_pippins", "Unused, both for the enemy and the recruiting.", basicBool],
+    609: ["recruit_c_round", "Unused. It doesn't have recruit info anyway.", basicBool],
+    610: ["recruit_k_round", "Unused. It doesn't have recruit info anyway.", basicBool],
+    611: ["recruit_ponman", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    612: ["recruit_lancer_2", "Unused. He doesn't have recruit info anyway.", basicBool],
+    613: ["recruit_rabbick", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    614: ["recruit_bloxer", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    615: ["recruit_jigsaw", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    616: ["recruit_clover", "Unused. She doesn't have recruit info anyway.", basicBool],
+    617: ["recruit_doomtank", "Unused, both for the enemy and the recruiting. Thrash Machine was better anyway.", basicBool],
+    618: ["recruit_lancer_3", "Unused. He doesn't have recruit info anyway.", basicBool],
+    619: ["recruit_susie", "Unused. She doesn't have recruit info anyway.", basicBool],
+    620: ["recruit_JEVIL", "If I say 'Debug' it'll highlight this in red, because JEVIL does have recruit info.", basicBool],
+    621: ["recruit_k_round_2", "Unused. It doesn't have recruit info anyway.", basicBool],
+    622: ["recruit_rudinn_ranger", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    623: ["recruit_head_hathy", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
+    625: ["recruit_king", "Unused. He doesn't have recruit info anyway.", basicBool],
+    
     630: ["recruit_medic", "Whether you recruited Ambyu-Lance.", basicBool],
     631: ["recruit_poppup", "Whether you recruited Poppup.", basicBool],
     632: ["recruit_tasque", "Whether you recruited Tasque.", basicBool],
@@ -755,8 +792,153 @@ var flags = {
     634: ["recruit_maus", "Whether you recruited Maus.", basicBool],
     635: ["recruit_viro", "Whether you recruited Virovirokun.", basicBool],
     636: ["recruit_butler", "Whether you recruited Swatchling.", basicBool],
-    637: ["recruit_cap?", "Whether you recruited Cap'n? Probably unset, I don't remember ever seeing a 'Recruit!' in that scene.", basicBool],
-    638: ["recruit_k_k?", "See flag 637.", basicBool],
-    639: ["recruit_sweet", "See flag 637.", basicBool],
-    640: ["recruit_www", "Whether you recruited Werewerewire. It doesn't appear for the powers combined scene.", basicBool]
+    637: ["recruit_cap?", "Whether you recruited Cap'n? Probably unused, I don't remember ever seeing a 'Recruit!' in that scene. And they don't have recruit info.", basicBool],
+    638: ["recruit_k_k?", "See flag 637. Unused?", basicBool],
+    639: ["recruit_sweet?", "See flag 637. Unused?", basicBool],
+    640: ["recruit_www", "Whether you recruited Werewerewire. It doesn't appear for the powers combined scene.", basicBool],
+    641: ["recruit_graze_test", "Whether you somehow recruited this 'Graze Test' enemy that I don't see used anywhere. There's no recruit info. Unused.", basicBool],
+    642: ["recruit_task_manager", "Whether you recruited Tasque Manager.", basicBool],
+    643: ["recruit_berdly", "Whether you somehow found a way to recruit Berdly in his first battle. No recruit info. Unused.", basicBool],
+    644: ["recruit_mauswheel", "Whether you recruited Mauswheel.", basicBool],
+    645: ["recruit_rouxls", "Probably unused. It's just Rouxls/Thrash Machine's enemy ID.", basicBool],
+    646: ["recruit_berdly_2", "Whether you somehow found a way to recruit Berdly in his second battle. No recruit info. Unused.", basicBool],
+    647: ["recruit_dojo_clover", "Whether you somehow found a way to recruit Clover in her Party Dojo encounter. Very unused.", basicBool],
+    648: ["recruit_queen", "Unused. You always 'recruit' Queen, but she isn't a recruit, if you get my drift.", basicBool],
+    649: ["recruit_spamton", "Whether you somehow found a way to recruit Spamton. No recruit info. Unused.", basicBool],
+    650: ["recruit_spam_neo", "Whether you somehow found a way to recruit Spamton NEO. No recruit info. Unused.", basicBool],
+    651: ["recruit_giga_queen", "Whether you somehow found a way to recruit GIGA Queen. No recruit info. Unused.", basicBool],
+    652: ["recruit_joe", "Whether you somehow found a way to recruit Jigsaw Joe at the Party Dojo. Very unused.", basicBool],
+    653: ["recruit_pipis", "You can't recruit Pipis. Unused.", basicBool],
+    
+    // Are there NO 700s flags?? Must be saving for more recruit info...
+    
+    800: ["cafe_topleft", "The recruit seated in the top-left of the Cafe. Defaults to Jigsawry.", recruits],
+    801: ["cafe_topright", "The recruit seated in the top-right of the Cafe. Defaults to Rudinn.", recruits],
+    802: ["cafe_bottomleft", "The recruit seated in the bottom-left of the Cafe. Defaults to Hathy.", recruits],
+    803: ["cafe_bottomright", "The recruit seated in the bottom-right of the Cafe. Defaults to Rudinn.", recruits],
+    
+    810: ["beat_grazing", "Whether you beat the grazing challenge in the Party Dojo.", basicBool],
+    811: ["beat_dojo_clover", "Whether you beat Clover's rematch in the Party Dojo.", basicBool],
+    812: ["beat_tm_says", "Whether you beat the 'Tasque Manager Says' challenge in the Party Dojo.", basicBool],
+    813: ["beat_allstars", "Whether you beat the Ch2 All Stars challenge in the Party Dojo.", basicBool],
+    814: ["beat_joe", "Whether you defeated Jigsaw Joe in the Party Dojo and took his life savings.", basicBool],
+    
+    // wow things are really opening up now
+    
+    // credit to Nisha Wolfe of Spamton Save Editor for the vessel names, saved a lot of work https://saveeditor.spamton.com/deltarune2
+    900: ["vessel_head", "The head of your vessel.", [ // if you want better options find a way to include images in dropdowns
+            "Bald",
+            "Kris-like",
+            "Left lock",
+            "Middle part",
+            "Thick hair",
+            "Loose",
+            "Balding line",
+            "Refined"
+         ]],
+    901: ["vessel_torso", "The body of your vessel.", [
+            "Long sleeves",
+            "Short sleeves",
+            "Baggy sleeves",
+            "Baggier sleeves",
+            "Zipper",
+            "Buttons"
+         ]],
+    902: ["vessel_legs", "The legs of your vessel.", [
+            "Wider on right",
+            "Wider on right",
+            "Wider on right",
+            "Wider on right",
+            "Wider on left"
+         ]],
+    903: ["vessel_food", "Your vessel's favorite food.", [
+            "Sweet",
+            "Soft",
+            "Sour",
+            "Salty",
+            "Pain",
+            "Cold"
+         ]],
+    904: ["vessel_blood", "Your favorite blood type.", [
+            "A",
+            "AB",
+            "B",
+            "C",
+            "D"
+         ]],
+    905: ["vessel_color", "Your vessel's favorite color.", [
+            "Red",
+            "Blue",
+            "Green",
+            "Cyan"
+         ]],
+    906: ["vessel_feeling", "How you feel about your vessel.", [
+            "Love",
+            "Hope",
+            "Disgust",
+            "Fear"
+         ]],
+    907: ["vessel_honest", "Were you honest about your vessel choices?", ["Yes", "No"]],
+    908: ["vessel_seizure", "Do you acknowledge the possibility of pain and seizure?", ["Yes", "No"]],
+    909: ["vessel_gift", "The gift you give your vessel. Stored in reverse order for some reason.", {
+            -3: "Voice",
+            -2: "Bravery",
+            -1: "Ambition",
+            0: "Mind",
+            1: "Kindness",
+        }],
+    910: ["ch1_egg_room", "Your progress to finding... him.", [
+            "Default state",
+            "Entered room",
+            "Interacted with man"
+         ]],
+    911: ["got_ch1_egg", "Set when entering Chapter 2 if you had or deposited the Chapter 1 egg, but not if you dropped it. Maybe. It checks the key item.", basicBool],
+    912: ["language", "Damn it Toby you already have global.lang what more do you want", ["English", "Japanese"]],
+    913: ["interacted_man_car", "Whether you saw the man wave at you from his car, if flag 910 up there was 2 (even if you refused the offer).", basicBool],
+    914: ["chapter_started", "The chapter you started your current save file on. Set to 1 when continuing a Chapter 1 file into 2. Only used for a little Light World stats text."],
+    915: ["snowgrave_plot", "Your progress on the Snowgrave Route. This is a big one.", {
+            0: "Default state",
+            1: "Froze tutor Virovirokun",
+            1.5: "Froze Trash Zone enemies",
+            1.75: "Froze roadway enemies",
+            2: "Ready for Freeze Ring",
+            3: "Got Freeze Ring",
+            4: "Passed forcefield",
+            5: "Froze mouse puzzle",
+            6: "SnowGrave."
+            7: "Entered mansion",
+            8: "Rouxls's condition explained",
+            9: "Did not see Suselle scene",
+            19: "Seen Noelle with Rudy",
+            20: "Creeped Noelle out"
+        }],
+    916: ["snowgrave_fail", "Whether you failed the Snowgrave Route at any point, by any action. Reverts practically every effect of the route.", basicBool],
+    917: ["ch2_egg_room", "Your progress to finding him. Again.", [
+            "Default state",
+            "Killed by dog",
+            "Entered egg room",
+            "Interacted with man"
+         ]],
+    918: ["got_ch2_egg", "Whether you got the Chapter 2 egg, for Temmie's collection.", basicBool],
+    919: ["times_noelle_leveled", "Like flag 65 but for Noelle in particular. Unaccessed."],
+    920: ["got_ch2_moss", "Whether you got the Moss in Chapter 2 and the Moss Finder title.", basicBool],
+    921: ["noelle_moss", "Whether Noelle was with you when you found the Moss, earning the Moss Neutral title.", basicBool],
+    922: ["susie_moss", "Whether Susie was with you when you found the Moss, earning the Moss Enjoyer title.", basicBool],
+    923: ["forgot_ring", "Whether you failed the Snowgrave route because of not having the Thorn Ring at Berdly. Unaccessed.", basicBool],
+    924: ["snowgrave_attempts", "The number of times you told Noelle to KILL HIM, KILL HIM NOW. (0-4)"],
+    925: ["iceshocks", "The number of IceShocks Noelle has used, finishing or not. Each increases her Coldness by 7."],
+    926: ["iceshocked_encounters", "The number of encounters defeated with IceShock. Unaccessed."],
+    // no 927?
+    928: ["creepy_steps", "The number of steps you take toward Noelle (0-3) after the hospital scene on Snowgrave. Yeah, that's a thing."],
+    
+    // no 929-949
+    950: ["shadow_failed", "Whether you used the Shadow Crystal in Chapter 2 and saw nothing. 952 is more interesting.", basicBool],
+    951: ["glass_failed", "Whether you used the Glass in Chapter 2 and saw nothing. 953 and 281 are more interesting.", basicBool],
+    952: ["shadow_lab", "Whether you saw the computer lab using the Shadow Crystal.", basicBool],
+    953: ["glass_susie_glare", "Whether you saw Susie glare at you using the Glass.", basicBool],     
+    954: ["gave_JEVIL_crystal", "Whether you gave Seam JEVIL's Shadow Crystal.", basicBool],
+    // no 955-960
+    961: ["failed_spam_crystal", "Whether you got JEVIL's Shadow Crystal but failed to find Spamton's, and told Seam. They seem quite dejected...", basicBool], // :(
+    
+    // I'll need to check if any four-digit values are actually used, and go over all of this with a fine comb, but, wow! Nice!
 };
