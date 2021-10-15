@@ -1,12 +1,13 @@
 var basicBool = "checkbox";
-var enemyStates = {
-    0: "Default state",
-    1: "Violenced (includes SnowGrave)",
-    2: "Spared",
-    3: "Pacified",
-    5: "Susie (unused)",
-    6: "Frozen"
-};
+var enemyStates = [
+    "Default state",
+    "Violenced (includes SnowGrave)",
+    "Spared",
+    "Pacified",
+    "In combat (Ch. 1)",
+    "Susie (unused)",
+    "Frozen"
+];
 
 var flags = {
     // Format of [name (String), description (String), options (Object)]
@@ -487,7 +488,7 @@ var flags = {
     354: ["bagels_purchased", "The number of CD Bagels you purchased from K_K. He stops selling them at six, in case somebody orders 400."],
     // no 355
     356: ["lancer_cared_for", "Whether statue-Lancer has been pushed to the table and given his adorable bib.", basicBool],
-    357: ["recruited_hacker", "Whether you collected all three Blue Checksmarks for Hacker.", basicBool],
+    357: ["recruit_hacker", "Whether you collected all three Blue Checksmarks for Hacker.", basicBool],
     358: ["entered_basement", "Tracks how many times you entered the basement, and whether you can see Susie stealing Ralsei's glasses. Might max out at 2?"],
     359: ["met_hacker", "Whether you talked to Hacker. Note that the 2 state isn't directly used; see flag 357.", [
             "Default state",
@@ -734,5 +735,28 @@ var flags = {
     569: ["encount_www_sg", "That's gotta be the most abbreviated one yet! Tracks the state of Werewerewire on Snowgrave, since it's found elsewhere.", enemyStates],
     570: ["encount_ult_medic", "Tracks the state of the Ambyu-Lance encounter where Susie demonstrates UltimateHeal.", enemyStates],
     571: ["encount_spamton_neo", "For some reason doesn't use 'encounterflag' but tracks the state of Spamton NEO in case that's ever needed later. There are already like 2 flags for him anyway.", enemyStates],
-    572: ["encount_vase_poppup", "Tracks the state of the Poppup under the vase near where Susie and Ralsei leave you.", enemyStates]
+    572: ["encount_vase_poppup", "Tracks the state of the Poppup under the vase near where Susie and Ralsei leave you.", enemyStates],
+    
+    // woo buncha empty space
+    605: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    606: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    611: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    613: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    614: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    615: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    622: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    623: ["unaccessed", "Set at the start of Chapter 2. No known effects.", basicBool],
+    
+    // recruits, can take fractional values but the checkbox is alongside a number box anyway so whatever
+    630: ["recruit_medic", "Whether you recruited Ambyu-Lance.", basicBool],
+    631: ["recruit_poppup", "Whether you recruited Poppup.", basicBool],
+    632: ["recruit_tasque", "Whether you recruited Tasque.", basicBool],
+    633: ["recruit_plugboy", "Whether you recruited Plugboy, by which I mean Werewire.", basicBool],
+    634: ["recruit_maus", "Whether you recruited Maus.", basicBool],
+    635: ["recruit_viro", "Whether you recruited Virovirokun.", basicBool],
+    636: ["recruit_butler", "Whether you recruited Swatchling.", basicBool],
+    637: ["recruit_cap?", "Whether you recruited Cap'n? Probably unset, I don't remember ever seeing a 'Recruit!' in that scene.", basicBool],
+    638: ["recruit_k_k?", "See flag 637.", basicBool],
+    639: ["recruit_sweet", "See flag 637.", basicBool],
+    640: ["recruit_www", "Whether you recruited Werewerewire. It doesn't appear for the powers combined scene.", basicBool]
 };
