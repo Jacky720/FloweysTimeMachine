@@ -524,9 +524,9 @@ var flags = {
     366: ["tasque_released", "Makes one particular Tasque persist leaving the wall screen in Field?", basicBool],
     367: ["got_chestmark", "Whether you got the Blue Checksmark from a treasure chest.", basicBool],
     368: ["solved_mice_2", "Progress on solving the second mice puzzle.", {
-            0: "Default state",
-            0.5: "Mice in hole",
-            1: "Forcefield down"
+            "0": "Default state",
+            "0.5": "Mice in hole",
+            "1": "Forcefield down"
          ]],
     369: ["saw_ralsusie", "Whether Noelle gave her one-time dialogue about seeing Ralsei and Susie having fun.", basicBool],
     370: ["solved_mansion_traffic", "There was traffic in the mansion?? And this disables it? Are mice involved?", basicBool],
@@ -897,20 +897,20 @@ var flags = {
     913: ["interacted_man_car", "Whether you saw the man wave at you from his car, if flag 910 up there was 2 (even if you refused the offer).", basicBool],
     914: ["chapter_started", "The chapter you started your current save file on. Set to 1 when continuing a Chapter 1 file into 2. Only used for a little Light World stats text."],
     915: ["snowgrave_plot", "Your progress on the Snowgrave Route. This is a big one.", {
-            0: "Default state",
-            1: "Froze tutor Virovirokun",
-            1.5: "Froze Trash Zone enemies",
-            1.75: "Froze roadway enemies",
-            2: "Ready for Freeze Ring",
-            3: "Got Freeze Ring",
-            4: "Passed forcefield",
-            5: "Froze mouse puzzle",
-            6: "SnowGrave."
-            7: "Entered mansion",
-            8: "Rouxls's condition explained",
-            9: "Did not see Suselle scene",
-            19: "Seen Noelle with Rudy",
-            20: "Creeped Noelle out"
+            "0": "Default state",
+            "1": "Froze tutor Virovirokun",
+            "1.5": "Froze Trash Zone enemies",
+            "1.75": "Froze roadway enemies",
+            "2": "Ready for Freeze Ring",
+            "3": "Got Freeze Ring",
+            "4": "Passed forcefield",
+            "5": "Froze mouse puzzle",
+            "6": "SnowGrave."
+            "7": "Entered mansion",
+            "8": "Rouxls's condition explained",
+            "9": "Did not see Suselle scene",
+            "19": "Seen Noelle with Rudy",
+            "20": "Creeped Noelle out"
         }],
     916: ["snowgrave_fail", "Whether you failed the Snowgrave Route at any point, by any action. Reverts practically every effect of the route.", basicBool],
     917: ["ch2_egg_room", "Your progress to finding him. Again.", [
