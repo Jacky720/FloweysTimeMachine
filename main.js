@@ -137,36 +137,6 @@ var cellOpts = {
     "202": "Sans's Number"
 };
 
-var weaponAts = {
-    "3": 0,   // stick
-    "13": 3,  // toy knife
-    "14": 5,  // tough glove
-    "25": 7,  // ballet shoes
-    "45": 2,  // torn notebook
-    "47": 10, // burnt pan
-    "49": 12, // empty gun
-    "51": 15, // worn dagger
-    "52": 99  // Real Knife
-};
-
-var armorAts = {
-    "48": 5, // cowboy hat
-    "64": 10 // temy armor
-}
-
-var armorDfs = {
-    "4": 0,   // bandage
-    "12": 3,  // faded ribbon
-    "15": 7,  // manly bandana
-    "24": 10, // old tutu
-    "44": 6,  // clouded glasses
-    "46": 11, // stained apron
-    "48": 12, // cowboy hat
-    "50": 15, // heart locket
-    "53": 99, // The Locket
-    "64": 20  // temy armor
-};
-
 var rooms = [[], [], []];
 rooms[2] = [
     "Initializer [Dogchecked]",
