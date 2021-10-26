@@ -49,7 +49,7 @@ var flags = {
     15: ["sound_volume", "Volume of sound effects. Doesn't work correctly?"],
     16: ["music_volume", "Volume of music. Doesn't work correctly?"],
     17: ["audio_volume", "Volume of all audio. Doesn't work correctly?"],
-    20: ["manual_face_sprite", "Volatile. Controls some characters' faces."],
+    20: ["other_text_command", "Volatile. Controls how some characters' overworld sprites interact with their dialogue, among other things."],
     21: ["door_freeze_timer", "Volatile. Controls timing of room fades?"],
     29: ["susie_show_eyes", "Makes Susie show her eyes at the end of Chapter 1. Ignored in Chapter 2; she shows her eyes anyway.", basicBool],
     30: ["ralsei_hat_state", "Controls Ralsei's face selection. Ignored in Chapter 2; he's hatless anyway.", [
