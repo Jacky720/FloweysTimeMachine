@@ -640,7 +640,13 @@ var stateChoiceArrays = {
         "140": "Hit hand",
         "150": "Swan ride complete",
         "160": "Susie rejoined/reached 3F (Weird)",
-        "165": "Queen defeated"
+        "165": "Queen defeated",
+        "170": "GIGA Queen skipped",
+        "171": "GIGA Queen defeated",
+        "200": "Sealed fountain",
+        "205": "Susie following",
+        "210": "Susie & Toriel cooking",
+        "211": "Washed your hands"
     },
     "sav-location": rooms[1],
     "ini-location": rooms[1],
