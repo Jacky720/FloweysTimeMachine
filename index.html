@@ -6,6 +6,7 @@
     <title>Flowey's Time Machine</title>
     <script src="lib/FileSaver.min.js"></script>
     <script src="presets/presets.js"></script>
+    <!-- Deltarune presets coming soon
     <script src="presets/ruins-start.js"></script>
     <script src="presets/sans-battle.js"></script>
     <script src="presets/undyne-the-undying.js"></script>
@@ -13,6 +14,7 @@
     <script src="presets/asgore-true.js"></script>
     <script src="presets/omega-flowey.js"></script>
     <script src="presets/true-pacifist.js"></script>
+    -->
     <script src="flags.js"></script>
     <script src="main.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
@@ -21,12 +23,15 @@
   <body>
     <nav class="grid-cols-7">
       <div class="col-span-2">
+        <!--
+        <!-- Sorry, no preset files right now -- >
         <p>Built-in Presets</p>
         <div class="grid-cols-4 mt-1.5">
           <select id="builtinpresetselect" class="col-span-3"></select>
           <button id="builtinpresetload">Load</button>
         </div>
 
+        <!-- Need something to fill this space when re-adding presets -- >
         <div class="grid-cols-2 mt-1.5">
           <button
             title="When this file is present, the world is in the 'deleted' state that is triggered when you complete a genocide run."
@@ -41,6 +46,7 @@
             <span>sys_info_963</span>
           </button>
         </div>
+        -->
       </div>
 
       <header class="col-span-3">
@@ -74,8 +80,8 @@
 
     <div style="margin-top: 3rem;">
       <div>
-        <h1>Persistent Data (undertale.ini)</h1>
-        <p>Things that UNDERTALE remembers throughout multiple playthroughs</p>
+        <h1>Load Data (dr.ini)</h1>
+        <p>Contains data for the load menu. Doesn't do much else.</p>
       </div>
 
       <section>
@@ -97,7 +103,7 @@
             <input
               id="ini-name"
               class="col-span-3"
-              placeholder="Name the fallen human"
+              placeholder="YOUR OWN NAME"
               type="text"
               autocomplete="off"
             />
@@ -134,7 +140,8 @@
             <select id="allowed-locations"></select>
           </div>
         </fieldset>
-
+        
+        <!-- Photoshop Ralsei doesn't exist yet.
         <div class="flex">
           <fieldset class="w-full">
             <legend>Omega Flowey & Other</legend>
@@ -170,10 +177,11 @@
             </div>
           </fieldset>
         </div>
+        -->
       </section>
 
       <div class="mt-6">
-        <h1>SAVE Data (file0)</h1>
+        <h1 id="savefilecaption">SAVE Data (filech2_0)</h1> <!-- Add option (tabber?) to change target file (possibly even to Chapter 1 or completion data) -->
         <p>This is what gets SAVED at SAVE points</p>
       </div>
 
@@ -195,10 +203,11 @@
             <input
               id="sav-name"
               class="col-span-3"
-              placeholder="Name the fallen human"
+              placeholder="YOUR OWN NAME"
               type="text"
               autocomplete="off"
             />
+            <!-- This needs a major rewrite. Work out the most important values. -->
             <label for="sav-fun">Fun</label>
             <label for="sav-love">LOVE</label>
             <label for="sav-kills">Kills</label>
@@ -234,7 +243,7 @@
         </fieldset>
 
         <fieldset>
-          <legend>Stats</legend>
+          <legend>Kris's Stats</legend> <!-- Looks like this is per real character, not per party member, if that makes sense. -->
           <div class="grid-cols-3">
             <label for="sav-hp">HP</label>
             <label for="sav-exp">EXP</label>
@@ -263,17 +272,19 @@
           </div>
           <div class="grid-cols-2 mt-1.5">
             <label for="sav-weapon">Weapon</label>
-            <label for="sav-armor">Armor</label>
+            <label for="sav-armor">Armor 1</label>
             <select id="sav-weapon"></select>
             <select id="sav-armor"></select>
           </div>
+          <!-- This no longer makes sense- different item types use different ID systems.
           <div class="checkbox mt-1.5">
             <input id="allow-non-equipables" type="checkbox" />
             <label for="allow-non-equipables">Allow all items</label>
           </div>
+          -->
         </fieldset>
 
-        <fieldset>
+        <fieldset> <!-- this will be painful. Consumables, Armors, Weapons, Key Items, and Light World items. -->
           <legend>Inventory</legend>
           <div class="grid-cols-2">
             <label for="sav-invslot1">SLOT 1</label>
@@ -297,7 +308,7 @@
 
         <fieldset>
           <legend>Cellphone</legend>
-          <div class="checkbox">
+          <div class="checkbox"> <!-- Is this stored in the Deltarune save? Move the whole segment to some "Light World" section. -->
             <input id="sav-havecell" type="checkbox" />
             <label for="sav-havecell">You have a cellphone</label>
           </div>
@@ -318,14 +329,16 @@
             <label for="sav-cellslot8">SLOT 8</label>
             <select id="sav-cellslot7"></select>
             <select id="sav-cellslot8"></select>
+            <!-- This definitely isn't.
             <div class="col-span-2 checkbox">
               <input id="sav-undyne-cell" type="checkbox" />
               <label for="sav-undyne-cell">Dated Undyne (call with Papyrus)</label>
             </div>
+            -->
           </div>
         </fieldset>
 
-        <div class="flex">
+        <div class="flex"> <!-- This should have things like Jevil/Spamton/Weird Route progress. Or the Egg. Or talking to Sans and Onionsan. -->
           <fieldset>
             <legend>Ruins</legend>
             <div class="grid-cols-3">
@@ -511,7 +524,8 @@
             class="w-full mt-1.5"
           ></select>
         </fieldset>
-
+        
+        <!-- This does not exist, and most other things we can do with dropdowns.
         <fieldset class="col-span-2">
           <legend>FUN Values</legend>
           <div class="grid-cols-2">
@@ -561,7 +575,7 @@
             </table>
           </div>
         </fieldset>
-    
+        -->
         <fieldset class="col-span-3">
           <legend>Advanced</legend>
           <fieldset class="grid-cols-3" style="top: 3px; position: sticky;">
