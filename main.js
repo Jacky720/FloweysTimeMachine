@@ -520,11 +520,6 @@ let flagFor = { // Link flags with inputs
     "sav-sanskey": 497
 };
 
-for (let i = 1; i <= 10; i++) {
-    flagFor["sav-boxa" + i] = 299 + i;
-    flagFor["sav-boxb" + i] = 311 + i;
-}
-
 let inputForFlag = {}; // and vice versa
 for (const id in flagFor) {
     inputForFlag["sav-flag-" + flagFor[id]] = id;
@@ -547,6 +542,19 @@ const iniIDs = [
 const killedBool = [
     "Initial state",
     "Killed"
+],
+      itemStats = [
+    "name",
+    "at", // attack
+    "df", // defense
+    "mag", // magic
+    "blt", // bolts
+    "gzm", // graze amount
+    "gzs", // graze size
+    "bs", // bolt speed
+    "spc", // item special
+    "el", // elemental defense
+    "elm", // defense amount
 ];
 
 let stateChoiceArrays = {
@@ -1190,28 +1198,22 @@ function start() {
     });
     
     // Weapon/armor AT/DF calculation
-    let weaponSelect = document.getElementById("sav-weapon"),
-        armorSelect = document.getElementById("sav-armor");
-    weaponSelect.addEventListener("change", function() {
-        const weaponAt = weaponAts[this.value],
-              armorAt = armorAts[armorSelect.value] || 0; // Cowboy Hat, Temmie Armor
-        if (typeof weaponAt !== "undefined") {
-            document.getElementById("sav-weaponat").value = weaponAt + armorAt;
-        }
-    });
-    armorSelect.addEventListener("change", function() {
-        const df = armorDfs[this.value];
-        if (typeof df !== "undefined") {
-            document.getElementById("sav-armordf").value = df;
-        }
-        const weaponAt = weaponAts[weaponSelect.value],
-              armorAt = armorAts[this.value] || 0;
-        if (typeof weaponAt !== "undefined") {
-            document.getElementById("sav-weaponat").value = weaponAt + armorAt;
-        } else {
-            document.getElementById("sav-weaponat").value = Number(document.getElementById("sav-weaponat").value) + armorAt;
-        }
-    });
+    for (let weaponSelect of document.getElementsByClassName("sav-weapon-select")) {
+        weaponSelect.addEventListener("change", function() {
+            const myChar = this.id.slice(-3); // "-kr", "-su", "-ra", "-no" from "sav-weaponselect-kr"
+            for (const stat in itemStats) {
+                document.getElementById("sav-weapon-" + itemStats[stat] + myChar).value = weapons[this.value][stat];
+            }
+        });
+    }
+    for (let armorSelect of document.getElementsByClassName("sav-weapon-select")) {
+        armorSelect.addEventListener("change", function() {
+            const myChar = this.id.slice(-3); // "-kr", "-su", "-ra", "-no" from "sav-weaponselect-kr"
+            for (const stat in itemStats) {
+                document.getElementById("sav-weapon-" + itemStats[stat] + myChar).value = armors[this.value][stat];
+            }
+        });
+    }
     
     // Interface-altering options
     let allowedLocations1 = document.getElementById("allowed-locations"),
@@ -1226,8 +1228,9 @@ function start() {
         updateSelection("ini-location", null, rooms[this.value]);
         updateSelection("sav-location", null, rooms[this.value]);
     });
+    /* Perhaps I can put anonymous functions in the data to handle things like this.
     document.getElementById("allow-non-equipables").addEventListener("change", function() {
-        if (document.getElementById("allow-non-equipables").checked) {
+        if (this.checked) {
             updateSelection("sav-weapon", null, items);
             updateSelection("sav-armor",  null, items);
         } else {
@@ -1238,19 +1241,7 @@ function start() {
     document.getElementById("sav-havecell").addEventListener("change", function() {
         document.getElementById("cellslots").classList.toggle('hidden');
     });
-    document.getElementById("sav-undyne-cell").addEventListener("change", function() {
-        if (this.checked) {
-            cellOpts[210] = "Papyrus and Undyne";
-        } else {
-            cellOpts[210] = "Papyrus's Phone";
-        }
-        for (let i = 1; i <= 8; i++) {
-            updateSelection("sav-cellslot" + i);
-        }
-    });
-    document.getElementById("ini-omega-flowey-trapped").addEventListener("change", function() {
-        document.getElementById("sav-savefile8").classList.toggle('hidden');
-    });
+    */
     
     // Presets
     document.getElementById("builtinpresetload").addEventListener("click", function() {
