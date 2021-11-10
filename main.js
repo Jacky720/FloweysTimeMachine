@@ -1345,15 +1345,13 @@ function start() {
     document.getElementById("hide-advanced").addEventListener("click", function() {
         if (advancedMode) {
             advanced.classList.add('hidden');
-            advancedMode = false;
-            localStorage.setItem("advanced", false);
             this.innerHTML = "Show";
         } else {
             advanced.classList.remove('hidden');
-            advancedMode = true;
-            localStorage.setItem("advanced", true);
             this.innerHTML = "Hide";
         }
+        advancedMode = !advancedMode;
+        localStorage.setItem("advanced", advancedMode);
     });
     
     let saveElements = document.querySelectorAll("input[id^=\"sav-\"],select[id^=\"sav-\"]");
