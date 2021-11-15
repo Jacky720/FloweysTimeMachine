@@ -1705,8 +1705,6 @@ let stateChoiceArrays = {
     "sav-plotvalue": plotValues,
     "sav-location": rooms[1],
     "ini-location": rooms[1],
-    "allowed-locations": roomSelectOptions,
-    "allowed-locations-2": roomSelectOptions,
     "ini-omega-flowey-soul": [
         "None (Initial state)",
         "Light blue (Initiated fight)",
