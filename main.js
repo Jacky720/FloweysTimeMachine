@@ -18,6 +18,9 @@ const roomSelectOptions = [
     "All rooms"
 ];
 
+stateChoiceArrays["allowed-locations"]   = roomSelectOptions;
+stateChoiceArrays["allowed-locations-2"] = roomSelectOptions;
+
 let inputForFlag = {}; // reverse flagFor for later on (flagFor defined in data.js)
 for (const id in flagFor) {
     inputForFlag["sav-flag-" + flagFor[id]] = id;
@@ -120,15 +123,15 @@ function loadSaveFromFile(file, closure) {
 // Update the persistent data form from an ini object.
 function updatePersistentDataForm(iniobj) {
     "use strict";
+    if (document.getElementById("ini-omega-flowey-trapped").checked != Number(iniobj.FFFFF && iniobj.FFFFF.F && iniobj.FFFFF.F.trim())) {
+        document.getElementById("sav-savefile8").classList.toggle('hidden');
+    }
     document.getElementById("ini-name").value = iniobj.General.Name;
     updateSelection("ini-location", iniobj.General.Room);
     document.getElementById("ini-kills").value = Number(iniobj.General.Kills.trim());
     document.getElementById("ini-love").value = Number(iniobj.General.Love.trim());
     if (iniobj.FFFFF) {
         if (iniobj.FFFFF.F) {
-            if (document.getElementById("ini-omega-flowey-trapped").checked != Number(iniobj.FFFFF.F.trim())) {
-                document.getElementById("sav-savefile8").classList.toggle('hidden');
-            }
             document.getElementById("ini-omega-flowey-trapped").checked = Number(iniobj.FFFFF.F.trim());
         } else {
             document.getElementById("sav-savefile8").classList.add('hidden');
