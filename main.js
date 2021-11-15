@@ -1,75 +1,8 @@
-var debugVars = {}; // Could be handy
+let debugVars = {}; // Could be handy
 
-var items = [
-    "Empty",
-    "Monster Candy",
-    "Croquet Roll",
-    "Stick",
-    "Bandage",
-    "Rock Candy",
-    "Pumpkin Rings",
-    "Spider Donut",
-    "Stoic Onion",
-    "Ghost Fruit",
-    "Spider Cider",
-    "Butterscotch Pie",
-    "Faded Ribbon",
-    "Toy Knife",
-    "Tough Glove",
-    "Manly Bandana",
-    "Snowman Piece",
-    "Nice Cream",
-    "Puppydough Icecream",
-    "Bisicle",
-    "Unisicle",
-    "Cinnamon Bun",
-    "Temmie Flakes",
-    "Abandoned Quiche",
-    "Old Tutu",
-    "Ballet Shoes",
-    "Punch Card",
-    "Annoying Dog",
-    "Dog Salad",
-    "Dog Residue (1)",
-    "Dog Residue (2)",
-    "Dog Residue (3)",
-    "Dog Residue (4)",
-    "Dog Residue (5)",
-    "Dog Residue (6)",
-    "Astronaut Food",
-    "Instant Noodles",
-    "Crab Apple",
-    "Hot Dog...?",
-    "Hot Cat",
-    "Glamburger",
-    "Sea Tea",
-    "Starfait",
-    "Legendary Hero",
-    "Cloudy Glasses",
-    "Torn Notebook",
-    "Stained Apron",
-    "Burnt Pan",
-    "Cowboy hat",
-    "Empty Gun",
-    "Heart Locket",
-    "Worn Dagger",
-    "Real Knife",
-    "The Locket",
-    "Bad Memory",
-    "Dream",
-    "Undyne's Letter",
-    "Undyne Letter EX",
-    "Potato Chisps",
-    "Junk Food",
-    "Mystery Key",
-    "Face Steak",
-    "Hush Puppy",
-    "Snail Pie",
-    "temy armor",
-    "<invalid>"
-];
+// items defined in flags.js (soon to be data.js)
 
-var weapons = {
+const weapons = {
     // "0": "Empty",
     "3": "Stick",
     "13": "Toy Knife",
@@ -80,9 +13,8 @@ var weapons = {
     "49": "Empty Gun",
     "51": "Worn Dagger",
     "52": "Real Knife"
-};
-
-var armors = {
+},
+    armors = {
     // "0": "Empty",
     "4": "Bandage",
     "12": "Faded Ribbon",
@@ -94,22 +26,8 @@ var armors = {
     "50": "Heart Locket",
     "53": "The Locket",
     "64": "temy armor"
-};
-
-var cellOpts = {
-    "0": "Empty",
-    "201": "Say Hello",
-    "202": "Puzzle Help",
-    "203": "About Yourself",
-    "204": "Call Her \"Mom\"",
-    "205": "Flirt",
-    "206": "Toriel's Phone",
-    "210": "Papyrus's Phone",
-    "220": "Dimensional Box A",
-    "221": "Dimensional Box B"
-};
-
-var weaponAts = {
+},
+    weaponAts = {
     "3": 0,   // stick
     "13": 3,  // toy knife
     "14": 5,  // tough glove
@@ -119,14 +37,12 @@ var weaponAts = {
     "49": 12, // empty gun
     "51": 15, // worn dagger
     "52": 99  // Real Knife
-};
-
-var armorAts = {
+},
+    armorAts = {
     "48": 5, // cowboy hat
     "64": 10 // temy armor
-}
-
-var armorDfs = {
+},
+    armorDfs = {
     "4": 0,   // bandage
     "12": 3,  // faded ribbon
     "15": 7,  // manly bandana
@@ -139,7 +55,20 @@ var armorDfs = {
     "64": 20  // temy armor
 };
 
-var rooms = [[], [], []];
+let cellOpts = {
+    "0": "Empty",
+    "201": "Say Hello",
+    "202": "Puzzle Help",
+    "203": "About Yourself",
+    "204": "Call Her \"Mom\"",
+    "205": "Flirt",
+    "206": "Toriel's Phone",
+    "210": "Papyrus's Phone",
+    "220": "Dimensional Box A",
+    "221": "Dimensional Box B"
+};
+
+let rooms = [[], [], []];
 rooms[2] = [
     "Initializer [Dogchecked]",
     "Introduction [Dogchecked]",
@@ -479,7 +408,7 @@ rooms[2] = [
     "Snowdin - Dog Shrine [Dogchecked]"
 ];
 
-for (var i = 0; i < rooms[2].length; i++) {
+for (let i = 0; i < rooms[2].length; i++) {
     if (rooms[2][i].indexOf("[SAVE]") !== -1) {
         rooms[0][i] = rooms[2][i];
         rooms[1][i] = rooms[2][i];
@@ -489,14 +418,14 @@ for (var i = 0; i < rooms[2].length; i++) {
 }
 // rooms[0] is SAVE points only, rooms[1] is non-Dogchecked only, rooms[2] contains all rooms.
 
-var roomSelectOptions = [
+const roomSelectOptions = [
     "SAVE points only",
     "Accessible rooms only",
     "All rooms"
 ];
 
 // Flags initialized in flags.js
-var flagFor = { // Link flags with inputs
+let flagFor = { // Link flags with inputs
     "sav-fun": 5,
     "sav-defeatedasriel": 7,
     "sav-trainingdummystate": 14,
@@ -517,74 +446,59 @@ var flagFor = { // Link flags with inputs
     "sav-muffetstate": 397,
     "sav-broguardsstate": 402,
     "sav-mettatonstate": 425,
-    "sav-undyne-cell": 465
+    "sav-asgkey1": 452,
+    "sav-asgkey2": 453,
+    "sav-undyne-cell": 465,
+    "sav-redkey": 481,
+    "sav-blukey": 482,
+    "sav-grnkey": 483,
+    "sav-ylwkey": 484,
+    "sav-sanskey": 497
 };
 
-var inputForFlag = {}; // and vice versa
-for (var id in flagFor) {
+for (let i = 1; i <= 10; i++) {
+    flagFor["sav-boxa" + i] = 299 + i;
+    flagFor["sav-boxb" + i] = 311 + i;
+}
+
+let inputForFlag = {}; // and vice versa
+for (const id in flagFor) {
     inputForFlag["sav-flag-" + flagFor[id]] = id;
 }
 
-var killedBool = [
+const iniIDs = [
+    // Element ID, section, key
+    // TODO: Consider restructuring as {section: {key: id}} or [id, values] or whatever
+    ["ini-name",     "General", "Name" ],
+    ["ini-location", "General", "Room" ],
+    ["ini-kills",    "General", "Kills"],
+    ["ini-love",     "General", "Love" ],
+    ["ini-fun",      "General", "fun"  ],
+    ["ini-omega-flowey-trapped", "FFFFF", "F"],
+    ["ini-omega-flowey-soul",    "FFFFF", "P"],
+    ["ini-omega-flowey-deaths",  "FFFFF", "D"],
+    ["ini-dodged-all-special-thanks", "reset", "s_key"]
+];
+
+const killedBool = [
     "Initial state",
     "Killed"
 ];
 
-var simpleDogStates = [
-    "Initial state",
-    "Killed",
-    "Played fetch (Spared)"
-];
-
-var stateChoiceArrays = {
+let stateChoiceArrays = {
     "sav-trainingdummystate": [
         "Initial state",
         "Killed",
         "Talked to",
         "Tired of your shenanigans"
     ],
-    "sav-torielstate": {
-        "0": "Initial state",
-        "1": "In basement",
-        "3": "Fled from",
-        "4": "Killed",
-        "5": "Spared"
-    },
-    "sav-doggostate": simpleDogStates,
-    "sav-dogamydogaressastate": simpleDogStates,
-    "sav-greaterdogstate": [
-        "Initial state",
-        "Killed",
-        "Played fetch (Spared)",
-        "Ignored"
-    ],
-    "sav-comedianstate": [
-        "Initial state",
-        "Laughed at joke [Yellow credit]",
-        "Killed"
-    ],
-    "sav-papyrusstate": {
-        "-3": "Lost to thrice",
-        "-2": "Lost to twice",
-        "-1": "Lost to once",
-        "0": "Initial state",
-        "1": "Killed"
-    },
-    "sav-shyrenstate": [
-        "Initial state",
-        "Killed",
-        "Continued humming [Yellow credit]"
-    ],
     "sav-undynestate1": killedBool, // Undyne The Undying
     "sav-maddummystate": killedBool, // *Glad Dummy
-    "sav-undynestate2": [ // Undyne in general
-        "Initial state",
-        "Killed",
-        "Sick"
-    ],
     "sav-muffetstate": killedBool,
     "sav-broguardsstate": killedBool,
     "sav-mettatonstate": killedBool,
+    "sav-asgkey1": ["Initial state", "Got key"],
+    "sav-asgkey2": ["Initial state", "Got key"],
     "sav-weapon": weapons,
     "sav-armor": armors,
     "sav-plotvalue": {
@@ -724,25 +638,32 @@ var stateChoiceArrays = {
     ]
 };
 
-for (var i = 1; i <= 8; i++) {
+for (const id in flagFor) {
+    if (!stateChoiceArrays[id]) {
+        stateChoiceArrays[id] = flags[flagFor[id]][2];
+    }
+}
+
+for (let i = 1; i <= 8; i++) {
     stateChoiceArrays["sav-invslot" + i] = items;
     stateChoiceArrays["sav-cellslot" + i] = cellOpts;
 }
 
 function parseIniFromText(text) {
     "use strict";
-    var lines = text.match(/[^\r\n]+/g);
-    var section = null;
-    var ini = {};
+    let lines = text.match(/[^\r\n]+/g),
+        section = null,
+        ini = {};
+    
     lines.forEach(function(line) {
         // Ignore empty lines
         if (line === "") {
             return;
         }
         // If line starts with [, it is a section header
-        var lbracket = line.indexOf("[");
+        const lbracket = line.indexOf("[");
         if (lbracket !== -1) {
-            var rbracket = line.slice(lbracket).indexOf("]") + lbracket;
+            const rbracket = line.slice(lbracket).indexOf("]") + lbracket;
             if (rbracket !== -1) {
                 section = line.slice(lbracket + 1, rbracket);
                 ini[section] = {};
@@ -751,20 +672,24 @@ function parseIniFromText(text) {
             if (section === null) {
                 throw "Assignment outside of a section";
             }
-            var eq = line.indexOf("=");
+            
+            const eq = line.indexOf("=");
             if (eq === -1) {
                 throw "Expected '='";
             }
-            var lquot = line.indexOf('"');
+            
+            const lquot = line.indexOf('"');
             if (lquot === -1) {
                 throw "Expected '\"'";
             }
-            var rquot = line.slice(lquot + 1).indexOf('"') + lquot + 1;
+            
+            const rquot = line.slice(lquot + 1).indexOf('"') + lquot + 1;
             if (rquot === -1) {
                 throw "Unterminated value string";
             }
-            var value = line.slice(lquot + 1, rquot);
-            var key = line.slice(0, eq);
+            
+            const value = line.slice(lquot + 1, rquot),
+                  key = line.slice(0, eq);
             ini[section][key] = value;
         }
     });
@@ -775,8 +700,8 @@ function flowey_laugh_once() {
     "use strict";
     if (localStorage.getItem("laughed") !== "true") {
         document.getElementById("floweyimg").src = "res/flowey_evil.png";
-        if(!document.getElementById("mute").checked) {
-            var audio = new Audio("res/flowey_laugh.mp3");
+        if (!document.getElementById("mute").checked) {
+            let audio = new Audio("res/flowey_laugh.mp3");
             audio.play();
         }
         localStorage.setItem("laughed", "true");
@@ -787,9 +712,9 @@ function flowey_laugh_once() {
 // Load undertale.ini data into an ini object and execute a closure on it.
 function loadIniFromFile(file, closure) {
     "use strict";
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function(e) {
-        var text = e.target.result;
+        const text = e.target.result;
         try {
             closure(parseIniFromText(text));
         } catch (err) {
@@ -802,9 +727,9 @@ function loadIniFromFile(file, closure) {
 // Load save data from a file into an array of values, and execute a closure on it.
 function loadSaveFromFile(file, closure) {
     "use strict";
-    var reader = new FileReader();
+    let reader = new FileReader();
     reader.onload = function(e) {
-        var text = e.target.result;
+        const text = e.target.result;
         closure(text.match(/[^\r\n]+/g).map(function(line) {
             return line.trim();
         }));
@@ -817,93 +742,72 @@ function updatePersistentDataForm(iniobj) {
     "use strict";
     document.getElementById("ini-name").value = iniobj.General.Name;
     updateSelection("ini-location", iniobj.General.Room);
-    document.getElementById("ini-kills").value = parseInt(iniobj.General.Kills.trim());
-    document.getElementById("ini-love").value = parseInt(iniobj.General.Love.trim());
+    document.getElementById("ini-kills").value = Number(iniobj.General.Kills.trim());
+    document.getElementById("ini-love").value = Number(iniobj.General.Love.trim());
     if (iniobj.FFFFF) {
         if (iniobj.FFFFF.F) {
-            document.getElementById("ini-omega-flowey-trapped").checked = (parseInt(iniobj.FFFFF.F.trim()) === 1);
+            if (document.getElementById("ini-omega-flowey-trapped").checked != Number(iniobj.FFFFF.F.trim())) {
+                document.getElementById("sav-savefile8").classList.toggle('hidden');
+            }
+            document.getElementById("ini-omega-flowey-trapped").checked = Number(iniobj.FFFFF.F.trim());
+        } else {
+            document.getElementById("sav-savefile8").classList.add('hidden');
         }
         if (iniobj.FFFFF.P) {
             updateSelection("ini-omega-flowey-soul", iniobj.FFFFF.P);
         }
         if (iniobj.FFFFF.D) {
-            document.getElementById("ini-omega-flowey-deaths").value = parseInt(iniobj.FFFFF.D.trim());
+            document.getElementById("ini-omega-flowey-deaths").value = Number(iniobj.FFFFF.D.trim());
         }
     } else {
         document.getElementById("ini-omega-flowey-trapped").checked = false;
     }
     if (iniobj.reset) {
         if (iniobj.reset.s_key) {
-            document.getElementById("ini-dodged-all-special-thanks").checked = (parseInt(iniobj.reset.s_key.trim()) === 1);
+            document.getElementById("ini-dodged-all-special-thanks").checked = Number(iniobj.reset.s_key.trim());
         }
     } else {
         document.getElementById("ini-dodged-all-special-thanks").checked = false;
     }
     if (iniobj.General.fun) {
-        document.getElementById("ini-fun").value = parseInt(iniobj.General.fun.trim());
+        document.getElementById("ini-fun").value = Number(iniobj.General.fun.trim());
     }
 }
 
 // Update an ini object from the persistent data form.
 function updateIniFromForm(ini) {
     "use strict";
-    ini.General.Name = document.getElementById("ini-name").value;
-    ini.General.Room = document.getElementById("ini-location").value;
-    ini.General.Kills = document.getElementById("ini-kills").value;
-    ini.General.Love = document.getElementById("ini-love").value;
-    if (document.getElementById("ini-omega-flowey-trapped").checked) {
-        if (!ini.FFFFF) {
-            ini.FFFFF = {};
+    
+    for (const [elementID, section, key] of iniIDs) {
+        let value = 0;
+        if (document.getElementById(elementID).type === "checkbox") {
+            value = Number(document.getElementById(elementID).checked);
+        } else {
+            value = document.getElementById(elementID).value;
         }
-        ini.FFFFF.F = "1";
-    } else {
-        if (ini.FFFFF) {
-            ini.FFFFF.F = "0";
+        
+        if (value) {
+            if (!ini[section]) {
+                ini[section] = {};
+            }
+            ini[section][key] = String(value);
+        } else {
+            if (ini[section]) {
+                ini[section][key] = "0";
+            }
         }
-    }
-    var upcomingSoul = parseInt(document.getElementById("ini-omega-flowey-soul").value);
-    if (upcomingSoul) {
-        if (!ini.FFFFF) {
-            ini.FFFFF = {};
-        }
-        ini.FFFFF.P = upcomingSoul;
-    }
-    var timesDied = parseInt(document.getElementById("ini-omega-flowey-deaths").value);
-    if (timesDied) {
-        if (!ini.FFFFF) {
-            ini.FFFFF = {};
-        }
-        if (ini.FFFFF) {
-            ini.FFFFF.D = timesDied;
-        }
-    }
-    if (document.getElementById("ini-dodged-all-special-thanks").checked) {
-        if (!ini.reset) {
-            ini.reset = {};
-        }
-        ini.reset.s_key = "1";
-    } else {
-        if (ini.reset) {
-            ini.reset.s_key = "0";
-        }
-    }
-    var fun = parseInt(document.getElementById("ini-fun").value);
-    if (fun) {
-        ini.General.fun = fun;
     }
 }
 
 function updateSelection(id, value, newChoiceArray) {
     "use strict";
-    var select = document.getElementById(id);
+    let select = document.getElementById(id);
     
     // Sanitize value
     if (typeof value === "string") {
-        value = parseInt(value.trim());
-    } else if (typeof value === "number") {
-        value = parseInt(value);
+        value = Number(value.trim());
     } else if (value == undefined) {
-        if (select.value == undefined) {
+        if (select.value === undefined) {
             window.alert("No value found for form input " + id + ", defaulting to 0.");
             value = 0;
         } else {
@@ -933,10 +837,10 @@ function updateSelection(id, value, newChoiceArray) {
     }
     
     // Create options
-    for (var key of Object.keys(stateChoiceArrays[id]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
-        var newOption = document.createElement("option");
+    for (const key of Object.keys(stateChoiceArrays[id]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
+        let newOption = document.createElement("option"),
+            newContent = document.createTextNode(stateChoiceArrays[id][key]);
         newOption.setAttribute("value", key);
-        var newContent = document.createTextNode(stateChoiceArrays[id][key]);
         newOption.appendChild(newContent);
         select.appendChild(newOption);
     }
@@ -949,25 +853,31 @@ function updateSelection(id, value, newChoiceArray) {
 function updateSaveDataForm(values) {
     "use strict";
     document.getElementById("sav-name").value = values[0];
-    document.getElementById("sav-kills").value = values[11];
     document.getElementById("sav-love").value = values[1];
     document.getElementById("sav-hp").value = values[2];
-    document.getElementById("sav-exp").value = values[9];
-    document.getElementById("sav-gold").value = values[10];
+    // global.maxen is values[3]
     document.getElementById("sav-at").value = values[4];
     document.getElementById("sav-weaponat").value = values[5];
     document.getElementById("sav-df").value = values[6];
     document.getElementById("sav-armordf").value = values[7];
-    document.getElementById("sav-undyne-cell").checked = (parseInt(values[495].trim()) === 1);
-    if (parseInt(values[495].trim()) === 1) {
+    // global.sp is values[8]
+    document.getElementById("sav-exp").value = values[9];
+    document.getElementById("sav-gold").value = values[10];
+    document.getElementById("sav-kills").value = values[11];
+    
+    if (Number(values[495].trim())) {
         cellOpts[210] = "Papyrus and Undyne";
     } else {
         cellOpts[210] = "Papyrus's Phone";
     }
-    for (var i = 1; i <= 8; i++) {
+    if (Number(values[545].trim()) != document.getElementById("sav-havecell").checked) {
+        document.getElementById("cellslots").classList.toggle('hidden');
+    }
+    for (let i = 1; i <= 8; i++) { // values[12] through values[27]
         updateSelection("sav-invslot" + i, values[10 + (i * 2)]);
         updateSelection("sav-cellslot" + i, values[11 + (i * 2)]);
     }
+    
     if (document.getElementById("allow-non-equipables").checked) {
         updateSelection("sav-weapon", values[28], items);
         updateSelection("sav-armor", values[29], items);
@@ -975,130 +885,119 @@ function updateSaveDataForm(values) {
         updateSelection("sav-weapon", values[28], weapons);
         updateSelection("sav-armor", values[29], armors);
     }
-    updateSelection("sav-trainingdummystate", values[44]);
-    updateSelection("sav-torielstate", values[75]);
-    updateSelection("sav-doggostate", values[82]);
-    updateSelection("sav-dogamydogaressastate", values[83]);
-    updateSelection("sav-greaterdogstate", values[84]);
-    updateSelection("sav-comedianstate", values[87]);
-    updateSelection("sav-papyrusstate", values[97]);
-    updateSelection("sav-shyrenstate", values[111]);
-    //document.getElementById("sav-unkkills").value = values[231];
-    document.getElementById("sav-ruinskills").value = values[232];
-    document.getElementById("sav-snowdinkills").value = values[233];
-    document.getElementById("sav-waterfallkills").value = values[234];
-    document.getElementById("sav-hotlandkills").value = values[235];
-    updateSelection("sav-undynestate1", values[281]);
-    updateSelection("sav-maddummystate", values[282]);
-    updateSelection("sav-undynestate2", values[380]);
-    updateSelection("sav-muffetstate", values[427]);
-    updateSelection("sav-broguardsstate", values[432]);
-    updateSelection("sav-mettatonstate", values[455]);
-    document.getElementById("sav-exitedtruelab").checked = (parseInt(values[523].trim()) === 12);
-    document.getElementById("sav-defeatedasriel").checked = (parseInt(values[37].trim()) === 1);
-    updateSelection("sav-plotvalue", values[542]);
-    if (parseInt(values[545].trim()) != document.getElementById("sav-havecell").checked) {
-        document.getElementById("cellslots").classList.toggle('hidden');
+    
+    for (const id in flagFor) {
+        if (document.getElementById(id).nodeName === "SELECT") {
+            updateSelection(id, values[30 + flagFor[id]]);
+        } else {
+            document.getElementById(id).value = Number(values[30 + flagFor[id]].trim());
+            document.getElementById(id).checked = Number(values[30 + flagFor[id]].trim());
+        }
     }
-    document.getElementById("sav-havecell").checked = (parseInt(values[545].trim()) === 1);
-    updateSelection("sav-location", values[547]);
-    document.getElementById("sav-fun").value = parseInt(values[35].trim());
-    for (var i = 0; i < 512; i++) {
+    document.getElementById("sav-exitedtruelab").checked = (Number(values[523].trim()) === 12);
+    
+    for (let i = 0; i < 512; i++) {
         if (document.getElementById("sav-flag-" + i).nodeName === "SELECT") {
             updateSelection("sav-flag-" + i, values[30 + i], flags[i][2]);
         } else {
             document.getElementById("sav-flag-" + i).value = values[30 + i];
+            // Update checkboxes (should have no ill effects on non-checkbox-based flags)
+            document.getElementById("sav-flag-" + i).previousSibling.checked = Number(values[30 + i]);
         }
-        // Update checkboxes (should have no ill effects on non-checkbox-based flags)
-        document.getElementById("sav-flag-" + i).previousSibling.checked = parseFloat(document.getElementById("sav-flag-" + i).value);
     }
+    
+    updateSelection("sav-plotvalue", values[542]);
+    // Access to ITEM and STAT menus is values 543 and 544, respectively.
+    document.getElementById("sav-havecell").checked = (Number(values[545].trim()) === 1);
+    // global.currentsong is values[546]
+    updateSelection("sav-location", values[547]);
+    // global.time is values[548], stored in frames
 }
 
 // Update an array of values from the save data form.
 function updateSaveValuesFromForm(values) {
     "use strict";
-    for (var i = 0; i < flags.length; i++) {
+    values[523] = "0"; // Initialize correctly, can be overridden by flag entry OR True Lab checkbox
+    for (let i = 0; i < flags.length; i++) {
         values[30 + i] = document.getElementById("sav-flag-" + i).value;
     }
     values[0] = document.getElementById("sav-name").value;
     values[1] = document.getElementById("sav-love").value;
     values[2] = document.getElementById("sav-hp").value;
+    // global.maxen is values[3]
     values[4] = document.getElementById("sav-at").value;
     values[5] = document.getElementById("sav-weaponat").value;
     values[6] = document.getElementById("sav-df").value;
     values[7] = document.getElementById("sav-armordf").value;
+    // global.sp is values[8]
     values[9] = document.getElementById("sav-exp").value;
     values[10] = document.getElementById("sav-gold").value;
     values[11] = document.getElementById("sav-kills").value;
-    for (var i = 1; i <= 8; i++) {
+    for (let i = 1; i <= 8; i++) {
         values[10 + (i * 2)] = document.getElementById("sav-invslot" + i).value;
         values[11 + (i * 2)] = document.getElementById("sav-cellslot" + i).value;
     }
     values[28] = document.getElementById("sav-weapon").value;
     values[29] = document.getElementById("sav-armor").value;
-    values[44] = document.getElementById("sav-trainingdummystate").value;
-    values[75] = document.getElementById("sav-torielstate").value;
-    values[82] = document.getElementById("sav-doggostate").value;
-    values[83] = document.getElementById("sav-dogamydogaressastate").value;
-    values[84] = document.getElementById("sav-greaterdogstate").value;
-    values[87] = document.getElementById("sav-comedianstate").value;
-    values[97] = document.getElementById("sav-papyrusstate").value;
-    values[111] = document.getElementById("sav-shyrenstate").value;
-    //values[231] = document.getElementById("sav-unkkills").value;
-    values[232] = document.getElementById("sav-ruinskills").value;
-    values[233] = document.getElementById("sav-snowdinkills").value;
-    values[234] = document.getElementById("sav-waterfallkills").value;
-    values[235] = document.getElementById("sav-hotlandkills").value;
-    values[281] = document.getElementById("sav-undynestate1").value;
-    values[282] = document.getElementById("sav-maddummystate").value;
-    values[380] = document.getElementById("sav-undynestate2").value;
-    values[427] = document.getElementById("sav-muffetstate").value;
-    values[432] = document.getElementById("sav-broguardsstate").value;
-    values[455] = document.getElementById("sav-mettatonstate").value;
-    values[495] = +document.getElementById("sav-undyne-cell").checked;
+    
+    for (const id in flagFor) {
+        if (document.getElementById(id).type === "checkbox") {
+            values[30 + flagFor[id]] = document.getElementById(id).checked ? "1" : "0";
+        } else {
+            values[30 + flagFor[id]] = document.getElementById(id).value;
+        }
+    }
+    
     if (document.getElementById("sav-exitedtruelab").checked) {
         values[523] = "12";
-    } else {
-        values[523] = "0";
     }
-    values[37] = +document.getElementById("sav-defeatedasriel").checked;
     values[542] = document.getElementById("sav-plotvalue").value;
-    values[545] = +document.getElementById("sav-havecell").checked;
+    values[545] = document.getElementById("sav-havecell").checked ? "1" : "0";
     values[547] = document.getElementById("sav-location").value;
-    values[35] = document.getElementById("sav-fun").value;
 }
 
 function saveIniToFile(ini) {
     "use strict";
-    var string = "";
-    for (var section in ini) {
+    let string = "";
+    for (const section in ini) {
         string += "[" + section + "]\r\n";
-        for (var key in ini[section]) {
+        for (const key in ini[section]) {
             string += key + "=\"" + ini[section][key] + "\"\r\n";
         }
     }
-    var blob = new Blob([string], {type: "text/plain;charset=utf-8"});
-    saveAs(blob, "undertale.ini", true);
+    
+    saveAs(
+      new Blob([string], {type: "text/plain;charset=utf-8"}),
+      "undertale.ini",
+      true
+    );
     flowey_laugh_once();
 }
 
-function saveSaveValuesToFile(values) {
+function saveSaveValuesToFile(values, slot) {
     "use strict";
-    var string = "";
-    for (var i = 0; i < values.length; i++) {
+    if (!slot) {
+        slot = "0";
+    }
+    let string = "";
+    for (let i = 0; i < values.length; i++) {
         string += values[i] + "\r\n";
     }
-    var blob = new Blob([string], {type: "application/octet-stream"});
-    saveAs(blob, "file0", true);
+    
+    saveAs(
+      new Blob([string], {type: "application/octet-stream"}),
+      "file" + slot,
+      true
+    );
     flowey_laugh_once();
 }
 
 function loadPresetSelect() {
     "use strict";
-    var selectNode = document.getElementById("builtinpresetselect");
-    for (var k in presets) {
-        var newOption = document.createElement("option");
-        var newContent = document.createTextNode(k);
+    let selectNode = document.getElementById("builtinpresetselect");
+    for (const k in presets) {
+        let newOption  = document.createElement("option"),
+            newContent = document.createTextNode(k);
         newOption.appendChild(newContent);
         selectNode.appendChild(newOption);
     }
@@ -1106,15 +1005,15 @@ function loadPresetSelect() {
 
 function start() {
     "use strict";
-    var userPresets = localStorage.getItem("userPresets");
-    var advancedMode = (localStorage.getItem("advanced") == "true");
+    let userPresets = localStorage.getItem("userPresets"),
+        advancedMode = (localStorage.getItem("advanced") == "true");
     if (userPresets === null) {
         localStorage.setItem("userPresets", JSON.stringify({}));
     } else {
-        for (var key in JSON.parse(userPresets)) {
-            var presetSelect2 = document.getElementById("userpresetselect");
-            var option2 = document.createElement("option");
-            var text2 = document.createTextNode(key);
+        for (const key in JSON.parse(userPresets)) {
+            let presetSelect2 = document.getElementById("userpresetselect"),
+                option2 = document.createElement("option"),
+                text2 = document.createTextNode(key);
             option2.appendChild(text2);
             presetSelect2.appendChild(option2);
         }
@@ -1122,7 +1021,7 @@ function start() {
     if (localStorage.getItem("laughed") === "true") {
         document.getElementById("floweyimg").src = "res/flowey_evil.png";
     }
-    var ini, saveLines;
+    let ini, saveLines;
     function loadPreset(name) {
         ini = presets[name].ini;
         saveLines = presets[name].lines;
@@ -1132,15 +1031,15 @@ function start() {
     // Initialize form
     updateSelection("allowed-locations", 1);
     updateSelection("allowed-locations-2", 1);
-    var advanced = document.getElementById("advanced");
+    let advanced = document.getElementById("advanced");
     if (advancedMode) {
         advanced.classList.remove('hidden');
         document.getElementById("hide-advanced").innerHTML = "Hide";
     }
-    for (var i = 0; i < flags.length; i += 3) {
-        for (var j = 0; j < 3; j++) {
-            var checkDesc = false;
-            var newLabel = document.createElement("label");
+    for (let i = 0; i < flags.length; i += 3) {
+        for (let j = 0; j < 3; j++) {
+            let checkDesc = false,
+                newLabel = document.createElement("label");
             newLabel.setAttribute("for", "sav-flag-" + (i + j));
             newLabel.innerHTML = "[" + (i + j) + "] " + flags[i + j][0];
             if (typeof flags[i + j][1] === "string") {
@@ -1160,14 +1059,14 @@ function start() {
             
             advanced.appendChild(newLabel);
         }
-        for (var j = 0; j < 3; j++) {
-            var newField;
+        for (let j = 0; j < 3; j++) {
+            let newField;
             if (typeof flags[i + j][2] === "object") { // Options listed
                 newField = document.createElement("select");
-                for (var key of Object.keys(flags[i + j][2]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
-                    var newOption = document.createElement("option");
+                for (const key of Object.keys(flags[i + j][2]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
+                    let newOption  = document.createElement("option"),
+                        newContent = document.createTextNode(flags[i + j][2][key]);
                     newOption.setAttribute("value", key);
-                    var newContent = document.createTextNode(flags[i + j][2][key]);
                     newOption.appendChild(newContent);
                     newField.appendChild(newOption);
                 }
@@ -1180,16 +1079,18 @@ function start() {
                 newField = document.createElement("div");
                 newField.setAttribute("class", "checkbox");
                 newField.style.marginTop = 0;
-                var newOption = document.createElement("input");
+                
+                let newOption = document.createElement("input");
                 newOption.setAttribute("type", "checkbox");
                 newOption.addEventListener("change", function() {
-                    this.nextSibling.value = +this.checked;
+                    this.nextSibling.value = Number(this.checked);
                 });
                 newField.appendChild(newOption);
+                
                 newOption = document.createElement("input");
                 newOption.setAttribute("type", "number");
                 newOption.addEventListener("change", function() {
-                    this.previousSibling.checked = parseFloat(this.value);
+                    this.previousSibling.checked = Number(this.value);
                 });
                 newOption.style.width = "100%";
                 newOption.setAttribute("id", "sav-flag-" + (i + j));
@@ -1208,12 +1109,12 @@ function start() {
     loadPreset("Ruins Start");
     
     // Selecting a file
-    var iniFile, saveFile;
+    let iniFile, saveFile;
     document.getElementById("ini-file").addEventListener("change", function(evt) {
         iniFile = evt.target.files[0];
         if (iniFile) {
             document.getElementById("ini-loadbutton").classList.remove('disabled');
-            document.querySelector(`label[for="${event.target.id}"]`).style = "border-color: #fff"
+            document.querySelector(`label[for="${evt.target.id}"]`).style = "border-color: #fff";
         } else {
             document.getElementById("ini-loadbutton").classList.add('disabled');
         }
@@ -1222,7 +1123,7 @@ function start() {
         saveFile = evt.target.files[0];
         if (saveFile) {
             document.getElementById("sav-loadbutton").classList.remove('disabled');
-            document.querySelector(`label[for="${event.target.id}"]`).style = "border-color: #fff"
+            document.querySelector(`label[for="${evt.target.id}"]`).style = "border-color: #fff";
         } else {
             document.getElementById("sav-loadbutton").classList.add('disabled');
         }
@@ -1259,56 +1160,65 @@ function start() {
         updateSaveValuesFromForm(saveLines);
         saveSaveValuesToFile(saveLines);
     });
+    document.getElementById("sav-savefile8").addEventListener("click", function() {
+        updateSaveValuesFromForm(saveLines);
+        saveSaveValuesToFile(saveLines, "8");
+    });
     
     // system_information download
     document.getElementById("savesi2").addEventListener("click", function() {
-        var blob = new Blob([], {type: "application/octet-stream"});
-        saveAs(blob, "system_information_962", true);
+        saveAs(
+          new Blob([], {type: "application/octet-stream"}),
+          "system_information_962",
+          true
+        );
         flowey_laugh_once();
     });
     document.getElementById("savesi3").addEventListener("click", function() {
-        var blob = new Blob([], {type: "application/octet-stream"});
-        saveAs(blob, "system_information_963", true);
+        saveAs(
+          new Blob([], {type: "application/octet-stream"}),
+          "system_information_963",
+          true
+        );
         flowey_laugh_once();
     });
     
     // Weapon/armor AT/DF calculation
-    var weaponSelect = document.getElementById("sav-weapon");
-    var armorSelect = document.getElementById("sav-armor");
+    let weaponSelect = document.getElementById("sav-weapon"),
+        armorSelect = document.getElementById("sav-armor");
     weaponSelect.addEventListener("change", function() {
-        var weaponAt = weaponAts[weaponSelect.value];
-        var armorAt = armorAts[armorSelect.value] || 0; // Cowboy Hat, Temmie Armor
+        const weaponAt = weaponAts[this.value],
+              armorAt = armorAts[armorSelect.value] || 0; // Cowboy Hat, Temmie Armor
         if (typeof weaponAt !== "undefined") {
             document.getElementById("sav-weaponat").value = weaponAt + armorAt;
         }
-        
     });
     armorSelect.addEventListener("change", function() {
-        var df = armorDfs[armorSelect.value];
+        const df = armorDfs[this.value];
         if (typeof df !== "undefined") {
             document.getElementById("sav-armordf").value = df;
         }
-        var weaponAt = weaponAts[weaponSelect.value];
-        var armorAt = armorAts[armorSelect.value] || 0;
+        const weaponAt = weaponAts[weaponSelect.value],
+              armorAt = armorAts[this.value] || 0;
         if (typeof weaponAt !== "undefined") {
             document.getElementById("sav-weaponat").value = weaponAt + armorAt;
         } else {
-            document.getElementById("sav-weaponat").value = parseInt(document.getElementById("sav-weaponat").value) + armorAt;
+            document.getElementById("sav-weaponat").value = Number(document.getElementById("sav-weaponat").value) + armorAt;
         }
     });
     
     // Interface-altering options
-    var allowedLocations1 = document.getElementById("allowed-locations");
-    var allowedLocations2 = document.getElementById("allowed-locations-2");
+    let allowedLocations1 = document.getElementById("allowed-locations"),
+        allowedLocations2 = document.getElementById("allowed-locations-2");
     allowedLocations1.addEventListener("change", function() {
-        allowedLocations2.value = allowedLocations1.value;
-        updateSelection("ini-location", null, rooms[allowedLocations1.value]);
-        updateSelection("sav-location", null, rooms[allowedLocations1.value]);
+        allowedLocations2.value = this.value;
+        updateSelection("ini-location", null, rooms[this.value]);
+        updateSelection("sav-location", null, rooms[this.value]);
     });
     allowedLocations2.addEventListener("change", function() {
-        allowedLocations1.value = allowedLocations2.value;
-        updateSelection("ini-location", null, rooms[allowedLocations1.value]);
-        updateSelection("sav-location", null, rooms[allowedLocations1.value]);
+        allowedLocations1.value = this.value;
+        updateSelection("ini-location", null, rooms[this.value]);
+        updateSelection("sav-location", null, rooms[this.value]);
     });
     document.getElementById("allow-non-equipables").addEventListener("change", function() {
         if (document.getElementById("allow-non-equipables").checked) {
@@ -1322,43 +1232,44 @@ function start() {
     document.getElementById("sav-havecell").addEventListener("change", function() {
         document.getElementById("cellslots").classList.toggle('hidden');
     });
-    var callUndyne = document.getElementById("sav-undyne-cell");
-    callUndyne.addEventListener("change", function() {
-        if (callUndyne.checked) {
+    document.getElementById("sav-undyne-cell").addEventListener("change", function() {
+        if (this.checked) {
             cellOpts[210] = "Papyrus and Undyne";
         } else {
             cellOpts[210] = "Papyrus's Phone";
         }
-        for (var i = 1; i <= 8; i++) {
+        for (let i = 1; i <= 8; i++) {
             updateSelection("sav-cellslot" + i);
         }
+    });
+    document.getElementById("ini-omega-flowey-trapped").addEventListener("change", function() {
+        document.getElementById("sav-savefile8").classList.toggle('hidden');
     });
     
     // Presets
     document.getElementById("builtinpresetload").addEventListener("click", function() {
-        var name = document.getElementById("builtinpresetselect").value;
-        loadPreset(name);
+        loadPreset(this.value);
     });
     function saveUserPreset(name) {
         updateIniFromForm(ini);
         updateSaveValuesFromForm(saveLines);
-        var obj = {
+        let obj = {
             "ini": ini,
             "lines": saveLines,
-        };
-        var presets = JSON.parse(localStorage.getItem("userPresets"));
+        },
+            presets = JSON.parse(localStorage.getItem("userPresets"));
         presets[name] = obj;
-        localStorage.setItem("userPresets",JSON.stringify(presets));
+        localStorage.setItem("userPresets", JSON.stringify(presets));
     }
     document.getElementById("userpresetnew").addEventListener("click", function() {
-        var name = window.prompt("Enter the name for your new preset");
+        const name = window.prompt("Enter the name for your new preset");
         if (name === null || name === "") {
             window.alert("You did not enter a valid name, preset not created.");
         } else {
             saveUserPreset(name);
-            var presetSelect = document.getElementById("userpresetselect");
-            var option = document.createElement("option");
-            var text = document.createTextNode(name);
+            let presetSelect = document.getElementById("userpresetselect"),
+                option = document.createElement("option"),
+                text = document.createTextNode(name);
             option.appendChild(text);
             presetSelect.appendChild(option);
             presetSelect.value = name;
@@ -1369,7 +1280,7 @@ function start() {
         }
     });
     document.getElementById("userpresetsave").addEventListener("click", function() {
-        var name = document.getElementById("userpresetselect").value;
+        const name = document.getElementById("userpresetselect").value;
         if (name !== null && name !== "") {
             saveUserPreset(name);
         } else {
@@ -1377,11 +1288,11 @@ function start() {
         }
     });
     document.getElementById("userpresetload").addEventListener("click", function() {
-        var name = document.getElementById("userpresetselect").value;
+        const name = document.getElementById("userpresetselect").value;
         if (name !== null && name !== "") {
-            var item = localStorage.getItem("userPresets");
-            var presets = JSON.parse(item);
-            var obj = presets[name];
+            let item = localStorage.getItem("userPresets"),
+                presets = JSON.parse(item),
+                obj = presets[name];
             ini = obj.ini;
             saveLines = obj.lines;
             updateSaveDataForm(saveLines);
@@ -1391,17 +1302,17 @@ function start() {
         }
     });
     document.getElementById("userpresetdelete").addEventListener("click", function() {
-        var selection = document.getElementById("userpresetselect");
-        var name = selection.value;
-        var children = selection.childNodes;
-        for (var i = 0; i < children.length; i++) {
+        let selection = document.getElementById("userpresetselect"),
+            name = selection.value,
+            children = selection.childNodes;
+        for (let i = 0; i < children.length; i++) {
             if (children[i].value === name) {
                 selection.removeChild(children[i]);
                 break;
             }
         }
-        var item = localStorage.getItem("userPresets");
-        var presets = JSON.parse(item);
+        let item = localStorage.getItem("userPresets"),
+            presets = JSON.parse(item);
         delete presets[name];
         localStorage.setItem("userPresets", JSON.stringify(presets));
         if (document.getElementById("userpresetselect").value === "") {
@@ -1418,17 +1329,20 @@ function start() {
         document.getElementById("userpresetexport").classList.remove('disabled');
     }
     document.getElementById("userpresetexport").addEventListener("click", function() {
-        var presets = JSON.parse(localStorage.getItem("userPresets"));
-        var name = document.getElementById("userpresetselect").value;
+        let presets = JSON.parse(localStorage.getItem("userPresets")),
+            name = document.getElementById("userpresetselect").value;
         saveUserPreset(name);
-        var preset = presets[name];
-        var string = "presets[\"" + name + "\"] = " + JSON.stringify(preset) + ";";
-        var blob = new Blob([string], {type: "application/octet-stream"});
-        saveAs(blob, name + ".js", true);
+        const preset = presets[name],
+              string = "presets[\"" + name + "\"] = " + JSON.stringify(preset) + ";";
+        saveAs(
+          new Blob([string], {type: "application/octet-stream"}),
+          name + ".js",
+          true
+        );
     });
     
     document.getElementById("floweyimg").addEventListener("click", function() {
-        document.getElementById("floweyimg").src = "res/flowey_wink.png";
+        this.src = "res/flowey_wink.png";
         localStorage.setItem("laughed", false);
     });
     document.getElementById("hide-advanced").addEventListener("click", function() {
@@ -1445,21 +1359,21 @@ function start() {
         }
     });
     
-    var saveElements = document.querySelectorAll("input[id^=\"sav-\"],select[id^=\"sav-\"]");
-    for (var i = 0; i < saveElements.length; i++) {
+    let saveElements = document.querySelectorAll("input[id^=\"sav-\"],select[id^=\"sav-\"]");
+    for (let i = 0; i < saveElements.length; i++) {
         if (flagFor[saveElements[i].id] >= 0) {
             saveElements[i].addEventListener("change", function() {
                 if (this.type == "checkbox") {
-                    document.getElementById("sav-flag-" + flagFor[this.id]).value = +this.checked;
+                    document.getElementById("sav-flag-" + flagFor[this.id]).value = Number(this.checked);
                 } else {
                     document.getElementById("sav-flag-" + flagFor[this.id]).value = this.value;
                 }
             });
         } else if (inputForFlag[saveElements[i].id]) {
             saveElements[i].addEventListener("change", function() {
-                var targetElement = document.getElementById(inputForFlag[this.id]);
+                let targetElement = document.getElementById(inputForFlag[this.id]);
                 if (targetElement.type == "checkbox") {
-                    targetElement.checked = parseFloat(this.value);
+                    targetElement.checked = Number(this.value);
                 } else if (targetElement.type == "number") {
                     targetElement.value = this.value;
                 } else { // dropdown

@@ -84,7 +84,7 @@ var flags = [
     ["fun", "The fun value. See above list for effects."],
     ["hardmode", "Hard Mode.", basicBool],
     ["true_pacifist", "In the Pacifist epilogue.", basicBool],
-    ["disable_random_encounters", "Self-explanatory. Set by several events.", basicBool],
+    ["disable_random_encounters", "Self-explanatory. Set at the start of the Undyne's Letter quest or after defeating Mettaton NEO.", basicBool],
     ["flowey_seen_stalking", "Unaccessed. Tracks how often you backtracked to catch Flowey."],
     ["spared_last", "Whether you spared the previous enemy.", basicBool],
     ["escaped_last", "Whether you fled the previous battle.", basicBool],
@@ -162,7 +162,7 @@ var flags = [
     ["flirted_toriel", "How many times you have called Toriel to flirt with her."],
     ["call_mom_toriel", "Whether you have called Toriel 'mom'.", basicBool],
     ["ruins_switches_pressed", "When greater than 25, changes the displayed text upon pressing a switch."],
-    ["disobeyed_toriel", "How manny times Toriel had to return you upstairs."],
+    ["disobeyed_toriel", "How many times Toriel had to return you upstairs."],
     ["status_toriel", "Self-explanatory.", {
         "0": "Initial state",
         "1": "In basement",
@@ -618,7 +618,7 @@ var flags = [
     ["dimensional_box_A_8", "The item in a given slot of a given box.", items],
     ["dimensional_box_A_9", "The item in a given slot of a given box.", items],
     ["dimensional_box_A_10", "The item in a given slot of a given box.", items],
-    ["box_A_interacted", "Whether you have interacted with Dimensional Box A. Unaccessed." {
+    ["box_A_interacted", "Whether you have interacted with Dimensional Box A. Unaccessed.", {
         "0": "Initial state",
         "999": "Interacted" // probably not intended for this but that's the only thing it does
     }],
@@ -633,7 +633,7 @@ var flags = [
     ["dimensional_box_B_8", "The item in a given slot of a given box.", items],
     ["dimensional_box_B_9", "The item in a given slot of a given box.", items],
     ["dimensional_box_B_10", "The item in a given slot of a given box.", items],
-    ["box_B_interacted", "Whether you have interacted with Dimensional Box B. Unaccessed." {
+    ["box_B_interacted", "Whether you have interacted with Dimensional Box B. Unaccessed.", {
         "0": "Initial state",
         "999": "Interacted"
     }],
@@ -997,22 +997,26 @@ var flags = [
     ["truelab_unsuppress_border", "Whether the True Lab border has been unlocked. Maintains the border when backtracking to the first two initially-borderless rooms.", basicBool],
     ["inside_truelab", "Whether you are inside the True Lab. Darkens obj_mainchara appropriately.", basicBool],
     ["truelab_red_key_status", "Status of the red key.", [
-        "On ground",
+        "Initial state",
+        "In sink",
         "Collected",
         "In slot"
     ]],
     ["truelab_blue_key_status", "Status of the blue key.", [
+        "Initial state",
         "On ground",
         "Collected",
         "In slot"
     ]],
     ["truelab_green_key_status", "Status of the green key.", [
-        "On ground",
+        "Initial state",
+        "In tub",
         "Collected",
         "In slot"
     ]],
     ["truelab_yellow_key_status", "Status of the yellow key.", [
-        "On ground",
+        "Initial state",
+        "On bed",
         "Collected",
         "In slot"
     ]],
@@ -1037,11 +1041,11 @@ var flags = [
         "11": "Received Papyrus call",
         "12": "True Lab complete"
     }],
-    ["status_undyne_letter", "Status of dropping Undyne's Letter.", [
-        "Initial state",
-        "Dropped",
-        "Received EX letter"
-    ]],
+    ["status_undyne_letter", "Status of dropping Undyne's Letter.", {
+        "0": "Initial state",
+        "1": "Dropped",
+        "3": "Received EX letter"
+    }],
     ["popato_chisps_bought", "Amount of potato chisps you have bought. (0-8)"],
     ["conversation_onionsan", "Onionsan's status.", {
         "-1": "Rejected",
