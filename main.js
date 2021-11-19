@@ -2,14 +2,14 @@ let debugVars = {}; // Could be handy
 
 // items, rooms, stats, flags defined in data.js
 
-for (let i = 0; i < rooms[2].length; i++) {
-    if (rooms[2][i].indexOf("[SAVE]") !== -1) {
-        rooms[0][i] = rooms[2][i];
-        rooms[1][i] = rooms[2][i];
-    } else if (rooms[2][i].indexOf("[Dogchecked]") === -1) {
-        rooms[1][i] = rooms[2][i];
+rooms[2].forEach(function(room, id) {
+    if (room.indexOf("[SAVE]") !== -1) {
+        rooms[0][id] = room;
     }
-}
+    if (room.indexOf("[Dogchecked]") === -1) {
+        rooms[1][id] = room;
+    }
+});
 // rooms[0] is SAVE points only, rooms[1] is non-Dogchecked only, rooms[2] contains all rooms.
 
 const roomSelectOptions = [
@@ -96,14 +96,14 @@ function flowey_laugh_once() {
 function loadIniFromFile(file, closure) {
     "use strict";
     let reader = new FileReader();
-    reader.onload = function(e) {
-        const text = e.target.result;
+    reader.addEventListener("load", function() {
+        const text = this.result;
         try {
             closure(parseIniFromText(text));
         } catch (err) {
             window.alert("Error parsing undertale.ini: " + err);
         }
-    };
+    });
     reader.readAsText(file);
 }
 
@@ -111,57 +111,31 @@ function loadIniFromFile(file, closure) {
 function loadSaveFromFile(file, closure) {
     "use strict";
     let reader = new FileReader();
-    reader.onload = function(e) {
-        const text = e.target.result;
+    reader.addEventListener("load", function() {
+        const text = this.result;
         closure(text.match(/[^\r\n]+/g).map(function(line) {
             return line.trim();
         }));
-    };
+    });
     reader.readAsText(file);
 }
 
 // Update the persistent data form from an ini object.
 function updatePersistentDataForm(iniobj) {
     "use strict";
-    if (document.getElementById("ini-omega-flowey-trapped").checked != Number(iniobj.FFFFF && iniobj.FFFFF.F && iniobj.FFFFF.F.trim())) {
-        document.getElementById("sav-savefile8").classList.toggle('hidden');
-    }
-    document.getElementById("ini-name").value = iniobj.General.Name;
-    updateSelection("ini-location", iniobj.General.Room);
-    document.getElementById("ini-kills").value = Number(iniobj.General.Kills.trim());
-    document.getElementById("ini-love").value = Number(iniobj.General.Love.trim());
-    if (iniobj.FFFFF) {
-        if (iniobj.FFFFF.F) {
-            document.getElementById("ini-omega-flowey-trapped").checked = Number(iniobj.FFFFF.F.trim());
+    iniIDs.forEach(function([elementID, section, key]) {
+        if (iniobj[section]) {
+            updateSelection(elementID, iniobj[section][key]);
         } else {
-            document.getElementById("sav-savefile8").classList.add('hidden');
+            updateSelection(elementID, 0);
         }
-        if (iniobj.FFFFF.P) {
-            updateSelection("ini-omega-flowey-soul", iniobj.FFFFF.P);
-        }
-        if (iniobj.FFFFF.D) {
-            document.getElementById("ini-omega-flowey-deaths").value = Number(iniobj.FFFFF.D.trim());
-        }
-    } else {
-        document.getElementById("ini-omega-flowey-trapped").checked = false;
-    }
-    if (iniobj.reset) {
-        if (iniobj.reset.s_key) {
-            document.getElementById("ini-dodged-all-special-thanks").checked = Number(iniobj.reset.s_key.trim());
-        }
-    } else {
-        document.getElementById("ini-dodged-all-special-thanks").checked = false;
-    }
-    if (iniobj.General.fun) {
-        document.getElementById("ini-fun").value = Number(iniobj.General.fun.trim());
-    }
+    });
 }
 
 // Update an ini object from the persistent data form.
-function updateIniFromForm(ini) {
+function updateIniFromForm(iniobj) {
     "use strict";
-    
-    for (const [elementID, section, key] of iniIDs) {
+    iniIDs.forEach(function([elementID, section, key]) {
         let value = 0;
         if (document.getElementById(elementID).type === "checkbox") {
             value = Number(document.getElementById(elementID).checked);
@@ -170,91 +144,125 @@ function updateIniFromForm(ini) {
         }
         
         if (value) {
-            if (!ini[section]) {
-                ini[section] = {};
+            if (!iniobj[section]) {
+                iniobj[section] = {};
             }
             ini[section][key] = String(value);
         } else {
-            if (ini[section]) {
-                ini[section][key] = "0";
+            if (iniobj[section]) {
+                iniobj[section][key] = "0";
             }
         }
-    }
+    });
 }
 
 function updateSelection(id, value, newChoiceArray) {
     "use strict";
-    let select = document.getElementById(id);
+    let select = document.getElementById(id),
+        type   = "unknown";
+    
+    if (select.nodeName === "SELECT") {
+        type = "select";
+    } else if (select.nodeName === "INPUT") {
+        type = select.type;
+    }
     
     // Sanitize value
     if (typeof value === "string") {
-        value = Number(value.trim());
-    } else if (value == undefined) {
-        if (select.value === undefined) {
-            window.alert("No value found for form input " + id + ", defaulting to 0.");
+        if (type === "text") {
+            value = value.trim();
+        } else {
+            value = Number(value.trim());
+        }
+    } else if (typeof value !== "number") {
+        /* An undefined value indicates one of two things:
+         * - A newChoiceArray is being set without changing the value
+         * - The value is suppposed to be zero but is undefined (usually ini values)
+         * Hence, if no newChoiceArray is found, it assumes the latter.
+         */
+        if (!newChoiceArray) {
+            value = 0;
+        } else if (select.value === undefined) {
+            window.alert("ERROR: No value found for form input " + id + ", defaulting to 0.");
             value = 0;
         } else {
             value = select.value;
         }
     }
     
-    // Switch selected array
-    if (newChoiceArray) {
-        stateChoiceArrays[id] = newChoiceArray;
+    switch (type) {
+        case "select":
+            // Switch selected array
+            if (newChoiceArray) {
+                stateChoiceArrays[id] = newChoiceArray;
+            }
+            
+            // Default case if incorrect ID is used (or stateChoiceArrays missing a case)
+            if (!stateChoiceArrays[id]) {
+                window.alert("ERROR: No associated array for form input " + id + " found, defaulting to [\"Error\"].");
+                stateChoiceArrays[id] = ["Error"];
+            }
+            
+            // Add "Unrecognized" value if necessary
+            if (!stateChoiceArrays[id][value]) {
+                stateChoiceArrays[id][value] = "Unrecognized (" + value + ")";
+            }
+
+            // Clear old options
+            while (select.firstChild) {
+                select.removeChild(select.firstChild);
+            }
+
+            // Create options
+            for (const key of Object.keys(stateChoiceArrays[id]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
+                let newOption = document.createElement("option"),
+                    newContent = document.createTextNode(stateChoiceArrays[id][key]);
+                newOption.setAttribute("value", key);
+                newOption.appendChild(newContent);
+                select.appendChild(newOption);
+            }
+
+            // Update value
+            select.value = value;
+            break;
+        
+        case "checkbox":
+            if (select.checked !== Boolean(value)) {
+                select.click(); // Triggers change events such as hidden element toggling
+            }
+            break;
+        
+        case "number":
+        case "text":
+            select.value = value;
+            break;
+        
+        default:
+            window.alert("ERROR: What are you trying to update?\nElement ID: " + id + "\nType: " + type + "\nNode type: " + select.nodeName + "\nSub-type: " + select.type);
+            break;
     }
-    
-    // Default case if incorrect ID is used (or stateChoiceArrays missing a case)
-    if (!stateChoiceArrays[id]) {
-        window.alert("No associated array for form input " + id + " found, defaulting to [\"Error\"].");
-        stateChoiceArrays[id] = ["Error"];
-    }
-    
-    // Add "Unrecognized" value if necessary
-    if (!stateChoiceArrays[id][value]) {
-        stateChoiceArrays[id][value] = "Unrecognized (" + value + ")";
-    }
-    
-    // Clear old options
-    while (select.firstChild) {
-        select.removeChild(select.firstChild);
-    }
-    
-    // Create options
-    for (const key of Object.keys(stateChoiceArrays[id]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
-        let newOption = document.createElement("option"),
-            newContent = document.createTextNode(stateChoiceArrays[id][key]);
-        newOption.setAttribute("value", key);
-        newOption.appendChild(newContent);
-        select.appendChild(newOption);
-    }
-    
-    // Update value
-    select.value = value;
 }
 
 // Update the save data form from an array of values.
 function updateSaveDataForm(values) {
     "use strict";
-    document.getElementById("sav-name").value = values[0];
-    document.getElementById("sav-love").value = values[1];
-    document.getElementById("sav-hp").value = values[2];
+    updateSelection("sav-name", values[0]);
+    updateSelection("sav-love", values[1]);
+    updateSelection("sav-hp", values[2]);
     // global.maxen is values[3]
-    document.getElementById("sav-at").value = values[4];
-    document.getElementById("sav-weaponat").value = values[5];
-    document.getElementById("sav-df").value = values[6];
-    document.getElementById("sav-armordf").value = values[7];
+    updateSelection("sav-at", values[4]);
+    updateSelection("sav-weaponat", values[5]);
+    updateSelection("sav-df", values[6]);
+    updateSelection("sav-armordf", values[7]);
     // global.sp is values[8]
-    document.getElementById("sav-exp").value = values[9];
-    document.getElementById("sav-gold").value = values[10];
-    document.getElementById("sav-kills").value = values[11];
+    updateSelection("sav-exp", values[9]);
+    updateSelection("sav-gold", values[10]);
+    updateSelection("sav-kills", values[11]);
     
     if (Number(values[495].trim())) {
         cellOpts[210] = "Papyrus and Undyne";
     } else {
         cellOpts[210] = "Papyrus's Phone";
-    }
-    if (Number(values[545].trim()) != document.getElementById("sav-havecell").checked) {
-        document.getElementById("cellslots").classList.toggle('hidden');
     }
     for (let i = 1; i <= 8; i++) { // values[12] through values[27]
         updateSelection("sav-invslot" + i, values[10 + (i * 2)]);
@@ -270,28 +278,21 @@ function updateSaveDataForm(values) {
     }
     
     for (const id in flagFor) {
-        if (document.getElementById(id).nodeName === "SELECT") {
-            updateSelection(id, values[30 + flagFor[id]]);
-        } else {
-            document.getElementById(id).value = Number(values[30 + flagFor[id]].trim());
-            document.getElementById(id).checked = Number(values[30 + flagFor[id]].trim());
-        }
+        updateSelection(id, values[30 + flagFor[id]]);
     }
-    document.getElementById("sav-exitedtruelab").checked = (Number(values[523].trim()) === 12);
+    updateSelection("sav-exitedtruelab", (Number(values[523].trim()) === 12));
     
     for (let i = 0; i < 512; i++) {
-        if (document.getElementById("sav-flag-" + i).nodeName === "SELECT") {
-            updateSelection("sav-flag-" + i, values[30 + i], flags[i][2]);
-        } else {
-            document.getElementById("sav-flag-" + i).value = values[30 + i];
-            // Update checkboxes (should have no ill effects on non-checkbox-based flags)
+        updateSelection("sav-flag-" + i, values[30 + i], flags[i][2]);
+        // Update checkboxes (should have no ill effects on non-checkbox-based flags)
+        if (document.getElementById("sav-flag-" + i).nodeName === "INPUT") {
             document.getElementById("sav-flag-" + i).previousSibling.checked = Number(values[30 + i]);
         }
     }
     
     updateSelection("sav-plotvalue", values[542]);
     // Access to ITEM and STAT menus is values 543 and 544, respectively.
-    document.getElementById("sav-havecell").checked = (Number(values[545].trim()) === 1);
+    updateSelection("sav-havecell", values[545]);
     // global.currentsong is values[546]
     updateSelection("sav-location", values[547]);
     // global.time is values[548], stored in frames
@@ -386,6 +387,26 @@ function loadPresetSelect() {
     }
 }
 
+let ini, saveLines;
+function loadPreset(name) {
+    ini = presets[name].ini;
+    saveLines = presets[name].lines;
+    updateSaveDataForm(saveLines);
+    updatePersistentDataForm(ini);
+}
+
+function saveUserPreset(name) {
+    updateIniFromForm(ini);
+    updateSaveValuesFromForm(saveLines);
+    let obj = {
+        "ini": ini,
+        "lines": saveLines,
+    },
+        presets = JSON.parse(localStorage.getItem("userPresets"));
+    presets[name] = obj;
+    localStorage.setItem("userPresets", JSON.stringify(presets));
+}
+
 function start() {
     "use strict";
     let userPresets = localStorage.getItem("userPresets"),
@@ -404,19 +425,13 @@ function start() {
     if (localStorage.getItem("laughed") === "true") {
         document.getElementById("floweyimg").src = "res/flowey_evil.png";
     }
-    let ini, saveLines;
-    function loadPreset(name) {
-        ini = presets[name].ini;
-        saveLines = presets[name].lines;
-        updateSaveDataForm(saveLines);
-        updatePersistentDataForm(ini);
-    }
+    
     // Initialize form
     updateSelection("allowed-locations", 1);
     updateSelection("allowed-locations-2", 1);
     let advanced = document.getElementById("advanced");
     if (advancedMode) {
-        advanced.classList.remove('hidden');
+        advanced.classList.remove("hidden");
         document.getElementById("hide-advanced").innerHTML = "Hide";
     }
     for (let i = 0; i < flags.length; i += 3) {
@@ -493,20 +508,20 @@ function start() {
     
     // Selecting a file
     let iniFile, saveFile;
-    document.getElementById("ini-file").addEventListener("change", function(evt) {
-        iniFile = evt.target.files[0];
+    document.getElementById("ini-file").addEventListener("change", function() {
+        iniFile = this.files[0];
         if (iniFile) {
             document.getElementById("ini-loadbutton").classList.remove('disabled');
-            document.querySelector(`label[for="${evt.target.id}"]`).style = "border-color: #fff";
+            document.querySelector(`label[for="${this.id}"]`).style = "border-color: #fff";
         } else {
             document.getElementById("ini-loadbutton").classList.add('disabled');
         }
     });
-    document.getElementById("sav-file").addEventListener("change", function (evt) {
-        saveFile = evt.target.files[0];
+    document.getElementById("sav-file").addEventListener("change", function() {
+        saveFile = this.files[0];
         if (saveFile) {
             document.getElementById("sav-loadbutton").classList.remove('disabled');
-            document.querySelector(`label[for="${evt.target.id}"]`).style = "border-color: #fff";
+            document.querySelector(`label[for="${this.id}"]`).style = "border-color: #fff";
         } else {
             document.getElementById("sav-loadbutton").classList.add('disabled');
         }
@@ -572,48 +587,41 @@ function start() {
     weaponSelect.addEventListener("change", function() {
         const weaponAt = weaponAts[this.value],
               armorAt = armorAts[armorSelect.value] || 0; // Cowboy Hat, Temmie Armor
-        if (typeof weaponAt !== "undefined") {
-            document.getElementById("sav-weaponat").value = weaponAt + armorAt;
+        if (weaponAt !== undefined) {
+            updateSelection("sav-weaponat", (weaponAt + armorAt));
         }
     });
     armorSelect.addEventListener("change", function() {
         const df = armorDfs[this.value];
-        if (typeof df !== "undefined") {
-            document.getElementById("sav-armordf").value = df;
+        if (df !== undefined) {
+            updateSelection("sav-armordf", df);
         }
         const weaponAt = weaponAts[weaponSelect.value],
               armorAt = armorAts[this.value] || 0;
-        if (typeof weaponAt !== "undefined") {
-            document.getElementById("sav-weaponat").value = weaponAt + armorAt;
-        } else {
-            document.getElementById("sav-weaponat").value = Number(document.getElementById("sav-weaponat").value) + armorAt;
+        if (weaponAt !== undefined) {
+            updateSelection("sav-weaponat", (weaponAt + armorAt));
         }
     });
     
     // Interface-altering options
-    let allowedLocations1 = document.getElementById("allowed-locations"),
-        allowedLocations2 = document.getElementById("allowed-locations-2");
-    allowedLocations1.addEventListener("change", function() {
-        allowedLocations2.value = this.value;
+    document.getElementById("allowed-locations").addEventListener("change", function() {
+        updateSelection("allowed-locations-2", this.value);
         updateSelection("ini-location", null, rooms[this.value]);
         updateSelection("sav-location", null, rooms[this.value]);
     });
-    allowedLocations2.addEventListener("change", function() {
-        allowedLocations1.value = this.value;
+    document.getElementById("allowed-locations-2").addEventListener("change", function() {
+        updateSelection("allowed-locations", this.value);
         updateSelection("ini-location", null, rooms[this.value]);
         updateSelection("sav-location", null, rooms[this.value]);
     });
     document.getElementById("allow-non-equipables").addEventListener("change", function() {
-        if (document.getElementById("allow-non-equipables").checked) {
+        if (this.checked) {
             updateSelection("sav-weapon", null, items);
             updateSelection("sav-armor",  null, items);
         } else {
             updateSelection("sav-weapon", null, weapons);
             updateSelection("sav-armor",  null, armors);
         }
-    });
-    document.getElementById("sav-havecell").addEventListener("change", function() {
-        document.getElementById("cellslots").classList.toggle('hidden');
     });
     document.getElementById("sav-undyne-cell").addEventListener("change", function() {
         if (this.checked) {
@@ -625,25 +633,11 @@ function start() {
             updateSelection("sav-cellslot" + i);
         }
     });
-    document.getElementById("ini-omega-flowey-trapped").addEventListener("change", function() {
-        document.getElementById("sav-savefile8").classList.toggle('hidden');
-    });
     
     // Presets
     document.getElementById("builtinpresetload").addEventListener("click", function() {
-        loadPreset(this.value);
+        loadPreset(document.getElementById("builtinpresetselect").value);
     });
-    function saveUserPreset(name) {
-        updateIniFromForm(ini);
-        updateSaveValuesFromForm(saveLines);
-        let obj = {
-            "ini": ini,
-            "lines": saveLines,
-        },
-            presets = JSON.parse(localStorage.getItem("userPresets"));
-        presets[name] = obj;
-        localStorage.setItem("userPresets", JSON.stringify(presets));
-    }
     document.getElementById("userpresetnew").addEventListener("click", function() {
         const name = window.prompt("Enter the name for your new preset");
         if (name === null || name === "") {
@@ -688,9 +682,9 @@ function start() {
         let selection = document.getElementById("userpresetselect"),
             name = selection.value,
             children = selection.childNodes;
-        for (let i = 0; i < children.length; i++) {
-            if (children[i].value === name) {
-                selection.removeChild(children[i]);
+        for (let child of children) {
+            if (child.value === name) {
+                selection.removeChild(child);
                 break;
             }
         }
@@ -729,42 +723,36 @@ function start() {
         localStorage.setItem("laughed", false);
     });
     document.getElementById("hide-advanced").addEventListener("click", function() {
+        advanced.classList.toggle("hidden");
+        advancedMode = !advancedMode;
         if (advancedMode) {
-            advanced.classList.add('hidden');
-            advancedMode = false;
-            localStorage.setItem("advanced", false);
-            this.innerHTML = "Show";
-        } else {
-            advanced.classList.remove('hidden');
-            advancedMode = true;
-            localStorage.setItem("advanced", true);
             this.innerHTML = "Hide";
+        } else {
+            this.innerHTML = "Show";
         }
+        localStorage.setItem("advanced", advancedMode);
     });
     
-    let saveElements = document.querySelectorAll("input[id^=\"sav-\"],select[id^=\"sav-\"]");
-    for (let i = 0; i < saveElements.length; i++) {
-        if (flagFor[saveElements[i].id] >= 0) {
-            saveElements[i].addEventListener("change", function() {
-                if (this.type == "checkbox") {
-                    document.getElementById("sav-flag-" + flagFor[this.id]).value = Number(this.checked);
+    document.querySelectorAll("[id^=\"sav-\"],[id^=\"ini-\"]").forEach(function(element) {
+        if (flagFor[element.id] >= 0) {
+            element.addEventListener("change", function() {
+                if (this.type === "checkbox") {
+                    updateSelection(("sav-flag-" + flagFor[this.id]), this.checked);
                 } else {
-                    document.getElementById("sav-flag-" + flagFor[this.id]).value = this.value;
+                    updateSelection(("sav-flag-" + flagFor[this.id]), this.value);
                 }
             });
-        } else if (inputForFlag[saveElements[i].id]) {
-            saveElements[i].addEventListener("change", function() {
-                let targetElement = document.getElementById(inputForFlag[this.id]);
-                if (targetElement.type == "checkbox") {
-                    targetElement.checked = Number(this.value);
-                } else if (targetElement.type == "number") {
-                    targetElement.value = this.value;
-                } else { // dropdown
-                    updateSelection(targetElement.id, this.value);
-                }
+        } else if (inputForFlag[element.id]) {
+            element.addEventListener("change", function() {
+                updateSelection(inputForFlag[this.id], this.value);
             });
         }
-    }
+        if (element.dataset.hides) {
+            element.addEventListener("change", function() {
+                document.getElementById(this.dataset.hides).classList.toggle("hidden");
+            });
+        }
+    });
 }
 
 document.addEventListener("DOMContentLoaded", start);
