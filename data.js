@@ -23,8 +23,44 @@ const iniIDs = [
     ["ini-omega-flowey-soul",    "FFFFF", "P"],
     ["ini-omega-flowey-deaths",  "FFFFF", "D"],
     ["ini-dodged-all-special-thanks", "reset", "s_key"]
+],
+      flagOffset = 30, // UT flags start on line 31 and values[] is zero-indexed
+      flagCount  = 512; // Counting 0; flag 512 isn't actually stored.
+
+let fileStructure = [
+    [
+        "sav-name",
+        "sav-love",
+        "sav-hp",
+        "sav-en",
+        "sav-at",
+        "sav-weaponat",
+        "sav-df",
+        "sav-armordf",
+        "sav-speed",
+        "sav-exp",
+        "sav-gold",
+        "sav-kills"
+    ],
+    "flags",
+    [
+        "sav-plotvalue",
+        "sav-haveitem",
+        "sav-havestat",
+        "sav-havecell",
+        "sav-music",
+        "sav-location",
+        "sav-time"
+    ]
 ];
-let fileStructure = {}; // TODO
+
+for (let i = 1; i <= 8; i++) {
+    fileStructure[0].push("sav-invslot" + i);
+    fileStructure[0].push("sav-cellslot" + i);
+}
+
+fileStructure[0].push("sav-weapon");
+fileStructure[0].push("sav-armor");
 
 // Items and stats
 const items = [
@@ -1661,6 +1697,7 @@ let flagFor = { // Link flags with inputs
     "sav-comedianstate": 57,
     "sav-papyrusstate": 67,
     "sav-shyrenstate": 81,
+    "sav-papdate": 88,
     "sav-ruinskills": 202,
     "sav-snowdinkills": 203,
     "sav-waterfallkills": 204,
@@ -1668,6 +1705,7 @@ let flagFor = { // Link flags with inputs
     "sav-undynestate1": 251,
     "sav-maddummystate": 252,
     "sav-undynestate2": 350,
+    "sav-unddate": 389,
     "sav-muffetstate": 397,
     "sav-broguardsstate": 402,
     "sav-mettatonstate": 425,
@@ -1678,6 +1716,7 @@ let flagFor = { // Link flags with inputs
     "sav-blukey": 482,
     "sav-grnkey": 483,
     "sav-ylwkey": 484,
+    "sav-alpdate": 493,
     "sav-sanskey": 497
 };
 
@@ -1718,6 +1757,6 @@ let stateChoiceArrays = {
 };
 
 for (let i = 1; i <= 8; i++) {
-    stateChoiceArrays["sav-invslot" + i] = items;
+    stateChoiceArrays["sav-invslot"  + i] = items;
     stateChoiceArrays["sav-cellslot" + i] = cellOpts;
 }
