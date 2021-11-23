@@ -13,7 +13,7 @@
     <script src="presets/asgore-true.js"></script>
     <script src="presets/omega-flowey.js"></script>
     <script src="presets/true-pacifist.js"></script>
-    <script src="data.js"></script>
+    <script src="flags.js"></script>
     <script src="main.js"></script>
     <link rel="stylesheet" type="text/css" href="style.css" />
   </head>
@@ -153,7 +153,7 @@
                 class="w-full"
               ></select>
               <div class="checkbox">
-                <input id="ini-omega-flowey-trapped" type="checkbox" />
+                <input id="ini-omega-flowey-trapped" type="checkbox" data-hides="sav-savefile8" />
                 <label 
                   title="Trapped in Flowey's World"
                   for="ini-omega-flowey-trapped"
@@ -298,7 +298,7 @@
         <fieldset>
           <legend>Cellphone</legend>
           <div class="checkbox">
-            <input id="sav-havecell" type="checkbox" />
+            <input id="sav-havecell" type="checkbox" data-hides="cellslots" />
             <label for="sav-havecell">You have a cellphone</label>
           </div>
           <div class="grid-cols-2 mt-1.5 hidden" id="cellslots">
@@ -320,7 +320,7 @@
             <select id="sav-cellslot8"></select>
             <div class="col-span-2 checkbox">
               <input id="sav-undyne-cell" type="checkbox" />
-              <label for="sav-undyne-cell">Dated Undyne (call with Papyrus)</label>
+              <label for="sav-undyne-cell">Dated Undyne (call w/Papyrus)</label>
             </div>
           </div>
         </fieldset>
@@ -484,18 +484,22 @@
 
         <fieldset>
           <legend>Other</legend>
-          <div class="checkbox">
-            <input
-              id="sav-exitedtruelab"
-              type="checkbox"
-              name="exitedtruelab"
-            />
-            <label
-              title="True lab exited (can get true ending)"
-              for="sav-exitedtruelab"
-              >True lab exited</label
-            >
-          </div>
+          <label for="sav-papdate">Papyrus date</label>
+          <select
+            id="sav-papdate"
+            class="w-full mt-1.5"
+          ></select>
+          <label for="sav-unddate">Undyne date</label>
+          <select
+            id="sav-unddate"
+            class="w-full mt-1.5"
+          ></select>
+          <label for="sav-alpdate">Alphys date</label>
+          <select
+            title="Alphys date and True Lab progression"
+            id="sav-alpdate"
+            class="w-full mt-1.5"
+          ></select>
           <div class="checkbox" style="margin-bottom: 0.5rem">
             <input id="sav-defeatedasriel" type="checkbox" />
             <label
@@ -512,13 +516,13 @@
           ></select>
         </fieldset>
 
-        <fieldset class="col-span-2">
+        <fieldset>
           <legend>FUN Values</legend>
-          <div class="grid-cols-2">
+          <div>
             <table>
               <tr>
-                <td>Value</th>
-                <td>Effect</th>
+                <th>Value</th>
+                <th>Effect</th>
               </tr>
               <tr>
                 <td>2-39</td>
@@ -536,8 +540,6 @@
                 <td>56-57</td>
                 <td>Nightmare mode</td>
               </tr>
-            </table>
-            <table>
               <tr>
                 <td>61-63</td>
                 <td>Gaster followers</td>

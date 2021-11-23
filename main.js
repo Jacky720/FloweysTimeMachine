@@ -161,6 +161,11 @@ function updateSelection(id, value, newChoiceArray) {
     let select = document.getElementById(id),
         type   = "unknown";
     
+    if (select === null) { // Nonexistent element
+        console.log("ERROR: Element with ID " + id + " not found" + (value ? " while setting to " + value : "") + ".");
+        return;
+    }
+    
     if (select.nodeName === "SELECT") {
         type = "select";
     } else if (select.nodeName === "INPUT") {
@@ -192,7 +197,7 @@ function updateSelection(id, value, newChoiceArray) {
     
     switch (type) {
         case "select":
-            // Switch selected array
+            // Change selected array
             if (newChoiceArray) {
                 stateChoiceArrays[id] = newChoiceArray;
             }
@@ -238,7 +243,7 @@ function updateSelection(id, value, newChoiceArray) {
             break;
         
         default:
-            window.alert("ERROR: What are you trying to update?\nElement ID: " + id + "\nType: " + type + "\nNode type: " + select.nodeName + "\nSub-type: " + select.type);
+            window.alert("ERROR: What are you trying to update?\nElement ID: " + id + "\nDetected type: " + type + "\nNode type: " + select.nodeName + "\nSub-type: " + select.type);
             break;
     }
 }
@@ -246,98 +251,111 @@ function updateSelection(id, value, newChoiceArray) {
 // Update the save data form from an array of values.
 function updateSaveDataForm(values) {
     "use strict";
-    updateSelection("sav-name", values[0]);
-    updateSelection("sav-love", values[1]);
-    updateSelection("sav-hp", values[2]);
-    // global.maxen is values[3]
-    updateSelection("sav-at", values[4]);
-    updateSelection("sav-weaponat", values[5]);
-    updateSelection("sav-df", values[6]);
-    updateSelection("sav-armordf", values[7]);
-    // global.sp is values[8]
-    updateSelection("sav-exp", values[9]);
-    updateSelection("sav-gold", values[10]);
-    updateSelection("sav-kills", values[11]);
-    
+    // Unfortunately these are still hardcoded
     if (Number(values[495].trim())) {
         cellOpts[210] = "Papyrus and Undyne";
     } else {
         cellOpts[210] = "Papyrus's Phone";
     }
-    for (let i = 1; i <= 8; i++) { // values[12] through values[27]
-        updateSelection("sav-invslot" + i, values[10 + (i * 2)]);
-        updateSelection("sav-cellslot" + i, values[11 + (i * 2)]);
-    }
     
     if (document.getElementById("allow-non-equipables").checked) {
-        updateSelection("sav-weapon", values[28], items);
-        updateSelection("sav-armor", values[29], items);
+        stateChoiceArrays["sav-weapon"] = items;
+        stateChoiceArrays["sav-armor"] = items;
     } else {
-        updateSelection("sav-weapon", values[28], weapons);
-        updateSelection("sav-armor", values[29], armors);
+        stateChoiceArrays["sav-weapon"] = items;
+        stateChoiceArrays["sav-armor"] = items;
     }
     
-    for (const id in flagFor) {
-        updateSelection(id, values[30 + flagFor[id]]);
-    }
-    updateSelection("sav-exitedtruelab", (Number(values[523].trim()) === 12));
-    
-    for (let i = 0; i < 512; i++) {
-        updateSelection("sav-flag-" + i, values[30 + i], flags[i][2]);
-        // Update checkboxes (should have no ill effects on non-checkbox-based flags)
-        if (document.getElementById("sav-flag-" + i).nodeName === "INPUT") {
-            document.getElementById("sav-flag-" + i).previousSibling.checked = Number(values[30 + i]);
+    let currentValue = 0;
+    fileStructure.forEach(function(idlist, key) {
+        switch (typeof idlist) {
+            case "object":
+                idlist.forEach(function(id) {
+                    updateSelection(id, values[currentValue]);
+                    currentValue++;
+                });
+                break;
+            case "string":
+                switch (idlist) { // Futureproofing, may have other arrays in need of linking for DR.
+                    case "flags":
+                        for (const id in flagFor) {
+                            updateSelection(id, values[flagOffset + flagFor[id]]);
+                        }
+
+                        for (let i = 0; i < flagCount; i++) {
+                            updateSelection("sav-flag-" + i, values[flagOffset + i], flags[i][2]);
+                            // Update checkboxes (should have no ill effects on non-checkbox-based flags)
+                            if (document.getElementById("sav-flag-" + i).nodeName === "INPUT") {
+                                document.getElementById("sav-flag-" + i).previousSibling.checked = Number(values[flagOffset + i]);
+                            }
+                        }
+
+                        // I would do currentValue++ each loop but this is probably better
+                        currentValue += flagCount;
+                        break;
+                    default:
+                        window.alert("ERROR: Something has gone horribly wrong with the file structure in data.js.\nEncountered a string entry (\"" + idlist + "\") without defined handling.");
+                        break;
+                }
+                break;
+            default:
+                window.alert("ERROR: Something has gone horribly wrong with the file structure in data.js.\nEncountered a non-string, non-object entry at entry " + key);
+                console.log("Wacky file structure entry:");
+                console.log(idlist);
+                break;
         }
-    }
-    
-    updateSelection("sav-plotvalue", values[542]);
-    // Access to ITEM and STAT menus is values 543 and 544, respectively.
-    updateSelection("sav-havecell", values[545]);
-    // global.currentsong is values[546]
-    updateSelection("sav-location", values[547]);
-    // global.time is values[548], stored in frames
+    });
 }
 
 // Update an array of values from the save data form.
 function updateSaveValuesFromForm(values) {
     "use strict";
-    values[523] = "0"; // Initialize correctly, can be overridden by flag entry OR True Lab checkbox
-    for (let i = 0; i < flags.length; i++) {
-        values[30 + i] = document.getElementById("sav-flag-" + i).value;
-    }
-    values[0] = document.getElementById("sav-name").value;
-    values[1] = document.getElementById("sav-love").value;
-    values[2] = document.getElementById("sav-hp").value;
-    // global.maxen is values[3]
-    values[4] = document.getElementById("sav-at").value;
-    values[5] = document.getElementById("sav-weaponat").value;
-    values[6] = document.getElementById("sav-df").value;
-    values[7] = document.getElementById("sav-armordf").value;
-    // global.sp is values[8]
-    values[9] = document.getElementById("sav-exp").value;
-    values[10] = document.getElementById("sav-gold").value;
-    values[11] = document.getElementById("sav-kills").value;
-    for (let i = 1; i <= 8; i++) {
-        values[10 + (i * 2)] = document.getElementById("sav-invslot" + i).value;
-        values[11 + (i * 2)] = document.getElementById("sav-cellslot" + i).value;
-    }
-    values[28] = document.getElementById("sav-weapon").value;
-    values[29] = document.getElementById("sav-armor").value;
     
-    for (const id in flagFor) {
-        if (document.getElementById(id).type === "checkbox") {
-            values[30 + flagFor[id]] = document.getElementById(id).checked ? "1" : "0";
-        } else {
-            values[30 + flagFor[id]] = document.getElementById(id).value;
+    let currentValue = 0;
+    fileStructure.forEach(function(idlist, key) {
+        switch (typeof idlist) {
+            case "object":
+                idlist.forEach(function(id) {
+                    if (document.getElementById(id) !== null) {
+                        if (document.getElementById(id).type === "checkbox") {
+                            values[currentValue] = document.getElementById(id).checked ? "1" : "0";
+                        } else {
+                            values[currentValue] = document.getElementById(id).value;
+                        }
+                    } else {
+                        console.log("ERROR: No element of ID " + id + " found while setting values[" + currentValue + "].");
+                    }
+                    currentValue++;
+                });
+                break;
+            case "string":
+                switch (idlist) { // Futureproofing, may have other arrays in need of linking for DR.
+                    case "flags":
+                        for (let i = 0; i < flagCount; i++) {
+                            values[flagOffset + i] = document.getElementById("sav-flag-" + i).value;
+                        }
+                        for (const id in flagFor) {
+                            if (document.getElementById(id).type === "checkbox") {
+                                values[flagOffset + flagFor[id]] = document.getElementById(id).checked ? "1" : "0";
+                            } else {
+                                values[flagOffset + flagFor[id]] = document.getElementById(id).value;
+                            }
+                        }
+
+                        currentValue += flagCount;
+                        break;
+                    default:
+                        window.alert("ERROR: Something has gone horribly wrong with the file structure in data.js.\nEncountered a string entry (\"" + idlist + "\") without defined handling.");
+                        break;
+                }
+                break;
+            default:
+                window.alert("ERROR: Something has gone horribly wrong with the file structure in data.js.\nEncountered a non-string, non-object entry at entry " + key);
+                console.log("Wacky file structure entry:");
+                console.log(idlist);
+                break;
         }
-    }
-    
-    if (document.getElementById("sav-exitedtruelab").checked) {
-        values[523] = "12";
-    }
-    values[542] = document.getElementById("sav-plotvalue").value;
-    values[545] = document.getElementById("sav-havecell").checked ? "1" : "0";
-    values[547] = document.getElementById("sav-location").value;
+    });
 }
 
 function saveIniToFile(ini) {
@@ -434,74 +452,71 @@ function start() {
         advanced.classList.remove("hidden");
         document.getElementById("hide-advanced").innerHTML = "Hide";
     }
-    for (let i = 0; i < flags.length; i += 3) {
-        for (let j = 0; j < 3; j++) {
-            let checkDesc = false,
-                newLabel = document.createElement("label");
-            newLabel.setAttribute("for", "sav-flag-" + (i + j));
-            newLabel.innerHTML = "[" + (i + j) + "] " + flags[i + j][0];
-            if (typeof flags[i + j][1] === "string") {
-                newLabel.title = flags[i + j][1];
-                checkDesc = true;
-            }
-            
-            // Hide unused flags, highlight debug ones.
-            if (flags[i + j][0] === "unused" || (checkDesc && (
-                flags[i + j][1].indexOf("nused") !== -1 || // "U" removed for case insensitivity
-                flags[i + j][1].indexOf("Unaccessed") !== -1
-            ))) {
-                newLabel.classList.add("gray");
-            } else if (checkDesc && flags[i + j][1].indexOf("Debug") !== -1) {
-                newLabel.classList.add("red");
-            }
-            
-            advanced.appendChild(newLabel);
+    for (let i = 0; i < flags.length; i++) {
+        let checkDesc = false,
+            newDiv = document.createElement("div"),
+            newLabel = document.createElement("label"),
+            newField;
+        newLabel.setAttribute("for", "sav-flag-" + i);
+        newLabel.innerHTML = "[" + i + "] " + flags[i][0];
+        if (typeof flags[i][1] === "string") {
+            newLabel.title = flags[i][1];
+            checkDesc = true;
         }
-        for (let j = 0; j < 3; j++) {
-            let newField;
-            if (typeof flags[i + j][2] === "object") { // Options listed
-                newField = document.createElement("select");
-                for (const key of Object.keys(flags[i + j][2]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
-                    let newOption  = document.createElement("option"),
-                        newContent = document.createTextNode(flags[i + j][2][key]);
-                    newOption.setAttribute("value", key);
-                    newOption.appendChild(newContent);
-                    newField.appendChild(newOption);
-                }
-                newField.setAttribute("id", "sav-flag-" + (i + j));
-                newField.value = 0;
-                if (i > 500) {
-                    debugVars[i + j] = newField;
-                }
-            } else if (typeof flags[i + j][2] === "string") { // Simple boolean
-                newField = document.createElement("div");
-                newField.setAttribute("class", "checkbox");
-                newField.style.marginTop = 0;
-                
-                let newOption = document.createElement("input");
-                newOption.setAttribute("type", "checkbox");
-                newOption.addEventListener("change", function() {
-                    this.nextSibling.value = Number(this.checked);
-                });
-                newField.appendChild(newOption);
-                
-                newOption = document.createElement("input");
-                newOption.setAttribute("type", "number");
-                newOption.addEventListener("change", function() {
-                    this.previousSibling.checked = Number(this.value);
-                });
-                newOption.style.width = "100%";
-                newOption.setAttribute("id", "sav-flag-" + (i + j));
-                newOption.value = 0;
-                newField.appendChild(newOption);
-            } else { // Numerical value
-                newField = document.createElement("input");
-                newField.setAttribute("type", "number");
-                newField.setAttribute("id", "sav-flag-" + (i + j));
-                newField.value = 0;
-            }
-            advanced.appendChild(newField);
+        
+        // Hide unused flags, highlight debug ones.
+        if (flags[i][0] === "unused" || (checkDesc && (
+            flags[i][1].indexOf("nused") !== -1 || // "U" removed for case insensitivity
+            flags[i][1].indexOf("Unaccessed") !== -1
+        ))) {
+            newLabel.classList.add("gray");
+        } else if (checkDesc && flags[i][1].indexOf("Debug") !== -1) {
+            newLabel.classList.add("red");
         }
+        
+        newDiv.appendChild(newLabel);
+        
+        if (typeof flags[i][2] === "object") { // Options listed
+            newField = document.createElement("select");
+            for (const key of Object.keys(flags[i][2]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
+                let newOption  = document.createElement("option"),
+                    newContent = document.createTextNode(flags[i][2][key]);
+                newOption.setAttribute("value", key);
+                newOption.appendChild(newContent);
+                newField.appendChild(newOption);
+            }
+            newField.setAttribute("id", "sav-flag-" + i);
+            newField.value = 0;
+        } else if (typeof flags[i][2] === "string") { // Simple boolean
+            newField = document.createElement("div");
+            newField.setAttribute("class", "checkbox");
+            newField.style.marginTop = 0;
+            
+            let newCheckbox = document.createElement("input");
+            newCheckbox.setAttribute("type", "checkbox");
+            newCheckbox.addEventListener("change", function() {
+                this.nextSibling.value = Number(this.checked);
+            });
+            newField.appendChild(newCheckbox);
+            
+            let newInput = document.createElement("input");
+            newInput.setAttribute("type", "number");
+            newInput.addEventListener("change", function() {
+                this.previousSibling.checked = Number(this.value);
+            });
+            newInput.style.width = "100%";
+            newInput.setAttribute("id", "sav-flag-" + i);
+            newInput.value = 0;
+            newField.appendChild(newInput);
+        } else { // Numerical value
+            newField = document.createElement("input");
+            newField.setAttribute("type", "number");
+            newField.setAttribute("id", "sav-flag-" + i);
+            newField.value = 0;
+        }
+        newField.style.width = "100%";
+        newDiv.appendChild(newField);
+        advanced.appendChild(newDiv);
     }
     loadPresetSelect();
     loadPreset("Ruins Start");
@@ -630,7 +645,7 @@ function start() {
             cellOpts[210] = "Papyrus's Phone";
         }
         for (let i = 1; i <= 8; i++) {
-            updateSelection("sav-cellslot" + i);
+            updateSelection("sav-cellslot" + i, null, cellOpts);
         }
     });
     
