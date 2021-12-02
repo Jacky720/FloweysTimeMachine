@@ -77,97 +77,461 @@
       <div>
         <h1>Persistent Data (undertale.ini)</h1>
         <p>Things that UNDERTALE remembers throughout multiple playthroughs</p>
+        <p>
+          <small>
+            Psst... You're a hacker, right? You want to see everything?
+            <a
+              id="ini-advanced-toggle"
+              data-hides="ini-advanced"
+            >Toggle advanced mode</a>
+          </small>
+        </p>
       </div>
 
       <section>
-        <fieldset>
-          <legend>General</legend>
-          <div class="grid-cols-3">
-            <label for="ini-file">
-              <img src="res/heart.svg" /><span>FILE</span>
-            </label>
-            <input id="ini-file" type="file" class="hidden" />
-            <button id="ini-loadbutton" class="disabled">
-              <img src="res/load.png" /><span>LOAD</span>
-            </button>
-            <button id="ini-savebutton">
-              <img src="res/star.png" /><span>SAVE</span>
-            </button>
-            
-            <label for="ini-name">Name</label>
+        <div class="flex">
+          <fieldset class="grid">
+            <legend>General</legend>
+            <div class="grid-cols-3">
+              <label for="ini-file">
+                <img src="res/heart.svg" /><span>FILE</span>
+              </label>
+              <input id="ini-file" type="file" class="hidden" />
+              <button id="ini-loadbutton" class="disabled">
+                <img src="res/load.png" /><span>LOAD</span>
+              </button>
+              <button id="ini-savebutton">
+                <img src="res/star.png" /><span>SAVE</span>
+              </button>
+
+              <label for="ini-name">Name</label>
+              <input
+                id="ini-name"
+                class="col-span-3"
+                placeholder="Name the fallen human"
+                type="text"
+                autocomplete="off"
+              />
+              <label for="ini-fun">Fun</label>
+              <label for="ini-love">LOVE</label>
+              <label for="ini-kills">Kills</label>
+              <input
+                id="ini-fun"
+                placeholder="Fun"
+                type="number"
+                autocomplete="off"
+              />
+              <input
+                id="ini-love"
+                placeholder="LOVE"
+                type="number"
+                autocomplete="off"
+              />
+              <input
+                id="ini-kills"
+                placeholder="Kills"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <label for="ini-location">Location</label>
+            <select
+              id="ini-location"
+              class="w-full"
+            ></select>
+            <div class="grid-cols-2 mt-1.5" style="align-items: center;">
+              <label for="allowed-locations">Filter rooms:</label>
+              <select id="allowed-locations"></select>
+            </div>
+            <label for="ini-gameover">Game Overs</label>
             <input
-              id="ini-name"
-              class="col-span-3"
-              placeholder="Name the fallen human"
-              type="text"
-              autocomplete="off"
-            />
-            <label for="ini-fun">Fun</label>
-            <label for="ini-love">LOVE</label>
-            <label for="ini-kills">Kills</label>
-            <input
-              id="ini-fun"
-              placeholder="Fun"
+              id="ini-gameover"
+              placeholder="Game Overs"
               type="number"
               autocomplete="off"
             />
+            <label for="ini-asgore-deaths">Deaths to Asgore</label>
             <input
-              id="ini-love"
+              id="ini-asgore-deaths"
+              placeholder="Deaths to Asgore"
+              type="number"
+              autocomplete="off"
+            />
+            <div class="checkbox" title="Unlocks the Developer Room in Snowdin.">
+              <input id="ini-dodged-credits" type="checkbox" />
+              <label for="ini-dodged-credits">Dodged special thanks</label>
+            </div>
+            <div class="checkbox">
+              <input id="ini-defeatedasriel" type="checkbox" />
+              <label
+                title="Defeated Asriel (true pacifist finished)"
+                for="ini-defeatedasriel"
+                >Defeated Asriel</label
+              >
+            </div>
+            <div class="checkbox">
+              <input id="ini-true-reset" type="checkbox" />
+              <label
+                title="True Reset"
+                for="ini-true-reset"
+                >Used True Reset</label
+              >
+            </div>
+          </fieldset>
+          
+          <fieldset class="grid ini-advanced hidden">
+            <legend>Deja vu</legend>
+            <label for="ini-toriel-pie">Pie preference</label>
+            <select
+              title="Delicious"
+              id="ini-toriel-pie"
+            ></select>
+            <div class="fakenum">
+              <label for="ini-papyrus-met">Times met Papyrus</label>
+              <input
+                id="ini-papyrus-met"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-papyrus-spared">Times spared Papyrus</label>
+              <input
+                id="ini-papyrus-spared"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-papyrus-dated">Times dated Papyrus</label>
+              <input
+                id="ini-papyrus-dated"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-undyne-dated">Times dated Undyne</label>
+              <input
+                id="ini-undyne-dated"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-alphys-dated">Times dated Alphys</label>
+              <input
+                id="ini-alphys-dated"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+          </fieldset>
+        </div>
+        
+        
+        <div>
+          <fieldset class="grid">
+            <legend>Omega Flowey</legend>
+            <label for="ini-omega-deaths">Times you died</label>
+            <input
+              id="ini-omega-deaths"
+              placeholder="Times you died"
+              type="number"
+              autocomplete="off"
+            />
+            <label for="ini-omega-soul">Upcoming soul fight</label>
+            <select
+              title="Upcoming soul fight"
+              id="ini-omega-soul"
+            ></select>
+            <div class="checkbox">
+              <input id="ini-omega-trapped" type="checkbox" data-hides="savefile8" />
+              <label 
+                title="Trapped in Flowey's World"
+                for="ini-omega-trapped"
+                >Trapped in Flowey's World</label
+              >
+            </div>
+            <button id="sav-savefile8" class="hidden savefile8" title="This file is used to persist your save data after the Omega Flowey fight.">
+              <img src="res/star.png" /><span>FILE8</span>
+            </button>
+            <label for="ini-omega-beat">Flowey defeat state</label>
+            <select id="ini-omega-beat"></select>
+          </fieldset>
+          
+          <fieldset class="grid ini-advanced hidden">
+            <legend>Sans</legend>
+            <div class="fakenum">
+              <label for="ini-sans-met">Times you met him</label>
+              <input
+                id="ini-sans-met"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-papyrus-killed">Times killed Papyrus</label>
+              <input
+                id="ini-papyrus-killed"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <p>Last Corridor meetings with:</p>
+            <div class="grid-cols-2">
+              <label for="ini-sans-lv1">No kills</label>
+              <label for="ini-sans-lv2">Kills</label>
+              <input
+                id="ini-sans-lv1"
+                placeholder="Pacifist"
+                type="number"
+                autocomplete="off"
+              />
+              <input
+                id="ini-sans-lv2"
+                placeholder="Unpacifist"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <label for="ini-sans-password" class="mt-1.5">Password progress</label>
+            <select
+              title="i'm the legendary fartmaster"
+              id="ini-sans-password"
+            ></select>
+            <label for="ini-sans-level">Last known LOVE</label>
+            <input
+              id="ini-sans-level"
               placeholder="LOVE"
               type="number"
               autocomplete="off"
             />
-            <input
-              id="ini-kills"
-              placeholder="Kills"
-              type="number"
-              autocomplete="off"
-            />
-            <label for="ini-location">Location</label>
-            <select
-              class="col-span-3"
-              id="ini-location"
-              class="w-full"
-            ></select>
-          </div>
-          <div class="grid-cols-2 mt-1.5">
-            <label for="allowed-locations">Filter rooms:</label>
-            <select id="allowed-locations"></select>
-          </div>
-        </fieldset>
-
-        <div class="flex">
-          <fieldset class="w-full">
-            <legend>Omega Flowey & Other</legend>
-            <div class="grid">
-              <label for="ini-omega-flowey-deaths">Times you died</label>
+            <br />
+            <div class="fakenum">
+              <label for="ini-sans-fights">Times fought Sans</label>
               <input
-                id="ini-omega-flowey-deaths"
-                placeholder="Times you died"
+                id="ini-sans-fights"
                 type="number"
                 autocomplete="off"
               />
-              <label for="ini-omega-flowey-soul">Upcoming soul fight</label>
+            </div>
+            <div class="fakenum">
+              <label for="ini-sans-midpoint">Times passed phase 1</label>
+              <input
+                id="ini-sans-midpoint"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-sans-dunk">Times got dunked</label>
+              <input
+                id="ini-sans-dunk"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-sans-undunk">Times entered phase 2</label>
+              <input
+                id="ini-sans-undunk"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <label for="ini-sans-kill">Times killed Sans</label>
+            <input
+              id="ini-sans-kill"
+              placeholder="Times killed Sans"
+              type="number"
+              autocomplete="off"
+            />
+          </fieldset>
+        </div>
+        
+        
+        <div class="flex ini-advanced hidden">
+          <fieldset>
+            <legend>Flowey</legend>
+            <div class="fakenum">
+              <label for="ini-flowey-met">Times you met him</label>
+              <input
+                id="ini-flowey-met"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-toriel-killed">Times killed Toriel</label>
+              <input
+                id="ini-toriel-killed"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="fakenum">
+              <label for="ini-toriel-spared">Times spared Toriel</label>
+              <input
+                id="ini-toriel-spared"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="checkbox">
+              <input id="ini-flowey-lecture" type="checkbox" />
+                <label 
+                  title="Different dialogue"
+                  for="ini-flowey-lecture"
+                >Received Toriel lecture</label
+              >
+            </div>
+            <div class="checkbox">
+              <input id="ini-flowey-geno" type="checkbox" />
+                <label 
+                  title="Why'd you have to SCREW IT UP?"
+                  for="ini-flowey-geno"
+                >Passed Genocide Ruins</label
+              >
+            </div>
+            <div class="fakenum">
+              <label for="ini-neutral-count">Neutral Routes</label>
+              <input
+                id="ini-neutral-count"
+                type="number"
+                autocomplete="off"
+              />
+            </div>
+            <div class="checkbox">
+              <input id="ini-flowey-alter" type="checkbox" />
+                <label 
+                  title="Flowey disappears"
+                  for="ini-flowey-alter"
+                >Flowey met post-Neutral</label
+              >
+            </div>
+            <div class="checkbox">
+              <input id="ini-asgore-suicide" type="checkbox" />
+                <label 
+                  title="One-time event"
+                  for="ini-asgore-suicide"
+                >Asgore committed suicide</label
+              >
+            </div>
+            <label for="ini-flowey-speech" class="mt-1.5">Post-Pacifist speech</label>
+            <select
+              title="Post-Pacifist speech"
+              id="ini-flowey-speech"
+              class="w-full"
+            ></select>
+            <div class="checkbox">
+              <input id="ini-flowey-kill" type="checkbox" data-hides="flowey-lessons" />
+                <label 
+                  title="No advice"
+                  for="ini-flowey-kill"
+                >Killed Flowey</label
+              >
+            </div>
+            <div class="flowey-lessons">
+              <div class="checkbox">
+                <input id="ini-flowey-gone" type="checkbox" />
+                  <label 
+                    title="He's not coming back"
+                    for="ini-flowey-gone"
+                  >Failed Genocide Route</label
+                >
+              </div>
+              <p>First Neutral run:</p>
+              <div class="grid-cols-2">
+                <div class="checkbox">
+                  <input id="ini-flowey-no-kills" type="checkbox" />
+                    <label 
+                      title="Good"
+                      for="ini-flowey-no-kills"
+                    >No EXP</label
+                  >
+                </div>
+                <div class="checkbox">
+                  <input id="ini-flowey-i-kill" type="checkbox" />
+                    <label 
+                      title="Bad"
+                      for="ini-flowey-i-kill"
+                    >With EXP</label
+                  >
+                </div>
+              </div>
+              <label for="ini-flowey-change">Different Neutral end</label>
               <select
-                title="Upcoming soul fight"
-                id="ini-omega-flowey-soul"
+                title="Changing from good to evil"
+                id="ini-flowey-change"
                 class="w-full"
               ></select>
               <div class="checkbox">
-                <input id="ini-omega-flowey-trapped" type="checkbox" data-hides="sav-savefile8" />
-                <label 
-                  title="Trapped in Flowey's World"
-                  for="ini-omega-flowey-trapped"
-                  >Trapped in Flowey's World</label
+                <input id="ini-flowey-asg-kill" type="checkbox" />
+                  <label 
+                    title="'What is wrong with you' -Flowey"
+                    for="ini-flowey-asg-kill"
+                  >Killed only Asgore</label
                 >
               </div>
-              <button id="sav-savefile8" class="hidden" title="This file is used to persist your save data after the Omega Flowey fight.">
-                <img src="res/star.png" /><span>FILE8</span>
-              </button>
-              <div class="checkbox" style="margin-top: -1px">
-                <input id="ini-dodged-all-special-thanks" type="checkbox" />
-                <label for="ini-dodged-all-special-thanks">Dodged special thanks</label>
+              <div class="checkbox">
+                <input id="ini-alphys-date-fail" type="checkbox" />
+                  <label 
+                    title="The lab was right there..."
+                    for="ini-alphys-date-fail"
+                  >Dated Alphys, fail Pacifist</label
+                >
               </div>
+              <label for="ini-flowey-extra">Additional lectures</label>
+              <select
+                title="Keep going back for more"
+                id="ini-flowey-extra"
+                class="w-full"
+              ></select>
+            </div>
+          </fieldset>
+
+          <fieldset class="w-full">
+            <legend>Scene skipping</legend>
+            <div class="checkbox">
+              <input id="ini-mett-opera" type="checkbox" />
+              <label 
+                title="Allows you to skip the opera on repeats"
+                for="ini-mett-opera"
+                >Seen Mettaton's opera</label
+              >
+            </div>
+            <div class="checkbox">
+              <input id="ini-mett-fought" type="checkbox" />
+              <label 
+                title="Allows you to turn Mettaton immediately"
+                for="ini-mett-opera"
+                >Fought Mettaton EX</label
+              >
+           </div>
+            <label for="ini-mett-essay">Essays written</label>
+            <input
+              id="ini-mett-essay"
+              placeholder="Essays written"
+              type="number"
+              autocomplete="off"
+              class="w-full"
+            />
+            <div class="checkbox">
+              <input id="ini-sans-met" type="checkbox" />
+              <label 
+                title="Skip his monologue"
+                for="ini-sans-met"
+                >Received Sans's Judgement</label
+              >
+            </div>
+            <div class="checkbox">
+              <input id="ini-under-tale" type="checkbox" />
+              <label 
+                title="Skip lore dump"
+                for="ini-under-tale"
+                >Heard Asriel's Story</label
+              >
             </div>
           </fieldset>
         </div>
@@ -225,10 +589,9 @@
             <select
               class="col-span-3"
               id="sav-location"
-              class="w-full"
             ></select>
           </div>
-          <div class="grid-cols-2 mt-1.5">
+          <div class="grid-cols-2 mt-1.5" style="align-items: center;">
             <label for="allowed-locations-2">Filter rooms:</label>
             <select id="allowed-locations-2"></select>
           </div>
@@ -302,7 +665,7 @@
             <input id="sav-havecell" type="checkbox" data-hides="cellslots" />
             <label for="sav-havecell">You have a cellphone</label>
           </div>
-          <div class="grid-cols-2 mt-1.5 hidden" id="cellslots">
+          <div class="grid-cols-2 mt-1.5 hidden cellslots">
             <label for="sav-cellslot1">SLOT 1</label>
             <label for="sav-cellslot2">SLOT 2</label>
             <select id="sav-cellslot1"></select>
@@ -571,11 +934,14 @@
             <div class="col-span-2">
               <p>PLEASE only proceed if you know what you are doing!</p>
               <p>Each flag has a mouseover explanation.</p>
-              <p><a href="help.html#Advanced_Mode">More info</a></p>
+              <a href="help.html#Advanced_Mode">More info</a>
             </div>
-            <button id="hide-advanced">Show</button>
+            <button
+              id="sav-hide-advanced"
+              data-hides="sav-advanced"
+            >Show</button>
           </fieldset>
-          <div class="grid-cols-3 mt-1.5 hidden" id="advanced"></div>
+          <div class="grid-cols-3 mt-1.5 hidden sav-advanced" id="advanced"></div>
         </fieldset>
       </section>
     </div>

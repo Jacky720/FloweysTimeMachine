@@ -116,6 +116,22 @@ input:not([type="file"]):not([type="checkbox"]),
   gap: 0.5rem;
 }
 
+.fakenum {
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  -moz-gap: 0.5rem;
+  gap: 0.5rem;
+}
+
+.fakenum label {
+  width: 85%;
+}
+
+.fakenum input {
+  width: 15%;
+}
+
 [type="checkbox"] {
   -webkit-appearance: none;
   -moz-appearance: none;
@@ -261,4 +277,13 @@ td:first-child {
 
 .hidden {
     display: none;
+}
+
+small, small * {
+    color: #888888;
+}
+
+small a {
+    text-decoration: underline;
+    font-size: 1em;
 }

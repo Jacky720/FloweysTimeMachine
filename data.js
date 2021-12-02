@@ -14,15 +14,72 @@ const basicBool = "checkbox",
 const iniIDs = [
     // Element ID, section, key
     // TODO: Consider restructuring as {section: {key: id}} or [id, values] or whatever
-    ["ini-name",     "General", "Name" ],
-    ["ini-location", "General", "Room" ],
-    ["ini-kills",    "General", "Kills"],
-    ["ini-love",     "General", "Love" ],
-    ["ini-fun",      "General", "fun"  ],
-    ["ini-omega-flowey-trapped", "FFFFF", "F"],
-    ["ini-omega-flowey-soul",    "FFFFF", "P"],
-    ["ini-omega-flowey-deaths",  "FFFFF", "D"],
-    ["ini-dodged-all-special-thanks", "reset", "s_key"]
+    
+    // General
+    ["ini-name",             "General", "Name"    ],
+    ["ini-location",         "General", "Room"    ],
+    ["ini-kills",            "General", "Kills"   ],
+    ["ini-love",             "General", "Love"    ],
+    ["ini-fun",              "General", "fun"     ],
+    ["ini-gameover",         "General", "Gameover"],
+    ["ini-asgore-deaths",    "Asgore",  "KillYou" ],
+    ["ini-dodged-credits",   "reset",   "s_key"   ],
+    ["ini-defeatedasriel",   "F7",      "F7"      ],
+    ["ini-true-reset",       "reset",   "reset"   ],
+    
+    // Deja vu
+    ["ini-toriel-pie",       "Toriel",  "Bscotch" ],
+    ["ini-papyrus-met",      "Papyrus", "M1"      ],
+    ["ini-papyrus-spared",   "Papyrus", "PS"      ],
+    ["ini-papyrus-dated",    "Papyrus", "PD"      ],
+    ["ini-undyne-dated",     "Undyne",  "UD"      ],
+    ["ini-alphys-dated",     "Alphys",  "AD"      ],
+    
+    // Omega Flowey
+    ["ini-omega-trapped",    "FFFFF",   "F"       ],
+    ["ini-omega-soul",       "FFFFF",   "P"       ],
+    ["ini-omega-deaths",     "FFFFF",   "D"       ],
+    ["ini-omega-beat",       "FFFFF",   "E"       ],
+    
+    // Sans
+    ["ini-sans-met",         "Sans",    "M1"      ],
+    ["ini-papyrus-killed",   "Papyrus", "PK"      ],
+    ["ini-sans-lv1",         "Sans",    "MeetLv1" ],
+    ["ini-sans-lv2",         "Sans",    "MeetLv2" ],
+    ["ini-sans-password",    "Sans",    "Pass"    ],
+    ["ini-sans-level",       "Sans",    "MeetLv"  ],
+    ["ini-sans-fights",      "Sans",    "F"       ],
+    ["ini-sans-midpoint",    "Sans",    "MP"      ],
+    ["ini-sans-dunk",        "Sans",    "SS"      ],
+    ["ini-sans-undunk",      "Sans",    "SS2"     ],
+    ["ini-sans-kill",        "Sans",    "SK"      ],
+    
+    // Flowey
+    ["ini-flowey-met",       "Flowey",  "Met1"    ],
+    ["ini-toriel-killed",    "Toriel",  "TK"      ],
+    ["ini-toriel-spared",    "Toriel",  "TS"      ],
+    ["ini-flowey-lecture",   "Flowey",  "FloweyExplain1"],
+    ["ini-flowey-geno",      "Flowey",  "truename"],
+    ["ini-flowey-geno",      "Flowey",  "alter2"  ], // I don't know if this works either
+    ["ini-neutral-count",    "General", "Won"     ],
+    ["ini-flowey-alter",     "Flowey",  "Alter"   ],
+    ["ini-asgore-suicide",   "Flowey",  "SK"      ],
+    ["ini-flowey-speech",    "EndF",    "EndF"    ],
+    ["ini-flowey-kill",      "Flowey",  "K"       ],
+    ["ini-flowey-gone",      "Flowey",  "SPECIALK"],
+    ["ini-flowey-no-kills",  "Flowey",  "NK"      ],
+    ["ini-flowey-i-kill",    "Flowey",  "IK"      ],
+    ["ini-flowey-change",    "Flowey",  "CHANGE"  ],
+    ["ini-flowey-asg-kill",  "Flowey",  "AK"      ],
+    ["ini-alphys-date-fail", "Flowey",  "AF"      ],
+    ["ini-flowey-extra",     "Flowey",  "EX"      ],
+    
+    // Speedrun strats (skipping certain scenes)
+    ["ini-mett-opera",       "Mett",     "O"      ],
+    ["ini-mett-fought",      "Mettaton", "BossMet"],
+    ["ini-mett-essay",       "MTT",      "EssayNo"],
+    ["ini-sans-met",         "Sans",     "EndMet" ],
+    ["ini-under-tale",       "General",  "Tale"   ]
 ],
       flagOffset = 30, // UT flags start on line 31 and values[] is zero-indexed
       flagCount  = 512; // Counting 0; flag 512 isn't actually stored.
@@ -41,6 +98,7 @@ let fileStructure = [
         "sav-exp",
         "sav-gold",
         "sav-kills"
+        // Additional entries added by loop below
     ],
     "flags",
     [
@@ -1744,7 +1802,7 @@ let stateChoiceArrays = {
     "sav-plotvalue": plotValues,
     "sav-location": rooms[1],
     "ini-location": rooms[1],
-    "ini-omega-flowey-soul": [
+    "ini-omega-soul": [
         "None (Initial state)",
         "Light blue (Initiated fight)",
         "Orange",
@@ -1753,6 +1811,40 @@ let stateChoiceArrays = {
         "Green",
         "Yellow",
         "None (Finished fight)"
+    ],
+    "ini-toriel-pie": [
+        "Initial state",
+        "Butterscotch",
+        "Cinnamon"
+    ],
+    "ini-omega-beat": [
+        "Initial state",
+        "Fight or Spare",
+        "At exit"
+    ],
+    "ini-sans-password": [
+        "Initial state",
+        "\"stupid doodoo butt\"",
+        "\"legendary fartmaster\"",
+        "\"out of material\""
+    ],
+    "ini-flowey-speech": [
+        "Initial state",
+        "Credits complete",
+        "Received speech"
+    ],
+    "ini-flowey-change": [
+        "Initial state",
+        "Changed to pacifism",
+        "Changed from pacifism"
+    ],
+    "ini-flowey-extra": [
+        "Initial state",
+        "\"You're pissing me off.\"",
+        "Flowey Fan Club",
+        "Smiley Trashbag",
+        "\"You're just bored.\"",
+        "\"Don't you have anything better to do?\""
     ]
 };
 

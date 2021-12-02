@@ -24,16 +24,33 @@ stateChoiceArrays["allowed-locations-2"] = roomSelectOptions;
 let inputForFlag = {}; // reverse flagFor for later on (flagFor defined in data.js)
 for (const id in flagFor) {
     inputForFlag["sav-flag-" + flagFor[id]] = id;
-}
-
-for (const id in flagFor) {
     if (!stateChoiceArrays[id]) {
         stateChoiceArrays[id] = flags[flagFor[id]][2];
     }
 }
 
+/* Functions (TODO: consider re-ordering in some logical way):
+ * - [function name]:    [inputs] > [outputs]
+ * - parseIniFromText:   ini string > ini object
+ * - flowey_laugh_once:  n/a > sound
+ * - loadIniFromFile:    ini file > ini object, ini form
+ * - loadSaveFromFile:   save file > save object, save form
+ * - updatePersistentDataForm: ini object > ini form
+ * - updateIniFromForm:  ini form > ini object
+ * - updateSelection:    value > form
+ * - updateSaveDataForm: save object > save form
+ * - updateSaveValuesFromForm: save form > save object
+ * - saveIniToFile:      ini object > ini file
+ * - saveSaveValuesToFile: save object > save file
+ * - loadPreset:         preset form > ini + save form
+ * - saveUserPreset:     preset object > cookies
+ * - start:              n/a > all forms and events
+ */
+
 function parseIniFromText(text) {
+    // This function converts a string (from an undertale.ini file) to an ini object, which is returned.
     "use strict";
+    
     let lines = text.match(/[^\r\n]+/g),
         section = null,
         ini = {};
@@ -80,7 +97,9 @@ function parseIniFromText(text) {
 }
 
 function flowey_laugh_once() {
+    // This function changes Flowey's face and plays his laugh sound effect.
     "use strict";
+    
     if (localStorage.getItem("laughed") !== "true") {
         document.getElementById("floweyimg").src = "res/flowey_evil.png";
         if (!document.getElementById("mute").checked) {
@@ -91,15 +110,16 @@ function flowey_laugh_once() {
     }
 }
 
-
-// Load undertale.ini data into an ini object and execute a closure on it.
-function loadIniFromFile(file, closure) {
+function loadIniFromFile(file) {
+    // This function loads undertale.ini data into an ini object and the form.
     "use strict";
+    
     let reader = new FileReader();
     reader.addEventListener("load", function() {
         const text = this.result;
         try {
-            closure(parseIniFromText(text));
+            ini = parseIniFromText(text);
+            updatePersistentDataForm(ini);
         } catch (err) {
             window.alert("Error parsing undertale.ini: " + err);
         }
@@ -107,22 +127,25 @@ function loadIniFromFile(file, closure) {
     reader.readAsText(file);
 }
 
-// Load save data from a file into an array of values, and execute a closure on it.
-function loadSaveFromFile(file, closure) {
+function loadSaveFromFile(file) {
+    // This function loads save data from a file into an array of values and the form.
     "use strict";
+    
     let reader = new FileReader();
     reader.addEventListener("load", function() {
         const text = this.result;
-        closure(text.match(/[^\r\n]+/g).map(function(line) {
+        saveLines = text.match(/[^\r\n]+/g).map(function(line) {
             return line.trim();
-        }));
+        });
+        updateSaveDataForm(saveLines);
     });
     reader.readAsText(file);
 }
 
-// Update the persistent data form from an ini object.
 function updatePersistentDataForm(iniobj) {
+    // This function updates the persistent data form from an ini object.
     "use strict";
+    
     iniIDs.forEach(function([elementID, section, key]) {
         if (iniobj[section]) {
             updateSelection(elementID, iniobj[section][key]);
@@ -132,9 +155,10 @@ function updatePersistentDataForm(iniobj) {
     });
 }
 
-// Update an ini object from the persistent data form.
 function updateIniFromForm(iniobj) {
+    // This function updates an ini object from the persistent data form.
     "use strict";
+    
     iniIDs.forEach(function([elementID, section, key]) {
         let value = 0;
         if (document.getElementById(elementID).type === "checkbox") {
@@ -157,7 +181,9 @@ function updateIniFromForm(iniobj) {
 }
 
 function updateSelection(id, value, newChoiceArray) {
+    // This function updates the value and/or available options of a form element.
     "use strict";
+    
     let select = document.getElementById(id),
         type   = "unknown";
     
@@ -181,11 +207,14 @@ function updateSelection(id, value, newChoiceArray) {
                 value = Number(value.trim());
             }
             break;
+        
         case "boolean":
             value = Number(value);
             break;
+        
         case "number":
             break;
+        
         case "object":
             if (value !== null) {
                 window.alert(`ERROR: Very strange value at updateSelection. Got a non-null object as value: ${JSON.stringify(value)}.
@@ -209,8 +238,10 @@ Setting value to 0.`);
                 value = select.value;
             }
             break;
+        
         default:
             window.alert(`ERROR: Very strange value at updateSelection. Expected a number, string, boolean, undefined, or object, and somehow got a(n) ${typeof value}: ${value}.`);
+            break;
     }
     
     switch (type) {
@@ -270,9 +301,10 @@ Sub-type: ${select.type}`);
     }
 }
 
-// Update the save data form from an array of values.
 function updateSaveDataForm(values) {
+    // This function updates the save data form from a values object.
     "use strict";
+    
     // This would normally use updateSelection("sav-weapon", null, items); but the weapon and armor are updated shortly thereafter anyway.
     if (document.getElementById("allow-non-equipables").checked) {
         stateChoiceArrays["sav-weapon"] = items;
@@ -291,6 +323,7 @@ function updateSaveDataForm(values) {
                     currentValue++;
                 });
                 break;
+            
             case "string":
                 switch (idlist) { // Futureproofing, may have other arrays in need of linking for DR.
                     case "flags":
@@ -309,12 +342,14 @@ function updateSaveDataForm(values) {
                         // I would do currentValue++ each loop but this is probably better
                         currentValue += flagCount;
                         break;
+                    
                     default:
                         window.alert(`ERROR: Something has gone horribly wrong with the file structure in data.js.
 Encountered a string entry ("${idlist}") without defined handling.`);
                         break;
                 }
                 break;
+            
             default:
                 window.alert(`ERROR: Something has gone horribly wrong with the file structure in data.js.
 Encountered a non-string, non-object entry at entry ${key}`);
@@ -325,8 +360,8 @@ Encountered a non-string, non-object entry at entry ${key}`);
     });
 }
 
-// Update an array of values from the save data form.
 function updateSaveValuesFromForm(values) {
+    // This function updates a values object from the save data form.
     "use strict";
     
     let currentValue = 0;
@@ -346,6 +381,7 @@ function updateSaveValuesFromForm(values) {
                     currentValue++;
                 });
                 break;
+            
             case "string":
                 switch (idlist) { // Futureproofing, may have other arrays in need of linking for DR.
                     case "flags":
@@ -362,12 +398,14 @@ function updateSaveValuesFromForm(values) {
 
                         currentValue += flagCount;
                         break;
+                    
                     default:
                         window.alert(`ERROR: Something has gone horribly wrong with the file structure in data.js.
 Encountered a string entry ("${idlist}") without defined handling.`);
                         break;
                 }
                 break;
+            
             default:
                 window.alert(`ERROR: Something has gone horribly wrong with the file structure in data.js.
 Encountered a non-string, non-object entry at entry ${key}`);
@@ -379,7 +417,9 @@ Encountered a non-string, non-object entry at entry ${key}`);
 }
 
 function saveIniToFile(ini) {
+    // This function saves an ini object to an undertale.ini file.
     "use strict";
+    
     let string = "";
     for (const section in ini) {
         string += `[${section}]\r\n`;
@@ -397,7 +437,9 @@ function saveIniToFile(ini) {
 }
 
 function saveSaveValuesToFile(values, slot) {
+    // This function saves a values object to a file0 or file8 file.
     "use strict";
+    
     if (!slot) {
         slot = "0";
     }
@@ -414,26 +456,20 @@ function saveSaveValuesToFile(values, slot) {
     flowey_laugh_once();
 }
 
-function loadPresetSelect() {
-    "use strict";
-    let selectNode = document.getElementById("builtinpresetselect");
-    for (const k in presets) {
-        let newOption  = document.createElement("option"),
-            newContent = document.createTextNode(k);
-        newOption.appendChild(newContent);
-        selectNode.appendChild(newOption);
-    }
-}
-
 let ini, saveLines;
-function loadPreset(name) {
-    ini = presets[name].ini;
-    saveLines = presets[name].lines;
+function loadPreset(val) {
+    // This function loads a preset to the form.
+    "use strict";
+    
+    ({ini: ini, lines: saveLines} = presets[Object.keys(presets)[val]]);
     updateSaveDataForm(saveLines);
     updatePersistentDataForm(ini);
 }
 
 function saveUserPreset(name) {
+    // This function saves a user preset to cookies.
+    "use strict";
+    
     updateIniFromForm(ini);
     updateSaveValuesFromForm(saveLines);
     let obj = {
@@ -446,12 +482,16 @@ function saveUserPreset(name) {
 }
 
 function start() {
+    // This function initializes the form after the HTML loads in.
     "use strict";
+    
     let userPresets = localStorage.getItem("userPresets"),
-        advancedMode = (localStorage.getItem("advanced") == "true");
+        advancedMode = (localStorage.getItem("advanced") === "true"),
+        iniAdvanced = (localStorage.getItem("iniAdvanced") === "true");
     if (userPresets === null) {
         localStorage.setItem("userPresets", JSON.stringify({}));
     } else {
+        // TODO: Try updateSelection here.
         for (const key in JSON.parse(userPresets)) {
             let presetSelect2 = document.getElementById("userpresetselect"),
                 option2 = document.createElement("option"),
@@ -470,7 +510,14 @@ function start() {
     let advanced = document.getElementById("advanced");
     if (advancedMode) {
         advanced.classList.remove("hidden");
-        document.getElementById("hide-advanced").innerHTML = "Hide";
+        document.getElementById("sav-hide-advanced").innerHTML = "Hide";
+    }
+    if (iniAdvanced) {
+        Object.values(
+          document.getElementsByClassName("ini-advanced")
+        ).forEach(function(element) {
+            element.classList.remove("hidden");
+        });
     }
     for (let i = 0; i < flags.length; i++) {
         let checkDesc = false,
@@ -498,18 +545,11 @@ function start() {
         
         if (typeof flags[i][2] === "object") { // Options listed
             newField = document.createElement("select");
-            for (const key of Object.keys(flags[i][2]).sort((a, b) => a - b)) { // (Decimal keys don't automatically sort correctly)
-                let newOption  = document.createElement("option"),
-                    newContent = document.createTextNode(flags[i][2][key]);
-                newOption.setAttribute("value", key);
-                newOption.appendChild(newContent);
-                newField.appendChild(newOption);
-            }
             newField.setAttribute("id", "sav-flag-" + i);
-            newField.value = 0;
+            // Value and options initialized during preset load
         } else if (typeof flags[i][2] === "string") { // Simple boolean
             newField = document.createElement("div");
-            newField.setAttribute("class", "checkbox");
+            newField.classList.add("checkbox");
             newField.style.marginTop = 0;
             
             let newCheckbox = document.createElement("input");
@@ -539,8 +579,8 @@ function start() {
         newDiv.appendChild(newField);
         advanced.appendChild(newDiv);
     }
-    loadPresetSelect();
-    loadPreset("Ruins Start");
+    updateSelection("builtinpresetselect", 0, Object.keys(presets));
+    loadPreset(0);
     
     // Selecting a file
     let iniFile, saveFile;
@@ -569,20 +609,14 @@ function start() {
             window.alert("You need to choose a file first!");
             return;
         }
-        loadIniFromFile(iniFile, function(iniobj) {
-            updatePersistentDataForm(iniobj);
-            ini = iniobj;
-        });
+        loadIniFromFile(iniFile);
     });
     document.getElementById("sav-loadbutton").addEventListener("click", function() {
         if (!saveFile) {
             window.alert("You need to choose a file first!");
             return;
         }
-        loadSaveFromFile(saveFile, function(lines) {
-            updateSaveDataForm(lines);
-            saveLines = lines;
-        });
+        loadSaveFromFile(saveFile);
     });
     
     // Saving
@@ -669,6 +703,10 @@ function start() {
             updateSelection("sav-cellslot" + i, null, cellOpts);
         }
     });
+    document.getElementById("ini-advanced-toggle").addEventListener("click", function() {
+        iniAdvanced = !iniAdvanced;
+        localStorage.setItem("iniAdvanced", iniAdvanced);
+    });
     
     // Presets
     document.getElementById("builtinpresetload").addEventListener("click", function() {
@@ -706,8 +744,7 @@ function start() {
             let item = localStorage.getItem("userPresets"),
                 presets = JSON.parse(item),
                 obj = presets[name];
-            ini = obj.ini;
-            saveLines = obj.lines;
+            ({ini: ini, lines: saveLines} = obj);
             updateSaveDataForm(saveLines);
             updatePersistentDataForm(ini);
         } else {
@@ -758,8 +795,7 @@ function start() {
         this.src = "res/flowey_wink.png";
         localStorage.setItem("laughed", false);
     });
-    document.getElementById("hide-advanced").addEventListener("click", function() {
-        advanced.classList.toggle("hidden");
+    document.getElementById("sav-hide-advanced").addEventListener("click", function() {
         advancedMode = !advancedMode;
         if (advancedMode) {
             this.innerHTML = "Hide";
@@ -786,8 +822,11 @@ function start() {
         }
         
         if (element.dataset.hides) {
-            element.addEventListener("change", function() {
-                document.getElementById(this.dataset.hides).classList.toggle("hidden");
+            element.addEventListener("click", function() {
+                let targetElements = document.getElementsByClassName(this.dataset.hides);
+                Object.values(targetElements).forEach(function(element) {
+                    element.classList.toggle("hidden");
+                });
             });
         }
     });
