@@ -29,156 +29,29 @@ for (const id in flagFor) {
     }
 }
 
-/* Functions (TODO: consider re-ordering in some logical way):
- * - [function name]:    [inputs] > [outputs]
- * - parseIniFromText:   ini string > ini object
- * - flowey_laugh_once:  n/a > sound
- * - loadIniFromFile:    ini file > ini object, ini form
- * - loadSaveFromFile:   save file > save object, save form
- * - updatePersistentDataForm: ini object > ini form
- * - updateIniFromForm:  ini form > ini object
- * - updateSelection:    value > form
- * - updateSaveDataForm: save object > save form
- * - updateSaveValuesFromForm: save form > save object
- * - saveIniToFile:      ini object > ini file
- * - saveSaveValuesToFile: save object > save file
- * - loadPreset:         preset form > ini + save form
- * - saveUserPreset:     preset object > cookies
- * - start:              n/a > all forms and events
+/* Functions:
+ * - [function name]:          [inputs]      > [outputs]
+ *
+ * - updateSelection:          value         > form
+ *
+ * - updatePersistentDataForm: ini object    > ini form
+ * - updateIniFromForm:        ini form      > ini object
+ * - updateSaveDataForm:       save object   > save form
+ * - updateSaveValuesFromForm: save form     > save object
+ *
+ * - loadIniFromFile:          ini file      > ini object, ini form
+ * - loadSaveFromFile:         save file     > save object, save form
+ *
+ * - saveIniToFile:            ini object    > ini file
+ * - saveSaveValuesToFile:     save object   > save file
+ *
+ * - loadPreset:               preset form   > ini + save form
+ * - saveUserPreset:           preset object > cookies
+ *
+ * - flowey_laugh_once:        n/a           > sound
+ *
+ * - start:                    n/a           > all forms and events
  */
-
-function parseIniFromText(text) {
-    // This function converts a string (from an undertale.ini file) to an ini object, which is returned.
-    "use strict";
-    
-    let lines = text.match(/[^\r\n]+/g),
-        section = null,
-        ini = {};
-    
-    lines.forEach(function(line) {
-        // Ignore empty lines
-        if (line === "") {
-            return;
-        }
-        // If line starts with [, it is a section header
-        const lbracket = line.indexOf("[");
-        if (lbracket !== -1) {
-            const rbracket = line.slice(lbracket).indexOf("]") + lbracket;
-            if (rbracket !== -1) {
-                section = line.slice(lbracket + 1, rbracket);
-                ini[section] = {};
-            }
-        } else { // Otherwise, it is assumed to be an assignment
-            if (section === null) {
-                throw "Assignment outside of a section";
-            }
-            
-            const eq = line.indexOf("=");
-            if (eq === -1) {
-                throw "Expected '='";
-            }
-            
-            const lquot = line.indexOf('"');
-            if (lquot === -1) {
-                throw "Expected '\"'";
-            }
-            
-            const rquot = line.slice(lquot + 1).indexOf('"') + lquot + 1;
-            if (rquot === -1) {
-                throw "Unterminated value string";
-            }
-            
-            const value = line.slice(lquot + 1, rquot),
-                  key = line.slice(0, eq);
-            ini[section][key] = value;
-        }
-    });
-    return ini;
-}
-
-function flowey_laugh_once() {
-    // This function changes Flowey's face and plays his laugh sound effect.
-    "use strict";
-    
-    if (localStorage.getItem("laughed") !== "true") {
-        document.getElementById("floweyimg").src = "res/flowey_evil.png";
-        if (!document.getElementById("mute").checked) {
-            let audio = new Audio("res/flowey_laugh.mp3");
-            audio.play();
-        }
-        localStorage.setItem("laughed", "true");
-    }
-}
-
-function loadIniFromFile(file) {
-    // This function loads undertale.ini data into an ini object and the form.
-    "use strict";
-    
-    let reader = new FileReader();
-    reader.addEventListener("load", function() {
-        const text = this.result;
-        try {
-            ini = parseIniFromText(text);
-            updatePersistentDataForm(ini);
-        } catch (err) {
-            window.alert("Error parsing undertale.ini: " + err);
-        }
-    });
-    reader.readAsText(file);
-}
-
-function loadSaveFromFile(file) {
-    // This function loads save data from a file into an array of values and the form.
-    "use strict";
-    
-    let reader = new FileReader();
-    reader.addEventListener("load", function() {
-        const text = this.result;
-        saveLines = text.match(/[^\r\n]+/g).map(function(line) {
-            return line.trim();
-        });
-        updateSaveDataForm(saveLines);
-    });
-    reader.readAsText(file);
-}
-
-function updatePersistentDataForm(iniobj) {
-    // This function updates the persistent data form from an ini object.
-    "use strict";
-    
-    iniIDs.forEach(function([elementID, section, key]) {
-        if (iniobj[section]) {
-            updateSelection(elementID, iniobj[section][key]);
-        } else {
-            updateSelection(elementID, 0);
-        }
-    });
-}
-
-function updateIniFromForm(iniobj) {
-    // This function updates an ini object from the persistent data form.
-    "use strict";
-    
-    iniIDs.forEach(function([elementID, section, key]) {
-        let value = 0;
-        if (document.getElementById(elementID).type === "checkbox") {
-            value = Number(document.getElementById(elementID).checked);
-        } else {
-            value = document.getElementById(elementID).value;
-        }
-        
-        if (value) {
-            if (!iniobj[section]) {
-                iniobj[section] = {};
-            }
-            ini[section][key] = String(value);
-        } else {
-            if (iniobj[section]) {
-                iniobj[section][key] = "0";
-            }
-        }
-    });
-}
 
 function updateSelection(id, value, newChoiceArray) {
     // This function updates the value and/or available options of a form element.
@@ -209,7 +82,7 @@ function updateSelection(id, value, newChoiceArray) {
             break;
         
         case "boolean":
-            value = Number(value);
+            value = value ? 1 : 0;
             break;
         
         case "number":
@@ -217,7 +90,7 @@ function updateSelection(id, value, newChoiceArray) {
         
         case "object":
             if (value !== null) {
-                window.alert(`ERROR: Very strange value at updateSelection. Got a non-null object as value: ${JSON.stringify(value)}.
+                window.alert(`ERROR: Very strange value at updateSelection. Got a non-null object with value: ${JSON.stringify(value)}.
 Setting value to 0.`);
                 value = 0;
                 break;
@@ -240,7 +113,7 @@ Setting value to 0.`);
             break;
         
         default:
-            window.alert(`ERROR: Very strange value at updateSelection. Expected a number, string, boolean, undefined, or object, and somehow got a(n) ${typeof value}: ${value}.`);
+            window.alert(`ERROR: Very strange value at updateSelection. Expected a number, string, boolean, undefined, or object, and somehow got a(n) ${typeof value}: ${JSON.stringify(value)}.`);
             break;
     }
     
@@ -299,6 +172,44 @@ Node type: ${select.nodeName}
 Sub-type: ${select.type}`);
             break;
     }
+}
+
+function updatePersistentDataForm(iniobj) {
+    // This function updates the persistent data form from an ini object.
+    "use strict";
+    
+    iniIDs.forEach(function([elementID, section, key]) {
+        if (iniobj[section]) {
+            updateSelection(elementID, iniobj[section][key]);
+        } else {
+            updateSelection(elementID, 0);
+        }
+    });
+}
+
+function updateIniFromForm(iniobj) {
+    // This function updates an ini object from the persistent data form.
+    "use strict";
+    
+    iniIDs.forEach(function([elementID, section, key]) {
+        let value = 0;
+        if (document.getElementById(elementID).type === "checkbox") {
+            value = document.getElementById(elementID).checked ? "1" : "0";
+        } else {
+            value = String(document.getElementById(elementID).value);
+        }
+        
+        if (value && value !== "0") {
+            if (!iniobj[section]) {
+                iniobj[section] = {};
+            }
+            ini[section][key] = value;
+        } else {
+            if (iniobj[section]) {
+                delete iniobj[section][key];
+            }
+        }
+    });
 }
 
 function updateSaveDataForm(values) {
@@ -416,17 +327,92 @@ Encountered a non-string, non-object entry at entry ${key}`);
     });
 }
 
+function loadIniFromFile(file) {
+    // This function loads undertale.ini data into an ini object and the form.
+    "use strict";
+    
+    let reader = new FileReader();
+    reader.addEventListener("load", function() {
+        const text = this.result;
+        try {
+            let lines = text.match(/[^\r\n]+/g),
+                section = null;
+            ini = {};
+
+            lines.forEach(function(line, lineNum) {
+                // Ignore empty lines
+                if (line === "") {
+                    return;
+                }
+                // If line starts with [, it is a section header
+                const lbracket = line.indexOf("[");
+                if (lbracket !== -1) {
+                    const rbracket = line.slice(lbracket).indexOf("]") + lbracket;
+                    if (rbracket !== -1) {
+                        section = line.slice(lbracket + 1, rbracket);
+                        ini[section] = {};
+                    }
+                } else { // Otherwise, it is assumed to be an assignment
+                    if (section === null) {
+                        throw `Assignment outside of a section: "${line}" at line ${lineNum}`;
+                    }
+
+                    const eq = line.indexOf("=");
+                    if (eq === -1) {
+                        throw `Expected '=', got "${line}" at line ${lineNum}`;
+                    }
+
+                    const lquot = line.indexOf('"');
+                    if (lquot === -1) {
+                        throw `Expected '"', got "${line}" at line ${lineNum}`;
+                    }
+
+                    const rquot = line.slice(lquot + 1).indexOf('"') + lquot + 1;
+                    if (rquot === -1) {
+                        throw `Unterminated value string "${line}" at line ${lineNum}`;
+                    }
+
+                    const value = line.slice(lquot + 1, rquot),
+                          key = line.slice(0, eq);
+                    ini[section][key] = value;
+                }
+            });
+            updatePersistentDataForm(ini);
+        } catch (err) {
+            window.alert("Error parsing undertale.ini: " + err);
+        }
+    });
+    reader.readAsText(file);
+}
+
+function loadSaveFromFile(file) {
+    // This function loads save data from a file into an array of values and the form.
+    "use strict";
+    
+    let reader = new FileReader();
+    reader.addEventListener("load", function() {
+        const text = this.result;
+        saveLines = text.match(/[^\r\n]+/g).map(function(line) {
+            return line.trim();
+        });
+        updateSaveDataForm(saveLines);
+    });
+    reader.readAsText(file);
+}
+
 function saveIniToFile(ini) {
     // This function saves an ini object to an undertale.ini file.
     "use strict";
     
     let string = "";
-    for (const section in ini) {
-        string += `[${section}]\r\n`;
-        for (const key in ini[section]) {
-            string += `${key}="${ini[section][key]}"\r\n`;
+    Object.entries(ini).forEach(function([name, section]) {
+        if (Object.keys(section).length) {
+            string += `[${name}]\r\n`;
+            Object.entries(section).forEach(function([key, value]) {
+                string += `${key}="${value}"\r\n`;
+            });
         }
-    }
+    });
     
     saveAs(
       new Blob([string], {type: "text/plain;charset=utf-8"}),
@@ -444,9 +430,10 @@ function saveSaveValuesToFile(values, slot) {
         slot = "0";
     }
     let string = "";
-    for (let i = 0; i < values.length; i++) {
-        string += values[i] + "\r\n";
-    }
+    
+    Object.values(values).forEach(function(value) {
+        string += value + "\r\n";
+    });
     
     saveAs(
       new Blob([string], {type: "application/octet-stream"}),
@@ -472,13 +459,26 @@ function saveUserPreset(name) {
     
     updateIniFromForm(ini);
     updateSaveValuesFromForm(saveLines);
-    let obj = {
+    let presets = JSON.parse(localStorage.getItem("userPresets"));
+    presets[name] = {
         "ini": ini,
         "lines": saveLines,
-    },
-        presets = JSON.parse(localStorage.getItem("userPresets"));
-    presets[name] = obj;
+    };
     localStorage.setItem("userPresets", JSON.stringify(presets));
+}
+
+function flowey_laugh_once() {
+    // This function changes Flowey's face and plays his laugh sound effect.
+    "use strict";
+    
+    if (localStorage.getItem("laughed") !== "true") {
+        document.getElementById("floweyimg").src = "res/flowey_evil.png";
+        if (!document.getElementById("mute").checked) {
+            let audio = new Audio("res/flowey_laugh.mp3");
+            audio.play();
+        }
+        localStorage.setItem("laughed", "true");
+    }
 }
 
 function start() {
@@ -487,18 +487,12 @@ function start() {
     
     let userPresets = localStorage.getItem("userPresets"),
         advancedMode = (localStorage.getItem("advanced") === "true"),
-        iniAdvanced = (localStorage.getItem("iniAdvanced") === "true");
+        iniAdvanced = (localStorage.getItem("iniAdvanced") === "true"),
+        muted = (localStorage.getItem("mute") === "true");
     if (userPresets === null) {
-        localStorage.setItem("userPresets", JSON.stringify({}));
-    } else {
-        // TODO: Try updateSelection here.
-        for (const key in JSON.parse(userPresets)) {
-            let presetSelect2 = document.getElementById("userpresetselect"),
-                option2 = document.createElement("option"),
-                text2 = document.createTextNode(key);
-            option2.appendChild(text2);
-            presetSelect2.appendChild(option2);
-        }
+        localStorage.setItem("userPresets", "{}");
+    } else if (Object.keys(JSON.parse(userPresets)).length) {
+        updateSelection("userpresetselect", 0, Object.keys(JSON.parse(userPresets)));
     }
     if (localStorage.getItem("laughed") === "true") {
         document.getElementById("floweyimg").src = "res/flowey_evil.png";
@@ -518,6 +512,9 @@ function start() {
         ).forEach(function(element) {
             element.classList.remove("hidden");
         });
+    }
+    if (muted) {
+        document.getElementById("mute").checked = true;
     }
     for (let i = 0; i < flags.length; i++) {
         let checkDesc = false,
@@ -555,7 +552,7 @@ function start() {
             let newCheckbox = document.createElement("input");
             newCheckbox.setAttribute("type", "checkbox");
             newCheckbox.addEventListener("change", function() {
-                this.nextSibling.value = Number(this.checked);
+                this.nextSibling.value = this.checked ? 1 : 0;
                 updateSelection(inputForFlag[this.nextSibling.id], this.checked);
             });
             newField.appendChild(newCheckbox);
@@ -703,10 +700,6 @@ function start() {
             updateSelection("sav-cellslot" + i, null, cellOpts);
         }
     });
-    document.getElementById("ini-advanced-toggle").addEventListener("click", function() {
-        iniAdvanced = !iniAdvanced;
-        localStorage.setItem("iniAdvanced", iniAdvanced);
-    });
     
     // Presets
     document.getElementById("builtinpresetload").addEventListener("click", function() {
@@ -718,12 +711,8 @@ function start() {
             window.alert("You did not enter a valid name, preset not created.");
         } else {
             saveUserPreset(name);
-            let presetSelect = document.getElementById("userpresetselect"),
-                option = document.createElement("option"),
-                text = document.createTextNode(name);
-            option.appendChild(text);
-            presetSelect.appendChild(option);
-            presetSelect.value = name;
+            let userPresets = Object.keys(JSON.parse(localStorage.getItem("userPresets")));
+            updateSelection("userpresetselect", userPresets.length - 1, userPresets)
             document.getElementById("userpresetload").classList.remove('disabled');
             document.getElementById("userpresetsave").classList.remove('disabled');
             document.getElementById("userpresetdelete").classList.remove('disabled');
@@ -742,9 +731,8 @@ function start() {
         const name = document.getElementById("userpresetselect").value;
         if (name !== null && name !== "") {
             let item = localStorage.getItem("userPresets"),
-                presets = JSON.parse(item),
-                obj = presets[name];
-            ({ini: ini, lines: saveLines} = obj);
+                presets = JSON.parse(item);
+            ({ini: ini, lines: saveLines} = presets[name]);
             updateSaveDataForm(saveLines);
             updatePersistentDataForm(ini);
         } else {
@@ -754,22 +742,17 @@ function start() {
     document.getElementById("userpresetdelete").addEventListener("click", function() {
         let selection = document.getElementById("userpresetselect"),
             name = selection.value,
-            children = selection.childNodes;
-        for (let child of children) {
-            if (child.value === name) {
-                selection.removeChild(child);
-                break;
-            }
-        }
-        let item = localStorage.getItem("userPresets"),
-            presets = JSON.parse(item);
-        delete presets[name];
+            presets = JSON.parse(localStorage.getItem("userPresets"));
+        delete presets[Object.keys(presets)[name]];
         localStorage.setItem("userPresets", JSON.stringify(presets));
-        if (document.getElementById("userpresetselect").value === "") {
+        if (Object.keys(presets).length === 0) {
+            selection.removeChild(selection.firstChild);
             document.getElementById("userpresetload").classList.add('disabled');
             document.getElementById("userpresetsave").classList.add('disabled');
             document.getElementById("userpresetdelete").classList.add('disabled');
             document.getElementById("userpresetexport").classList.add('disabled');
+        } else {
+            updateSelection("userpresetselect", Math.max(Number(name) - 1, 0), Object.keys(presets));
         }
     });
     if (document.getElementById("userpresetselect").value !== "") {
@@ -780,7 +763,7 @@ function start() {
     }
     document.getElementById("userpresetexport").addEventListener("click", function() {
         let presets = JSON.parse(localStorage.getItem("userPresets")),
-            name = document.getElementById("userpresetselect").value;
+            name = Object.keys(presets)[document.getElementById("userpresetselect").value];
         saveUserPreset(name);
         const preset = presets[name],
               string = `presets["${name}"] = ${JSON.stringify(preset)};`;
@@ -804,6 +787,14 @@ function start() {
         }
         localStorage.setItem("advanced", advancedMode);
     });
+    document.getElementById("ini-advanced-toggle").addEventListener("click", function() {
+        iniAdvanced = !iniAdvanced;
+        localStorage.setItem("iniAdvanced", iniAdvanced);
+    });
+    document.getElementById("mute").addEventListener("click", function() {
+        muted = !muted;
+        localStorage.setItem("mute", muted);
+    });
     
     document.querySelectorAll("[id^=\"sav-\"],[id^=\"ini-\"]").forEach(function(element) {
         if (flagFor[element.id] >= 0) {
@@ -823,8 +814,9 @@ function start() {
         
         if (element.dataset.hides) {
             element.addEventListener("click", function() {
-                let targetElements = document.getElementsByClassName(this.dataset.hides);
-                Object.values(targetElements).forEach(function(element) {
+                Object.values(
+                  document.getElementsByClassName(this.dataset.hides)
+                ).forEach(function(element) {
                     element.classList.toggle("hidden");
                 });
             });

@@ -711,7 +711,7 @@ const plotValues = { // Unobtainable values are commented out; this may change t
      "185": "\"This doesn't look like my map at all\"/Muffet defeated (Genocide)",
   // "193": "Mettaton defeated, Alphys scene incomplete",
      "199": "Mettaton defeated",
-     "201": "True Lab complete (Pacifist)/Last Corridor complete (Neutral/Genocide)",
+     "201": "True Lab (Pacifist)/Last Corridor (Neutral/Genocide) complete",
      "206": "Asgore intro complete",
      "207": "\"A visit to the dentist\"",
      "208": "Pre-Asgore",
