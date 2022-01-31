@@ -413,7 +413,7 @@ var flags = {
     304: ["susie_ate_cake", "Whether Susie ate Ralsei's entire cake (yet).", basicBool],
     305: ["told_mom_studying", "Whether you told Toriel you were going to be studying with Susie over the phone, with or without mentioning the trash orb.", basicBool],
     306: ["told_mom_orb", "Whether you called Toriel while just around the corner with a trash orb on your head. Also sets flag 305.", basicBool],
-    307: ["fave_party_member", "Apparently intended for who you gave the plush to, but- oh my that's a decompiler failure. It's reset to 1 in the acid river ride, right before some really interesting Ralsei dialogue that's cut because of it.", [
+    307: ["fave_party_member", "Records who you gave the plush to, but, uh, it's reset to 1 in the acid river ride, right before some really interesting Ralsei dialogue that's cut because of it.", [
             "Default state",
             "Ralsei",
             "Susie",
