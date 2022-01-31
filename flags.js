@@ -31,6 +31,8 @@ var basicBool = "checkbox",
         44: "Mauswheel"
     };
 
+// Big thanks to Xkeeper for cluing me in on a bunch of the Chapter 1 flags: https://mini.xkeeper.net/private/deltarune/data/flags.txt
+// This definitely saved a lot of time in figuring out stuff like Thrash Machine and Goner values.
 var flags = {
     // Format of [name (String), description (String), options (Object)]
     6: ["disable_text_skip", "Volatile. Prevents you from skipping text in some cutscenes.", basicBool],
