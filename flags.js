@@ -78,9 +78,9 @@ var flags = {
     45: ["freezes", "I have no idea?? It looks like nothing sets it, but apparently it's intended for IceShock violences..."],
     // no 46-49
     50: ["last_encounter_end", "Volatile. Contains what you did in the last encounter. For multiple enemies, priority is Violence > Spare > Pacify > IceShock.", enemyStates],
-    51: ["last_monster_end_0", "Volatile. What you did you the top monster in the last encounter.", enemyStates],
-    52: ["last_monster_end_1", "Volatile. What you did you the middle monster in the last encounter.", enemyStates],
-    53: ["last_monster_end_2", "Volatile. What you did you the bottom monster in the last encounter.", enemyStates],
+    51: ["last_monster_end_0", "Volatile. What you did to the top monster in the last encounter.", enemyStates],
+    52: ["last_monster_end_1", "Volatile. What you did to the middle monster in the last encounter.", enemyStates],
+    53: ["last_monster_end_2", "Volatile. What you did to the bottom monster in the last encounter.", enemyStates],
     54: ["encounter_pointer", "Volatile. Contains a numerical value representing the current encounter, which is used to permanently store the outcome of that encounter in a flag."],
     55: ["enemy_x", "Volatile. Used to return enemies to the correct spot in the overworld when frozen."],
     56: ["enemy_y", "Volatile. Used to return enemies to the correct spot in the overworld when frozen."],
