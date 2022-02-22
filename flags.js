@@ -53,6 +53,7 @@ var flags = {
     17: ["audio_volume", "Volume of all audio. Doesn't work correctly?"],
     20: ["other_text_command", "Volatile. Controls how some characters' overworld sprites interact with their dialogue, among other things."],
     21: ["door_freeze_timer", "Volatile. Controls timing of room fades?"],
+    22: ["disable_x_slowing", "Added in 1.08. Pressing Z while holding C in combat toggles it, throwing a bone to speedrunners.", basicBool],
     29: ["susie_show_eyes", "Makes Susie show her eyes at the end of Chapter 1. Ignored in Chapter 2; she shows her eyes anyway.", basicBool],
     30: ["ralsei_hat_state", "Controls Ralsei's face selection. Ignored in Chapter 2; he's hatless anyway.", [
             "Hat",
