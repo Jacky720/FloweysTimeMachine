@@ -585,9 +585,9 @@ var flags = {
     409: ["inspected_kris_bed", "Whether you inspected your own bed. Necessary to retain your Bed Inspector title.", basicBool],
     410: ["inspected_susie_bed", "Whether you inspected Susie's bed. Necessary to retain your Bed Inspector title.", basicBool],
     411: ["inspected_lancer_bed", "Whether you inspected Lancer's bed. Necessary to retain your Bed Inspector title.", basicBool],
-    412: ["inspected_clover_bed", "Whether you inspected Clover's bed. Necessary to retain your Bed Inspector title.", basicBool],
+    412: ["inspected_clover_bed", "Whether you inspected Clover's bed. Necessary to retain your Bed Inspector title. Only obtainable on v1.09+ due to a bug.", basicBool],
     413: ["inspected_noelle_bed", "Whether you inspected Noelle's bed. Necessary to retain your Bed Inspector title.", basicBool],
-    414: ["bed_inspector_ch2", "Whether you retained your Bed Inspector title. That is, got slightly different Noelle bed dialogue.", basicBool],
+    414: ["bed_inspector_ch2", "Whether you retained your Bed Inspector title. That is, got slightly different Noelle bed dialogue. Only obtainable on v1.09+ due to a bug.", basicBool],
     415: ["mice_attack_reason", "What you told Noelle about the mice attacking her. The question was, 'What do I look like, the girl from the Nutcracker?'", [
             "Default state",
             "They like you",
