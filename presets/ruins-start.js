@@ -1,7 +1,7 @@
 presets["Ruins Start"] = {
     ini: {
         "General": {
-            "fun": "45",
+            "fun": "33",
             "Room": "6",
             "Kills": "0",
             "Time": "0",
@@ -10,9 +10,6 @@ presets["Ruins Start"] = {
         },
         "Flowey": {
             "Met1": "1"
-        },
-        "FFFFF": { // technically produces invalid save but it should work fine
-            "P": "0"
         }
     },
     lines: [
