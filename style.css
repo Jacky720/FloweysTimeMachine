@@ -127,8 +127,12 @@ input:not([type="file"]):not([type="checkbox"]),
   padding-right: 0.5rem;
   height: 2.25rem;
   justify-content: center;
-  appearance: none;
+  /* appearance: none; /* breaks removal of the inc/dec arrows on firefox */
   margin: 0;
+}
+
+select {
+  appearance: none;
 }
 
 .checkbox {
