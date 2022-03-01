@@ -130,6 +130,13 @@ input:not([type="file"]):not([type="checkbox"]),
 
 .fakenum input {
   width: 15%;
+  -moz-appearance: textfield;
+}
+
+.fakenum input::-webkit-outer-spin-button,
+.fakenum input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 
 [type="checkbox"] {
