@@ -1,39 +1,40 @@
-var basicBool = "checkbox",
-    enemyStates = [
-        "Default state",
-        "Violenced (includes SnowGrave)",
-        "Spared",
-        "Pacified",
-        "In combat (Ch. 1)",
-        "Susie (unused)",
-        "Frozen"
-    ],
-    recruits = {
-        1: "Invalid (1)",
-        5: "Rudinn",
-        6: "Hathy",
-        11: "Ponman",
-        13: "Rabbick",
-        14: "Bloxer",
-        15: "Jigsawry",
-        20: "JEVIL",
-        22: "Rudinn Ranger",
-        23: "Head Hathy",
-        30: "Ambyu-Lance",
-        31: "Poppup",
-        32: "Tasque",
-        33: "Werewire",
-        34: "Maus",
-        35: "Virovirokun",
-        36: "Swatchling",
-        40: "Werewerewire",
-        42: "Tasque Manager",
-        44: "Mauswheel"
-    };
+const basicBool = "checkbox",
+      enemyStates = [
+          "Default state",
+          "Violenced (includes SnowGrave)",
+          "Spared",
+          "Pacified",
+          "In combat (Ch. 1)",
+          "Susie (unused)",
+          "Frozen"
+      ],
+      recruits = {
+          1: "Invalid (1)",
+          5: "Rudinn",
+          6: "Hathy",
+          11: "Ponman",
+          13: "Rabbick",
+          14: "Bloxer",
+          15: "Jigsawry",
+          20: "JEVIL",
+          22: "Rudinn Ranger",
+          23: "Head Hathy",
+          30: "Ambyu-Lance",
+          31: "Poppup",
+          32: "Tasque",
+          33: "Werewire",
+          34: "Maus",
+          35: "Virovirokun",
+          36: "Swatchling",
+          40: "Werewerewire",
+          42: "Tasque Manager",
+          44: "Mauswheel"
+      },
+      flagCount = 2500; // 9999 in Chapter 1, need a method for changing this dynamically (might just fork it lol)
 
 // Big thanks to Xkeeper for cluing me in on a bunch of the Chapter 1 flags: https://mini.xkeeper.net/private/deltarune/data/flags.txt
 // This definitely saved a lot of time in figuring out stuff like Thrash Machine and Goner values.
-var flags = {
+let flags = {
     // Format of [name (String), description (String), options (Object)]
     6: ["disable_text_skip", "Volatile. Prevents you from skipping text in some cutscenes.", basicBool],
     7: ["disable_menu?", "Seems to prevent you opening the Dark World menu. And affect the music when leaving shops?", basicBool],
@@ -945,3 +946,8 @@ var flags = {
     
     // I'll need to check if any four-digit values are actually used, and go over all of this with a fine comb, but, wow! Nice!
 };
+
+for (let i = 0; i < flagCount; i++) {
+    if (!flags[i])
+        flags[i] = ["unused"];
+}
