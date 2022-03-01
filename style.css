@@ -87,6 +87,29 @@ legend {
   pointer-events: none;
 }
 
+.fakenum {
+  margin-top: 0.25rem;
+  display: flex;
+  align-items: center;
+  -moz-gap: 0.5rem;
+  gap: 0.5rem;
+}
+
+.fakenum label {
+  width: 85%;
+}
+
+.fakenum input {
+  width: 15%;
+  -moz-appearance: textfield;
+}
+
+.fakenum input::-webkit-outer-spin-button,
+.fakenum input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 button,
 select,
 input:not([type="file"]):not([type="checkbox"]),
@@ -114,29 +137,6 @@ input:not([type="file"]):not([type="checkbox"]),
   align-items: center;
   -moz-gap: 0.5rem;
   gap: 0.5rem;
-}
-
-.fakenum {
-  margin-top: 0.25rem;
-  display: flex;
-  align-items: center;
-  -moz-gap: 0.5rem;
-  gap: 0.5rem;
-}
-
-.fakenum label {
-  width: 85%;
-}
-
-.fakenum input {
-  width: 15%;
-  -moz-appearance: textfield;
-}
-
-.fakenum input::-webkit-outer-spin-button,
-.fakenum input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
 }
 
 [type="checkbox"] {
