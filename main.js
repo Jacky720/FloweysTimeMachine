@@ -481,6 +481,28 @@ function flowey_laugh_once() {
     }
 }
 
+let ini, saveLines;
+
+function loadPreset(name) {
+    console.log("Loading preset: " + name);
+    ini       = presets[name].ini;
+    saveLines = presets[name].lines;
+    updateSaveDataForm(saveLines);
+    updatePersistentDataForm(ini);
+}
+
+function saveUserPreset(name) {
+    updateIniFromForm(ini);
+    updateSaveValuesFromForm(saveLines);
+    let obj = {
+        "ini": ini,
+        "lines": saveLines,
+    },
+        presets = JSON.parse(localStorage.getItem("userPresets"));
+    presets[name] = obj;
+    localStorage.setItem("userPresets", JSON.stringify(presets));
+}
+
 function start() {
     // This function initializes the form after the HTML loads in.
     "use strict";
@@ -705,6 +727,7 @@ function start() {
     document.getElementById("builtinpresetload").addEventListener("click", function() {
         loadPreset(document.getElementById("builtinpresetselect").value);
     });
+    
     document.getElementById("userpresetnew").addEventListener("click", function() {
         const name = window.prompt("Enter the name for your new preset");
         if (name === null || name === "") {
