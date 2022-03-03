@@ -516,7 +516,7 @@ function start() {
     if (muted) {
         document.getElementById("mute").checked = true;
     }
-    for (let i = 0; i < flags.length; i++) {
+    for (let i = 0; i < Object.keys(flags).length; i++) {
         let checkDesc = false,
             newDiv = document.createElement("div"),
             newLabel = document.createElement("label"),
