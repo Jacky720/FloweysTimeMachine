@@ -214,25 +214,25 @@ let flags = {
     218: ["solved_rouxls_puzz_2", "Whether you solved Rouxls's second puzzle.", basicBool],
     // no 219, but not as suspicious as some of these others
     220: ["thrash_machine_head", "Your Thrash Machine's head.", {
-            -1: "In design",
-            0: "Laser",
-            1: "Sword",
-            2: "Flame",
-            3: "Duck"
+            "-1": "In design",
+            "0": "Laser",
+            "1": "Sword",
+            "2": "Flame",
+            "3": "Duck"
          }],
     221: ["thrash_machine_body", "Your Thrash Machine's chassis.", {
-            -1: "In design",
-            0: "Plain",
-            1: "Wheel",
-            2: "Tank",
-            3: "Duck"
+            "-1": "In design",
+            "0": "Plain",
+            "1": "Wheel",
+            "2": "Tank",
+            "3": "Duck"
          }],
     222: ["thrash_machine_shoe", "Your Thrash Machine's... well, there's a lot of variance here.", {
-            -1: "In design",
-            0: "Shoes",
-            1: "Wheels",
-            2: "Treads",
-            3: "Duck"
+            "-1": "In design",
+            "0": "Shoes",
+            "1": "Wheels",
+            "2": "Treads",
+            "3": "Duck"
          }],
     223: ["thrash_head_color", "Your Thrash Machine's head color. You should probably just edit it in-game."],
     224: ["thrash_body_color", "Your Thrash Machine's chassis color. You should probably just edit it in-game."],
@@ -333,7 +333,7 @@ let flags = {
     262: ["bouquet_quest_stage", "Progress toward failing to redeem Toriel and Asgore's relationship in Chapter 1.", [
             "Default state",
             "In flower shop",
-            "Received bouquet"
+            "Received bouquet",
             "Gave to Toriel",
             "Disposed of"
          ]],
@@ -346,9 +346,9 @@ let flags = {
     265: ["talked_to_catty", "Whether you talked to Catty in Chapter 1.", basicBool],
     // no 266
     267: ["unused_toriel_talk", "Progress talking to Toriel... in an unused variant. The whole thing is thouroughly broken.", {
-            -10: "Kris...?",
-            0: "Headband",
-            1: "Go to bed"
+            "-10": "Kris...?",
+            "0": "Headband",
+            "1": "Go to bed"
          }],
     268: ["called_in_house", "Whether you called Toriel's home phone, while at home. Unaccessed.", basicBool],
     269: ["talked_to_alphys", "Whether you met Alphys after school in Chapter 1. Alters her dialogue the morning of Chapter 2.", basicBool],
@@ -434,7 +434,7 @@ let flags = {
             7: "Disk Loaded",
             8: "Disk inserted",
             9: "Defeated Spamton NEO"
-         ]],
+         }],
     310: ["touched_cheese_maze", "Whether you touched the cheese in the maze, triggering an encounter and destroying it.", basicBool],
     311: ["destroyed_cheese_alone", "Whether you triggered the cheese maze without Noelle, prompting slightly different text when interacting with it; a cruel victory for those who hate cheese.", basicBool],
     312: ["talked_seam_ch2", "Seems to be set to 1 when you talk to Seam in Chapter 2, preventing them from repeating themselves.", basicBool],
@@ -531,7 +531,7 @@ let flags = {
             "0": "Default state",
             "0.5": "Mice in hole",
             "1": "Forcefield down"
-         ]],
+         }],
     369: ["saw_ralsusie", "Whether Noelle gave her one-time dialogue about seeing Ralsei and Susie having fun.", basicBool],
     370: ["solved_mansion_traffic", "There was traffic in the mansion?? And this disables it? Are mice involved?", basicBool],
     371: ["fought_tasque_manager", "Whether you fought Tasque Manager.", basicBool],
@@ -617,16 +617,16 @@ let flags = {
             "Did not miss"
          ]],
     426: ["swatchling_combo", "Volatile. The current combination of Swatchlings you are fighting. Later ones are harder, generally.", {
-            -1: "RRB",
-            0: "ROB",
-            1: "BGY",
-            2: "ROY",
-            3: "BYR",
-            4: "RBY",
-            5: "BYG",
-            6: "RYB",
-            7: "BRY",
-            8: "YGO"
+            "-1": "RRB",
+            "0": "ROB",
+            "1": "BGY",
+            "2": "ROY",
+            "3": "BYR",
+            "4": "RBY",
+            "5": "BYG",
+            "6": "RYB",
+            "7": "BRY",
+            "8": "YGO"
          }],
     427: ["unlocked_mint_chest", "Whether Virovirokun triggered the hidden path to the Revive Mint chest.", basicBool],
     428: ["finished_sweet_dodging", "Whether you... finished... the part where Sweet attacks you? Which one?", basicBool],
@@ -885,11 +885,11 @@ let flags = {
     907: ["vessel_honest", "Were you honest about your vessel choices?", ["Yes", "No"]],
     908: ["vessel_seizure", "Do you acknowledge the possibility of pain and seizure?", ["Yes", "No"]],
     909: ["vessel_gift", "The gift you give your vessel. Stored in reverse order for some reason.", {
-            -3: "Voice",
-            -2: "Bravery",
-            -1: "Ambition",
-            0: "Mind",
-            1: "Kindness",
+            "-3": "Voice",
+            "-2": "Bravery",
+            "-1": "Ambition",
+            "0": "Mind",
+            "1": "Kindness",
         }],
     910: ["ch1_egg_room", "Your progress to finding... him.", [
             "Default state",
@@ -909,7 +909,7 @@ let flags = {
             "3": "Got Freeze Ring",
             "4": "Passed forcefield",
             "5": "Froze mouse puzzle",
-            "6": "SnowGrave."
+            "6": "SnowGrave.",
             "7": "Entered mansion",
             "8": "Rouxls's condition explained",
             "9": "Did not see Suselle scene",
@@ -942,7 +942,7 @@ let flags = {
     953: ["glass_susie_glare", "Whether you saw Susie glare at you using the Glass.", basicBool],     
     954: ["gave_JEVIL_crystal", "Whether you gave Seam JEVIL's Shadow Crystal.", basicBool],
     // no 955-960
-    961: ["failed_spam_crystal", "Whether you got JEVIL's Shadow Crystal but failed to find Spamton's, and told Seam. They seem quite dejected...", basicBool], // :(
+    961: ["failed_spam_crystal", "Whether you got JEVIL's Shadow Crystal but failed to find Spamton's, and told Seam. They seem quite dejected...", basicBool] // :(
     
     // I'll need to check if any four-digit values are actually used, and go over all of this with a fine comb, but, wow! Nice!
 };
