@@ -242,14 +242,16 @@ function updateSaveDataForm(values) {
                             updateSelection(id, values[flagOffset + flagFor[id]]);
                         }
 
-                        // "<=" so 512's options load
-                        for (let i = 0; i <= flagCount; i++) {
+                        for (let i = 0; i < flagCount; i++) {
                             updateSelection("sav-flag-" + i, values[flagOffset + i], flags[i][2]);
                             // Update checkboxes (should have no ill effects on non-checkbox-based flags)
                             if (document.getElementById("sav-flag-" + i).nodeName === "INPUT") {
                                 document.getElementById("sav-flag-" + i).previousSibling.checked = Number(values[flagOffset + i]);
                             }
                         }
+
+                        // load flag 512 values, even if just for loading
+                        updateSelection("sav-flag-512", 0, flags[512][2]);
 
                         // I would do currentValue++ each loop but this is probably better
                         currentValue += flagCount;
