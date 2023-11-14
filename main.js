@@ -242,7 +242,8 @@ function updateSaveDataForm(values) {
                             updateSelection(id, values[flagOffset + flagFor[id]]);
                         }
 
-                        for (let i = 0; i < flagCount; i++) {
+                        // "<=" so 512's options load
+                        for (let i = 0; i <= flagCount; i++) {
                             updateSelection("sav-flag-" + i, values[flagOffset + i], flags[i][2]);
                             // Update checkboxes (should have no ill effects on non-checkbox-based flags)
                             if (document.getElementById("sav-flag-" + i).nodeName === "INPUT") {
