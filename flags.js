@@ -309,7 +309,7 @@ let flags = {
     257: ["table_hole_fingers", "Whether you tried to put your fingers in the picnic table.", basicBool],
     258: ["onionsan_ch1", "Onion's status.", [
             "Default state",
-            "Talking (volatile",
+            "Talking (volatile)",
             "Befriended",
             "Rejected"
          ]],
