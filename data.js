@@ -660,7 +660,7 @@ let flags = {
     136: ["got_chest_candy", "Whether you got a Dark Candy from the super secret Dark Candy location. (IDK)", basicBool], // RESEARCH THIS
     137: ["got_revive_dust", "Whether you got the Revive Dust.", basicBool],
     138: ["got_painting_mint", "Whether you got the fourth Revive Mint from a painting.", basicBool],
-    139: ["got_mansion_glowshard", "Whether you got the Glowshard in Queen's Mansion. No, I don't know where it is. Or if it's actually obtainable.", basicBool],
+    139: ["got_mansion_glowshard", "Whether you got the Glowshard in Queen's Mansion, found by activating all the platters behind the door on the 2F moving vases room.", basicBool],
     140: ["got_trash_candy", "Whether you got a Dark Candy from the Dark Candy trash can.", basicBool],
     141: ["got_chain_mail", "Whether you got the Chain Mail armor.", basicBool],
     142: ["got_spamton_chest", "Whether you got the Dealmaker/Puppet Scarf from a chest. There's one immediately after you beat Spamton, and one back at My Castle Town.", basicBool],
@@ -1025,7 +1025,7 @@ let flags = {
     // no 355
     356: ["lancer_cared_for", "Whether statue-Lancer has been pushed to the table and given his adorable bib.", basicBool],
     357: ["recruit_hacker", "Whether you collected all three Blue Checksmarks for Hacker.", basicBool],
-    358: ["entered_basement", "Tracks how many times you entered the basement, and whether you can see Susie stealing Ralsei's glasses. Might max out at 2?"],
+    358: ["entered_basement", "Tracks how many times you entered the basement alone, and whether you can see Susie stealing Ralsei's glasses."],
     359: ["met_hacker", "Whether you talked to Hacker. Note that the 2 state isn't directly used; see flag 357.", [
             "Default state",
             "Talked",
@@ -1043,7 +1043,7 @@ let flags = {
             "1": "Forcefield down"
          }],
     369: ["saw_ralsusie", "Whether Noelle gave her one-time dialogue about seeing Ralsei and Susie having fun.", basicBool],
-    370: ["solved_mansion_traffic", "There was traffic in the mansion?? And this disables it? Are mice involved?", basicBool],
+    370: ["solved_mansion_traffic", "Whether the traffic challenge at the end of floor 1F was completed, opening the room with the backdoor switch.", basicBool],
     371: ["fought_tasque_manager", "Whether you fought Tasque Manager.", basicBool],
     // no 372
     373: ["unlocked_east_basement", "Whether you disabled the forcefield in the basement with the final boss. Yeah, the teacups.", basicBool],
@@ -1257,8 +1257,8 @@ let flags = {
     556: ["encount_flee_task", "Tracks the state of the Snowgrave Tasques that run away from you.", enemyStates],
     557: ["encount_pipis_fake", "Tracks the state of the last Pipis encounter you had in the dining hall. Well, it would. Pipis don't chase you."],
     558: ["encount_tasque_return", "Tracks the state of the Tasques found when backtracking to Tasque Manager's room.", enemyStates],
-    // Snowgrave.
     559: ["encount_trash_popup", "Tracks the state of the Poppups found when backtracking to the Trash Zone with Noelle.", enemyStates],
+    // Snowgrave.
     560: ["encount_trash_viro", "Tracks the state of the Virovirokun found when backtracking to the Trash Zone on Snowgrave.", enemyStates],
     561: ["encount_trash_ww", "Tracks the state of the Werewire found when backtracking to the Trash Zone on Snowgrave.", enemyStates],
     562: ["encount_road_medic", "Tracks the state of the Ambyu-Lance found in the middle of the road on Snowgrave.", enemyStates],
