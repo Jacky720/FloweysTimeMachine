@@ -1071,7 +1071,7 @@ let flags = {
     382: ["dining_hall_complete", "Whether you finished the ultimate dining hall puzzle.", basicBool],
     383: ["solved_forcefield_1", "Whether you successfully activated both switches in the first forcefield puzzle, disabling it forever.", basicBool],
     384: ["fought_cheese_something?", "WHY ARE THERE SO MANY FLAGS FOR CHEESE??", basicBool],
-    385: ["balance_pot_status", "What happened in the vase-balancing minigame.", [
+    385: ["balance_pot_status", "What happened in the vase-balancing minigame. Resets to Dropped if you enter the room again after fighting the Swatchlings in the room.", [
             "Default state",
             "Dropped pot",
             "Success"
