@@ -8,6 +8,15 @@ const basicBool = "checkbox",
           "Susie (unused)",
           "Frozen"
       ],
+      tennaRanks = {
+          "-1": "?",
+          "0": "Z",
+          "1": "C",
+          "2": "B",
+          "3": "A",
+          "4": "S",
+          "5": "T"
+      },
       recruits = {
           // Unrecruitable enemy IDs commented
           1: "Invalid (1)", // placeholder enemy
@@ -610,8 +619,8 @@ let flags = {
     62: ["nonnarrative_intro_text", "Used when Noelle enters her first battle and when Susie wants to demonstrate UltimateHeal to not use the normal battle introduction typer.", basicBool],
     63: ["violenced_last", "Volatile. Triggers 'You/Noelle became stronger' when violencing enemies.", basicBool],
     64: ["storage_size", "The amount of items you can keep in your pockets. Always 24. No idea why this needed to be a flag."],
-    65: ["times_leveled", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
-    66: ["times_gained_at", "The number of times your AT and Magic have increased due to leveling up (every ten encounters). Used to prevent overly increasing them when sealing the fountain."],
+    65: ["times_leveled_ch2", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
+    66: ["times_gained_at_ch2", "The number of times your AT and Magic have increased due to leveling up (every ten encounters). Used to prevent overly increasing them when sealing the fountain."],
     
     100: ["got_glowshard", "Whether you obtained the Glowshard. Prevents it from re-appearing.", basicBool],
     101: ["got_candy", "How much Dark Candy you've taken from the first Dark Candy tree.", [
@@ -1152,20 +1161,20 @@ let flags = {
             "Kris",
             "Draw"
          ]],
-    436: ["called_mom_busy", "Whether you called home during the end sequence. Unique dialogue the first time, then everyone's too busy to pick it up.", basicBool],
-    437: ["fave_party_member_2", "Who you told Susie you would take to the festival in the end cutscene. Unaccessed.", [
+    436: ["called_mom_busy", "Whether you called home during the Chapter 2 end sequence. Unique dialogue the first time, then everyone's too busy to pick it up.", basicBool],
+    437: ["fave_party_member_2", "Who you told Susie you would take to the festival in the Chapter 2 end cutscene. Unaccessed.", [
             "Default state",
             "Noelle",
             "Ralsei",
             "Susie",
             "..."
          ]],
-    438: ["tutor_viro_location", "Where you fought the tutorial Virovirokun. Persists its ice statue in Snowgrave. VERIFY WHICH!", [
+    438: ["tutor_viro_location", "Where you fought the tutorial Virovirokun. Persists its ice statue in Snowgrave. TODO: Verify which?", [
             "Default state",
             "Progressed",
             "Backtracked"
          ]],
-    439: ["deposited_ch2_egg", "Whether you put the egg in the egg basket in Sans's store. It also works if you interact with any object on the northeast side of the store lol.", basicBool],
+    439: ["deposited_ch2_egg", "Whether you put the egg in the egg basket in Sans's store.", basicBool],
     440: ["interacted_ferris_poster", "Whether you interacted with the Ferris wheel poster with Noelle. One-time event.", basicBool],
     441: ["talked_friend_addison", "Whether you talked to the Addison selling Dating Shoes. One-time event. See also flag 421.", basicBool],
     442: ["learned_teacups", "Whether you've taken your first teacup ride and possibly gotten a tutorial on operating it.", basicBool],
@@ -1215,7 +1224,14 @@ let flags = {
     506: ["fought_bloxer", "Whether you fought Bloxer. If so, they don't chase you as diligently.", basicBool],
     507: ["fought_rudinn_ranger", "Whether you fought Rudinn Ranger. If so, they don't chase you at all.", basicBool],
     508: ["fought_hathyx", "Whether you fought Head Hathy. If so, they don't chase you at all.", basicBool],
-    // no 509-519?
+    // no 509-519? not in chapter 2
+    
+    511: ["shuttah_s_act", "Whether you've used S-Action during a Shuttah battle. Randomizes flavortext on repeat.", basicBool],
+    512: ["shuttah_r_act", "Whether you've used R-Action during a Shuttah battle. Reduces flavortext on repeat.", basicBool],
+    513: ["shuttah_kris_pic", "Whether you took a photo of Kris during the Shuttah fight. Alters repeat dialogue.", basicBool],
+    514: ["shuttah_susie_pic", "Whether you took a photo of Susie during the Shuttah fight. Alters repeat dialogue.", basicBool],
+    515: ["shuttah_ralsei_pic", "Whether you took a photo of Ralsei during the Shuttah fight. Alters repeat dialogue.", basicBool],
+    
     520: ["rudinn_violences", "The number of Rudinns you have beat up. Subtracted from flag 40 if you apologize."],
     521: ["hathy_violences", "The number of Hathys you have beat up. Subtracted from flag 40 if 2 or less and you apologize."],
     522: ["clover_violence", "Whether you beat up Clover the first time. You can't apologize.", basicBool],
@@ -1274,30 +1290,30 @@ let flags = {
     572: ["encount_vase_poppup", "Tracks the state of the Poppup under the vase near where Susie and Ralsei leave you.", enemyStates],
     
     // recruits, can take fractional values but the checkbox is alongside a number box anyway so whatever
-    601: ["recruit_enemy", "Whether you recruited the Chapter 1 placeholder enemy. Unused x2.", basicBool],
-    602: ["recruit_lancer", "Unused. He doesn't have recruit info anyway.", basicBool],
-    603: ["recruit_dummy", "Unused. It doesn't have recruit info anyway.", basicBool],
-    604: ["recruit_ralsei", "Recruit entry for tutorial Ralsei. Unused.", basicBool],
+    // 601: ["recruit_enemy", "Whether you recruited the Chapter 1 placeholder enemy. Unused x2.", basicBool],
+    // 602: ["recruit_lancer", "Unused. He doesn't have recruit info anyway.", basicBool],
+    // 603: ["recruit_dummy", "Unused. It doesn't have recruit info anyway.", basicBool],
+    // 604: ["recruit_ralsei", "Recruit entry for tutorial Ralsei. Unused.", basicBool],
     605: ["recruit_rudinn", "Set at the start of Chapter 2. You NEED at least one recruit.", basicBool],
     606: ["recruit_hathy", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
-    607: ["recruit_clover_old", "Unused, both for the enemy and the recruiting.", basicBool],
-    608: ["recruit_pippins", "Unused, both for the enemy and the recruiting.", basicBool],
-    609: ["recruit_c_round", "Unused. It doesn't have recruit info anyway.", basicBool],
-    610: ["recruit_k_round", "Unused. It doesn't have recruit info anyway.", basicBool],
+    // 607: ["recruit_clover_old", "Unused, both for the enemy and the recruiting.", basicBool],
+    // 608: ["recruit_pippins", "Unused, both for the enemy and the recruiting.", basicBool],
+    // 609: ["recruit_c_round", "Unused. It doesn't have recruit info anyway.", basicBool],
+    // 610: ["recruit_k_round", "Unused. It doesn't have recruit info anyway.", basicBool],
     611: ["recruit_ponman", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
-    612: ["recruit_lancer_2", "Unused. He doesn't have recruit info anyway.", basicBool],
+    // 612: ["recruit_lancer_2", "Unused. He doesn't have recruit info anyway.", basicBool],
     613: ["recruit_rabbick", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
     614: ["recruit_bloxer", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
     615: ["recruit_jigsaw", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
-    616: ["recruit_clover", "Unused. She doesn't have recruit info anyway.", basicBool],
-    617: ["recruit_doomtank", "Unused, both for the enemy and the recruiting. Thrash Machine was better anyway.", basicBool],
-    618: ["recruit_lancer_3", "Unused. He doesn't have recruit info anyway.", basicBool],
-    619: ["recruit_susie", "Unused. She doesn't have recruit info anyway.", basicBool],
+    // 616: ["recruit_clover", "Unused. She doesn't have recruit info anyway.", basicBool],
+    // 617: ["recruit_doomtank", "Unused, both for the enemy and the recruiting. Thrash Machine was better anyway.", basicBool],
+    // 618: ["recruit_lancer_3", "Unused. He doesn't have recruit info anyway.", basicBool],
+    // 619: ["recruit_susie", "Unused. She doesn't have recruit info anyway.", basicBool],
     620: ["recruit_JEVIL", "If I say 'Debug' it'll highlight this in red, because JEVIL does have recruit info.", basicBool],
-    621: ["recruit_k_round_2", "Unused. It doesn't have recruit info anyway.", basicBool],
+    // 621: ["recruit_k_round_2", "Unused. It doesn't have recruit info anyway.", basicBool],
     622: ["recruit_rudinn_ranger", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
     623: ["recruit_head_hathy", "Self-explanatory. Set at the start of Chapter 2.", basicBool],
-    625: ["recruit_king", "Unused. He doesn't have recruit info anyway.", basicBool],
+    // 625: ["recruit_king", "Unused. He doesn't have recruit info anyway.", basicBool],
     
     630: ["recruit_medic", "Whether you recruited Ambyu-Lance.", basicBool],
     631: ["recruit_poppup", "Whether you recruited Poppup.", basicBool],
@@ -1306,25 +1322,41 @@ let flags = {
     634: ["recruit_maus", "Whether you recruited Maus.", basicBool],
     635: ["recruit_viro", "Whether you recruited Virovirokun.", basicBool],
     636: ["recruit_butler", "Whether you recruited Swatchling.", basicBool],
-    637: ["recruit_cap?", "Whether you recruited Cap'n? Probably unused, I don't remember ever seeing a 'Recruit!' in that scene. And they don't have recruit info.", basicBool],
-    638: ["recruit_k_k?", "See flag 637. Unused?", basicBool],
-    639: ["recruit_sweet?", "See flag 637. Unused?", basicBool],
+    // 637: ["recruit_cap?", "Whether you recruited Cap'n? Probably unused, I don't remember ever seeing a 'Recruit!' in that scene. And they don't have recruit info.", basicBool],
+    // 638: ["recruit_k_k?", "See flag 637. Unused?", basicBool],
+    // 639: ["recruit_sweet?", "See flag 637. Unused?", basicBool],
     640: ["recruit_www", "Whether you recruited Werewerewire. It doesn't appear for the powers combined scene.", basicBool],
-    641: ["recruit_graze_test", "Whether you somehow recruited this 'Graze Test' enemy that I don't see used anywhere. There's no recruit info. Unused.", basicBool],
+    // 641: ["recruit_graze_test", "Whether you somehow recruited this 'Graze Test' enemy that I don't see used anywhere. There's no recruit info. Unused.", basicBool],
     642: ["recruit_task_manager", "Whether you recruited Tasque Manager.", basicBool],
-    643: ["recruit_berdly", "Whether you somehow found a way to recruit Berdly in his first battle. No recruit info. Unused.", basicBool],
+    // 643: ["recruit_berdly", "Whether you somehow found a way to recruit Berdly in his first battle. No recruit info. Unused.", basicBool],
     644: ["recruit_mauswheel", "Whether you recruited Mauswheel.", basicBool],
-    645: ["recruit_rouxls", "Probably unused. It's just Rouxls/Thrash Machine's enemy ID.", basicBool],
-    646: ["recruit_berdly_2", "Whether you somehow found a way to recruit Berdly in his second battle. No recruit info. Unused.", basicBool],
-    647: ["recruit_dojo_clover", "Whether you somehow found a way to recruit Clover in her Party Dojo encounter. Very unused.", basicBool],
-    648: ["recruit_queen", "Unused. You always 'recruit' Queen, but she isn't a recruit, if you get my drift.", basicBool],
-    649: ["recruit_spamton", "Whether you somehow found a way to recruit Spamton. No recruit info. Unused.", basicBool],
-    650: ["recruit_spam_neo", "Whether you somehow found a way to recruit Spamton NEO. No recruit info. Unused.", basicBool],
-    651: ["recruit_giga_queen", "Whether you somehow found a way to recruit GIGA Queen. No recruit info. Unused.", basicBool],
-    652: ["recruit_joe", "Whether you somehow found a way to recruit Jigsaw Joe at the Party Dojo. Very unused.", basicBool],
-    653: ["recruit_pipis", "You can't recruit Pipis. Unused.", basicBool],
+    // 645: ["recruit_rouxls", "Probably unused. It's just Rouxls/Thrash Machine's enemy ID.", basicBool],
+    // 646: ["recruit_berdly_2", "Whether you somehow found a way to recruit Berdly in his second battle. No recruit info. Unused.", basicBool],
+    // 647: ["recruit_dojo_clover", "Whether you somehow found a way to recruit Clover in her Party Dojo encounter. Very unused.", basicBool],
+    // 648: ["recruit_queen", "Unused. You always 'recruit' Queen, but she isn't a recruit, if you get my drift.", basicBool],
+    // 649: ["recruit_spamton", "Whether you somehow found a way to recruit Spamton. No recruit info. Unused.", basicBool],
+    // 650: ["recruit_spam_neo", "Whether you somehow found a way to recruit Spamton NEO. No recruit info. Unused.", basicBool],
+    // 651: ["recruit_giga_queen", "Whether you somehow found a way to recruit GIGA Queen. No recruit info. Unused.", basicBool],
+    // 652: ["recruit_joe", "Whether you somehow found a way to recruit Jigsaw Joe at the Party Dojo. Very unused.", basicBool],
+    // 653: ["recruit_pipis", "You can't recruit Pipis. Unused.", basicBool],
+    654: ["recruit_shadowguy", "Recruit progress.", basicBool],
+    655: ["recruit_shuttah", "Recruit progress.", basicBool],
+    656: ["recruit_zapper", "Recruit progress.", basicBool],
+    657: ["recruit_ribbick", "Recruit progress.", basicBool],
+    658: ["recruit_cooler", "Recruit progress.", basicBool],
+    659: ["recruit_pippins", "Recruit progress.", basicBool],
+    660: ["recruit_elnina", "Recruit progress.", basicBool],
+    661: ["recruit_lanino", "Recruit progress.", basicBool],
+    662: ["recruit_guei", "Recruit progress.", basicBool],
+    663: ["recruit_balthizard", "Recruit progress.", basicBool],
+    664: ["recruit_bibliox", "Recruit progress.", basicBool],
+    665: ["recruit_mizzle", "Recruit progress.", basicBool],
+    666: ["recruit_wicabel", "Recruit progress.", basicBool],
+    667: ["recruit_winglade", "Recruit progress.", basicBool],
+    668: ["recruit_organikk", "Recruit progress.", basicBool],
+    669: ["recruit_ms_mizzle", "Recruit progress.", basicBool],
     
-    // Are there NO 700s flags?? Must be saving for more recruit info...
+    734: ["ral_susie_festival_talk", "Whether you completed the talk between Susie and Ralsei prior to Tenna's introduction in Chapter 3.", basicBool],
     
     800: ["cafe_topleft", "The recruit seated in the top-left of the Cafe. Defaults to Jigsawry.", recruits],
     801: ["cafe_topright", "The recruit seated in the top-right of the Cafe. Defaults to Rudinn.", recruits],
@@ -1446,15 +1478,404 @@ let flags = {
     928: ["creepy_steps", "The number of steps you take toward Noelle (0-3) after the hospital scene on Snowgrave. Yeah, that's a thing."],
     
     // no 929-949
-    950: ["shadow_failed", "Whether you used the Shadow Crystal in Chapter 2 and saw nothing. 952 is more interesting.", basicBool],
-    951: ["glass_failed", "Whether you used the Glass in Chapter 2 and saw nothing. 953 and 281 are more interesting.", basicBool],
+    950: ["shadow_failed_ch2", "Whether you used the Shadow Crystal in Chapter 2 and saw nothing. 952 is more interesting.", basicBool],
+    951: ["glass_failed_ch2", "Whether you used the Glass in Chapter 2 and saw nothing. 953 and 281 are more interesting.", basicBool],
     952: ["shadow_lab", "Whether you saw the computer lab using the Shadow Crystal.", basicBool],
     953: ["glass_susie_glare", "Whether you saw Susie glare at you using the Glass.", basicBool],     
     954: ["gave_JEVIL_crystal", "Whether you gave Seam JEVIL's Shadow Crystal.", basicBool],
     // no 955-960
-    961: ["failed_spam_crystal", "Whether you got JEVIL's Shadow Crystal but failed to find Spamton's, and told Seam. They seem quite dejected...", basicBool] // :(
+    961: ["failed_spam_crystal", "Whether you got JEVIL's Shadow Crystal but failed to find Spamton's, and told Seam. They seem quite dejected...", basicBool], // :(
     
-    // I'll need to check if any four-digit values are actually used, and go over all of this with a fine comb, but, wow! Nice!
+    1002: ["fought_shadowmantle", "Whether you've started the Shadow Mantle fight. Speeds up repeat fights... but you die? idk if it's really used.", basicBool],
+    
+    1008: ["found_shadowtease", "Whether you found the 'See you soon' hidden message in the Sword Route.", basicBool],
+    
+    1011: ["gameshow_battles", "Number of battles entered on Tenna's show? Unaccessed, but there's an empty code block here."],
+    1012: ["gameshow_name_1", "First letter selected for Kris's name on the game show.", ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]],
+    1013: ["gameshow_name_2", "Second letter selected for Kris's name on the game show.", ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]],
+    1014: ["gameshow_name_3", "Third letter selected for Kris's name on the game show.", ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]],
+    
+    1019: ["quiz_right_answers", "Number of correct answers (totalled on all characters) in the most recent of Tenna's quizzes. Slightly alters the Tenna-sphinx dialogue."],
+    1020: ["got_power_croissant", "Whether Susie has obtained the Power Croissant, allowing her to pick up boxes, pots, weeds, and Ralsei.", basicBool],
+    1021: ["ch3_couch_walkaway", "Whether the couch has begun walking away (if you go right then go back to it) at the start of Chapter 3.", basicBool],
+    1022: ["tenna_board_absent", "Whether Tenna has left the current board, allowing for additional chicanery. Volatile?", basicBool],
+    
+    1024: ["board_transitioning?", "Seems to be a volatile value to freeze characters on Chapter 3 minigame transitions.", basicBool],
+    
+    1027: ["s_star_splat", "Whether you interacted with the stars in the S-Rank room, causing one of them to fall on the floor.", basicBool],
+    1028: ["got_ramb_prize_1", "Whether you got the first board reward from Ramb (if available based on rank).", [
+             "Default state",
+             "Got prize",
+             "Got nothing (Z-Rank)"
+          ]],
+    1029: ["ramb_back_talk_2", "How much you've talked with Ramb backstage after round 2. More complicated?", [
+             "Default state",
+             "Moved Ramb",
+             "'I'm glad you're having REAL fun, Kris.'",
+             "Talked round 3 (unused?)"
+          ]],
+    1030: ["got_ramb_prize_2", "Whether you got the second board reward from Ramb (if available based on rank).", [
+             "Default state",
+             "Got prize",
+             "Got nothing (Z-Rank)"
+          ]],
+    1031: ["entered_changing_room", "Whether you've interacted to enter the S- or Z-Rank room. Stops Susie's and Ralsei's dialogue on repeat.", basicBool],
+    1032: ["ramb_first_talk", "Whether you've talked to Ramb at least once in the Green Room. Alters repeat interaction.", basicBool],
+    1033: ["tried_racing", "Whether you've tried the unseeable racing game at least once. Alters repeat interaction.", basicBool],
+    1034: ["times_played_racing", "Number of times you played the unseeable racing game."],
+    1035: ["won_racing", "Whether you won the racing game. Susie refuses to play any more afterward.", basicBool],
+    
+    1039: ["tenna_pipis_state", "State of Tenna's Pipis in the Bonus Zone (without Spamton).", [
+             "Default state",
+             "Tenna panicked",
+             "Got Pipis"
+          ]],
+    
+    1044: ["points", "Your point total in Chapter 3."],
+    1045: ["susie_heal_practice", "The number of times you have used UltraHeal/OKHeal/BetterHeal. Improves the spell. Caps at 5 in Chapter 3, 15 in Chapter 4."],
+    
+    1047: ["knight_ch3_status", "Whether you beat the Knight... down to 80% of its health. Also saved to ini.", [
+             "Default state",
+             "Won",
+             "Lost"
+          ]],
+    1048: ["lancer_cost", "Amount spent on Lancer in Board 2. Decreases if he is photographed before purchase.", {
+             0: "Uninitialized",
+             9: "9 points",
+             99: "99 points"
+             999: "999 points"
+          }],
+    1049: ["board_1_battles", "Number of battles engaged in on Board 1."],
+    1050: ["saw_board3_fail", "Whether the unused Board 3 game failed to load following the Sword Route.", basicBool],
+    
+    1054: ["tenna_voice_pitch", "Appears to be a volatile factor applied to Tenna's voice bite. Only used for his flashback.", {
+             "0": "Uninitialized"
+             "0.8": "80% pitch"
+             "1": "Full pitch"
+          }],
+    1055: ["sword_route_progress", "Progress on the Sword Route, the Chapter 3 side quest for the Shadow Mantle.", {
+             "0": "Not started",
+             "1": "Got Ice Key",
+             "1.5": "Entered Ice Palace",
+             "2": "She was used up.",
+             "3": "Got Shelter Key",
+             "4": "Entered red dungeon",
+             "5": "Entered shelter",
+             "6": "Defeated boss"
+          }],
+    1056: ["kris_tenna_chat", "Whether Tenna tried to justify himself to Kris between rounds.", basicBool],
+    1057: ["unused", "Seems to be a tracker for a scrapped backstage sequence in Chapter 3? There's code to advance to 2, but not to 1."],
+    1058: ["found_island_tenna", "Whether you found Tenna at the Tropic of Love on the original game, and heard his musings.", basicBool],
+    1059: ["rouxls_ch3_status", "Battle status of the Rouxls Kaard Rules Card battle (probably always Spared?)", enemyStates],
+    1060: ["got_elnina_controller", "Whether you got the Elnina Controller for an unused game. The item ID got repurposed as the Odd Controller.", basicBool],
+    
+    1062: ["got_curtain_saber10", "Whether you got the Saber10 from the quiet person behind the S-Rank curtain.", basicBool],
+    
+    1066: ["talked_ramb_fountain", "Whether Ramb explained (after Board 3) that he saw Kris make the fountain.", basicBool],
+    1067: ["got_shadowmantle", "Whether you've opened the chest containing the Shadow Mantle.", basicBool],
+    1068: ["talked_lancer_greenroom", "Whether you've talked to Lancer in the Green Room (and he phased through the door).", basicBool],
+    
+    1071: ["ch3_couch_skip", "Whether you used the couch to skip to Board 1 in Chapter 3.", basicBool],
+    
+    1073: ["lancer_tv_name", "What you (and Ralsei) named Lancer in Tenna's quiz.", [
+             "Lancer",
+             "Dancer",
+             "Prancer",
+             "Mr. Generosity"
+          ]],
+    1074: ["got_in_s_rank_1", "Whether you've talked to the Zapper guarding the S-Rank room and gotten in for board 1.", basicBool],
+    1075: ["got_in_s_rank_2", "Whether you've talked to the Zapper guarding the S-Rank room and gotten in for board 2.", basicBool],
+    1076: ["counterfeit_s_1", "Buying the counterfeit S-Rank for Board 1.", [
+             "Default state",
+             "Have counterfeit",
+             "Reset"
+          ]],
+    1077: ["counterfeit_s_2", "Buying the counterfeit S-Rank for Board 2.", [
+             "Default state",
+             "Have counterfeit",
+             "Reset"
+          ]],
+    1078: ["got_ch3_moss", "Whether you got the Moss in Chapter 3 and the Moss Mystery title.", basicBool],
+    1079: ["drank_oasis", "Whether you chose to deplete the oasis by drinking it. Dries up all the trees.", basicBool],
+    1080: ["suziezilla_losses", "Times lost at Suziezilla, up to 8."],
+    1081: ["suziezilla_result", "Exactly how much you won at Suziezilla.", [
+             "Default state",
+             "Declared win by Tenna",
+             "Defeated final wave"
+          ]],
+    
+    1083: ["got_lancer_name_q", "Whether you've faced the question of Tenna forgetting Lancer's name. Unaccessed (there's an unused follow-up).", basicBool],
+    1084: ["ramb_game_opinion", "Your choice to Ramb of whether you're enjoying Tenna's game.", [
+             "Default state",
+             "Super fun",
+             "Eh"
+          ]],
+    1085: ["unused_puzzle_start", "Seems to be set when you enter an unused Chapter 3 room with a board puzzle?", basicBool],
+    1086: ["beat_doom_shadowman", "Whether you've defeated the Shadowman on the Doom Board, to prompt the Zapper encounter instead.", basicBool],
+    
+    1089: ["cooking_losses", "Times lost at the cooking game (counted by Tenna)."],
+    
+    1091: ["susie_notice_sword", "Status of Susie noticing Kris has a sword in the minigame if the OddController was obtained.", [
+             "Default state",
+             "Sword used",
+             "Susie commented"
+          ]],
+    1092: ["ch3_bibliox_state", "Progress obtaining the TripTicket to Nowhere from the Bibliox.", [
+             "Default state",
+             "Wardrobe mentioned",
+             "Wardrobe appeared",
+             "Wardrobe checked",
+             "Got TripTicket"
+          ]],
+    1093: ["jailed_cheater", "Whether you confessed to the Zapper that you are cheaters, and went into the highly escapable prison.", basicBool],
+    1094: ["parent_lock_1", "Whether you solved the first parental lock in Chapter 3.", basicBool],
+    1095: ["parent_lock_2", "Whether you solved the second parental lock in Chapter 3.", basicBool],
+    1096: ["rhythm_game_tries", "Total number of attempts on the rock band game after Board 2 (not replays)."],
+    
+    1101: ["point_chest_state", "Progress with the 10-point chest in the dust pile at the start of Chapter 3.", [
+             "Default state",
+             "Found chest",
+             "Got points"
+          ]],
+    1102: ["zapper_sneezed", "Whether a Zapper left of the Chapter 3 starting area gave itself away by sneezing.", basicBool],
+    
+    1104: ["got_cut_ribbick_item", "Unused? Set for a Ribbick trigger in what I think is an unused room.", basicBool],
+    1105: ["cut_ribbick_fights", "Unused? Counts up with a Ribbick trigger in what I think is an unused room."],
+    1106: ["did_cut_weather_puz", "Seems to be? a flag for an unused puzzle involving a bridge and the Weather Duo.", basicBool],
+    
+    1113: ["guard_zapper_buttons", "Progress with the Zapper guarding the cold area.", [
+             "Default state",
+             "Played chest like bongos",
+             "Shood off"
+          ]],
+    1114: ["guard_zapper_fought", "Attempting to do nothing against the Zapper guarding the cold area.", basicBool],
+    1115: ["mailroom_status", "Progress entering Tenna's secret mail room.", [
+             "Default state",
+             "Discovered???",
+             "Entered",
+             "Found empty"
+          ]],
+    1116: ["points_from_battle", "Number of points earned in battles on the current board. Used for the board score."],
+    1117: ["points_spent", "Number of points spent on the current board. Used to include them in the board score as well as held points."],
+    1118: ["last_minigame_points", "Seems to be? the number of points earned in the last PHYSICAL CHALLENGE, tracked into the overall round evaluation."],
+    
+    1124: ["tenna_falling_stuff", "What Tenna last called the falling objects on Board 1. Alters Board 2 dialogue.", [
+             "Default state",
+             "Rocks",
+             "Peaches"
+          ]],
+    1125: ["started_cowboy_game", "Whether you reached the first cowboy game in Chapter 3.", basicBool],
+    
+    1131: ["overworld_quiz_1", "Whether you completed the 1st overworld quiz while escaping.", basicBool],
+    1132: ["overworld_quiz_2", "Whether you completed the 2nd overworld quiz while escaping.", basicBool],
+    1133: ["parent_lock_1_start", "Whether you got a wrong answer for the first parental lock, activating the screen with the puzzle.", basicBool],
+    1134: ["parent_lock_2_start", "Whether you've activated the second parental lock puzzle by interacting with it.", basicBool],
+    
+    1141: ["ch3_bibliox_talk", "Number of times talked to the Chapter 3 in-game Bibliox. Dialogue does not reset."],
+    
+    1143: ["cooler_avoid_num", "Number of times you entered the room with the second Watercooler fight. They get closer up to 5 times, then block the way. Set to 50 after actually doing the fight."],
+    
+    1147: ["lawnmower_beat_paper", "Whether you used the lawnmower to destroy the Shadowmen's contracts. Earns their gratitude if not previously LOST.", basicBool],
+    1148: ["rouxls_snacks_ch3", "Rouxls's progress when he shows up with the weather duo.", [
+             "Default state",
+             "Showed up for snacks",
+             "Took snacks and left"
+          ]],
+    
+    1150: ["parent_lock_3", "Progress with the third parental lock puzzle.", {
+             "0": "Default state",
+             "1": "Activated",
+             "1.5": "Used TV",
+             "2": "Solved block puzzle",
+             "3": "Solved bridge puzzle",
+             "4": "Got camera"
+          }],
+    1151: ["saw_spamtenna_scene", "Whether you saw Tenna coat Spamton in foam in self-defense.", basicBool],
+    1152: ["horse_ralsei", "Whether Ralsei forgot to change out of his horse costume.", basicBool],
+    1153: ["hay_response", "Set based on how Susie reacts to Ralsei considering eating hay. Depends on whether you've previously eaten moss.", [
+             "Default state",
+             "It's for sleeping (no moss)",
+             "Eat spinach (ate moss with Susie)"
+          ]],
+    1154: ["bonus_zone_treasure_1", "Whether you got the 1st treasure chest (of points) in Tenna's bonus zone.", basicBool],
+    1155: ["bonus_zone_treasure_2", "Whether you got the 2nd treasure chest (of points) in Tenna's bonus zone.", basicBool],
+    1156: ["bonus_zone_treasure_3", "Whether you got the 3rd treasure chest (of points) in Tenna's bonus zone.", basicBool],
+    1157: ["bonus_zone_points_1", "Whether you got the 1st coin in Tenna's bonus zone.", basicBool],
+    1158: ["bonus_zone_points_2", "Whether you got the 2nd coin in Tenna's bonus zone.", basicBool],
+    1159: ["bonus_zone_points_3", "Whether you got the 3rd coin in Tenna's bonus zone.", basicBool],
+    1160: ["bonus_zone_points_4", "Whether you got the 4th coin in Tenna's bonus zone.", basicBool],
+    1161: ["tenna_bonus_zone", "Whether you've entered Tenna's Bonus Zone behind the green panel (prior to Pipis scene).", basicBool],
+    1162: ["bonus_big_chest", "Whether you've opened the giant test in Tenna's Bonus Zone (with a Pippins).", basicBool],
+    
+    1165: ["overworld_quiz_3", "Whether you completed an overworld quiz in the big maze room.", basicBool],
+    1166: ["overworld_quiz_4", "Whether you completed an overworld quiz in the big maze room.", basicBool],
+    1167: ["overworld_quiz_5", "Whether you completed an overworld quiz in the big maze room.", basicBool],
+    1168: ["overworld_quiz_6", "Whether you completed an overworld quiz in the big maze room.", basicBool],
+    
+    1171: ["board_2_battles", "Number of battles engaged in on Board 2."],
+    
+    1173: ["rank_board_1", "Your rank on Board 1.", tennaRanks],
+    1174: ["rank_board_2", "Your rank on Board 2.", tennaRanks],
+    
+    1182: ["gacha_lastbet", "Amount previously spent on the gumball machine in Chapter 3, used to compute gold prize odds. Resets upon earning a gold prize."],
+    
+    1185: ["s_rank_room_answer", "What you told Susie you were doing in the S-Rank room.", [
+             "Default state",
+             "Playing games",
+             "Nothing"
+          ]],
+    1186: ["s_rank_return_2", "Whether you've gotten the scene of Ralsei mentioning RPGs after returning from the Sword Island Board.", basicBool],
+    1187: ["z_rank_unlock", "Whether you've talked to unlock the Z-Rank door. Changes for each board.", [
+             "Default state",
+             "Open Board 1",
+             "Open Board 2"
+          ]],
+    1188: ["cooler_status", "Status of the Watercooler encounter in the C-Rank room.", enemyStates],
+    1189: ["bought_suziezilla", "Whether you've purchased access to the Suziezilla game.", basicBool],
+    1190: ["control_unjumble", "Whether you chose to... keep your controls? It's reversed, Ralsei playing as Kris (board 2) is actually the 0 value.", [
+             "You can have a turn",
+             "Let's all go back to normal"
+          ]],
+    1191: ["ch3_manhole_activation", "When you last used the Z-Rank manhole to reach the original game. Used to open the return manhole.", [
+             "Default state",
+             "Opened after board 1",
+             "Opened after board 2"
+          ]],
+    1192: ["s_rank_return_3", "Whether you've gotten the scene of Susie and Ralsei racing after returning with the Shadow Mantle.", basicBool],
+    1193: ["cooking_best_score", "Highest score at the cooking minigame."],
+    1194: ["cooking_best_rank", "The corresponding rank to your cooking minigame high score.", tennaRanks],
+    1195: ["raise_bat_hiscore", "Highest score on Raise Up Your Bat, Normal Mode"],
+    1196: ["raise_bat_hirank", "Highest rank on Raise Up Your Bat, Normal Mode", tennaRanks],
+    1197: ["suziezilla_best_score", "Seems to be the high score at Susiezilla."],
+    1198: ["suziezilla_best_rank", "The corresponding rank to your Susiezilla high score.", tennaRanks],
+    1199: ["susie_tenna_chat_1", "Whether you saw Susie compliment Tenna's show between boards.", basicBool],
+    1200: ["ralsei_face_thoughts", "Your commentary on Ralsei's face, if not watching Susie.", [
+             "Default state",
+             "Seen it before",
+             "It's unique",
+             "It's cute"
+          ]],
+    1201: ["tenna_opinion_susie", "Your opinion on Tenna as given to Susie before Board 2.", [
+             "Default state",
+             "He's fun",
+             "He sucks"
+          ]],
+    
+    1208: ["susie_tenna_chat_2", "Progress with Susie questioning Tenna's show between boards.", [
+             "Default state",
+             "Started scene",
+             "Finished scene"
+          ]],
+    
+    1210: ["elnina_greenroom_comment", "What you told Elnina about her relationship in the Green Room.", [
+             "Default state",
+             "You're strong and independent",
+             "Your forecast is love"
+          ]],
+    1211: ["lanino_greenroom_comment", "What you told Lanino about his relationship in the Green Room.", [
+             "Default state",
+             "You're strong and independent",
+             "Your forecast is love"
+          ]],
+    
+    1214: ["who_asked_okay", "Who you asked whether they were okay in the Chapter 3 parental lock room.", [
+             "Default state",
+             "Susie",
+             "Ralsei",
+             "Neither"
+          ]],
+    1215: ["susie_reassurance", "What you said to Susie (if talking to her) in the parental lock room.", [
+             "Default state",
+             "I'm not a dream (creepy)",
+             "Your friendships are real (fake-heroic)",
+             "Sucks to be you (unwittingly ironic)"
+          ]],
+    1216: ["ralsei_reassurance", "What you said to Ralsei (if talking to him) in the parental lock room.", [
+             "Default state",
+             "It's ok to take it easy",
+             "Stay on task"
+          ]],
+    1217: ["icecream_for_susie", "What you said to Ralsei about getting ice cream from him to Susie.", [
+             "Default state",
+             "I'm not going with her",
+             "I'm saying it's from me",
+             "Of course"
+          ]],
+    1218: ["festival_ral_whoelse", "Who you told Ralsei you're going to the festival with, if not Susie.", [
+             "Default state",
+             "Noelle",
+             "Ralsei",
+             "Berdly (BERDLY!?)",
+             "Not going"
+          ]],
+    1219: ["tried_suziezilla", "Whether you completed the intro scene for the Susiezilla game.", basicBool],
+    1220: ["beat_suziezilla?", "Whether you reached the elusive BOARD CLEAR of the Suziezilla game.", basicBool],
+    1221: ["got_cooler_crater", "Whether you got the 200 points from underneath the C-Rank Watercooler.", basicBool],
+    
+    1224: ["opened_bonus_zone", "Whether you opened Tenna's secret bonus zone behind a green screen.", basicBool],
+    1225: ["opened_sams_zone", "Whether you opened the secret zone where you can choose whether the talking cages love or hate. Behind a green screen.", basicBool],
+    
+    1228: ["entered_coldplace", "Whether you've entered the Cold Place and such has been acknowledged by the party.", basicBool],
+    
+    1231: ["parent_lock_3_done", "Whether you solved the undefined parental lock in Chapter 3, optional on Sword Route.", basicBool],
+    1232: ["started_cowboy_game_2", "Whether you reached the second cowboy game in Chapter 3.", basicBool],
+    
+    1234: ["suziezilla_best_time", "The duration of your best Suziezilla run, I think?"],
+    1235: ["tenna_mad_at_staff", "Whether you've seen the scene where Tenna gets mad the Darkners haven't found the Lightners yet.", basicBool],
+    1236: ["ramb_quit", "Whether you've seen the scene where Tenna gets mad Ramb is quitting on him.", basicBool],
+    
+    1238: ["ramb_push_3", "Whether you've moved Ramb to play the final game. Enjoy the games, eh, luv?", basicBool],
+    1239: ["ramb_petrify_lore", "Your progress in learning about why Ramb petrified.", [
+             "Default state",
+             "Spawned Pippins",
+             "'No one will shed a tear for him.'"
+          ]],
+    1240: ["talk_starwalker_ch3", "Whether you've talked to Starwalker in the first room after escaping Tenna.", basicBool],
+    1241: ["ral_suspect_zapper", "Whether you've interacted with the Zapper guarding the parental locks, preventing Ralsei's dialogue from repeating.", basicBool],
+    1242: ["best_food_stack", "Number of food items successfully served in a single simultaneous stack in the cooking minigame. Used to track the record on replay."],
+    1243: ["zapper_jail_2", "Progress on the second highly ineffective jail you are placed in by a Zapper while sneaking.", [
+             "Default state",
+             "Imprisoned",
+             "Escaped"
+          ]],
+    
+    1248: ["times_leveled_ch3", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
+    1249: ["times_gained_at_ch3", "The number of times your AT and Magic have increased due to leveling up (every ten encounters)."],
+    
+    1250: ["jail_dinner_talked", "Whether you've talked to the imprisoned Pippins selling TV Dinners. Alters repeat interaction.", basicBool],
+    
+    1255: ["sword_route_kills", "Number of enemies killed using your sword in the Chapter 3 minigames. Appears in Kris's stats."],
+    
+    1257: ["times_carried_ralsei", "Appears to be? the number of times you carry Ralsei in the Chapter 3 minigames. Appears in Ralsei's stats (up to 99)."],
+    1258: ["ch3_run_reminder", "Whether Susie reminded you you can run at the start of Chapter 3.", basicBool],
+    1259: ["ch3_run_reminder_2", "Whether Ralsei reminded you you can run in Chapter 3.", basicBool],
+    1260: ["talked_ral_eye_puzzle", "Whether you've talked to Ralsei at the Chapter 3 starting eye puzzle. Alters repeat dialogue.", basicBool],
+    1261: ["talked_sus_eye_puzzle", "Whether you've talked to Susie at the Chapter 3 starting eye puzzle. Alters repeat dialogue.", basicBool],
+    1262: ["parent_lock_1_close", "Number of times you got the first parental lock numbers, but in the wrong order. Ralsei has special dialogue for the first couple tries."],
+    1263: ["almost_beat_knight", "Whether you've gotten the one-off pep talk from Gaster for reaching the damage threshold then dying.", basicBool],
+    1264: ["knight_deaths", "Number of times you died to the Knight -- it doesn't reset your save when you retry."],
+    
+    1266: ["moved_ramb_2", "Whether you've talked to Ramb after round 2 for him to move away from the door.", basicBool],
+    
+    1268: ["mini_attack_susie", "Whether the mini-Kris tried to attack Susie, causing her to offer to let Kris knaw her hair. Unaccessed?", basicBool],
+    1269: ["shadow_home", "Whether you saw the smashed TV using the Shadow Crystal.", basicBool],
+    1270: ["shadow_failed_ch3", "Whether you used the Shadow Crystal in Chapter 3 and saw nothing. 1269 is more interesting.", basicBool],
+    1271: ["glass_undyne_froze", "Whether you used the Glass in Chapter 3 and saw Undyne frozen in ice. Unused; you cannot visit the Light World in Chapter 3.", basicBool],
+    1272: ["glass_failed_ch3", "Whether you used the Glass in Chapter 3 and saw nothing. 1271 is more interesting.", basicBool],
+    1273: ["gameshow_name_ja", "Whether the start of Chapter 3 (naming Kris on the show) was played in Japanese.", basicBool],
+    1274: ["gameshow_name_1_backup", "Secondary tracker for the first letter of Kris's name (used for safety with translation).", ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]],
+    1275: ["gameshow_name_2_backup", "Secondary tracker for the second letter of Kris's name (used for safety with translation).", ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]],
+    1276: ["gameshow_name_3_backup", "Secondary tracker for the third letter of Kris's name (used for safety with translation).", ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"]],
+    
+    1277: ["pippins_bonus_stole", "Appears? to be the number of chests looted by Pippinses in Tenna's bonus zone."],
+    1278: ["swordroute_soda", "Status of the soda left by Susie after obtaining the Shadow Mantle.", [
+             "Default state",
+             "Soda placed",
+             "Soda collected"
+          ]],
+    1279: ["raise_bat_hard_hiscore", "High score on Raise Up Your Bat, Hard Mode"],
+    1280: ["raise_bat_hard_hirank", "Highest rank on Raise Up Your Bat, Hard Mode", tennaRanks],
+    
 };
 
 for (let i = 0; i < flagCount; i++) {
