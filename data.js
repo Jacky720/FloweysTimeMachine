@@ -234,7 +234,7 @@ const consumables = {
     51: ["Mystic Band",     0, 0, 4,  0,  0, 0, 0, 0, 0, 0   ],
     52: ["Power Band",      4, 0, 0,  0,  0, 0, 0, 0, 0, 0   ],
     53: ["Princess Ribbon", 2, 4, 0,  0,  0, 0, 0, 0, 0, 0   ],
-    54: ["Gold Widow",      1, 5, 0,  0,  0, 0, 0, 0, 0, 0   ],
+    54: ["Gold Widow",      1, 5, 1,  0,  0, 0, 0, 0, 0, 0   ],
 },
       lightItems = [
     "Empty",
