@@ -580,7 +580,7 @@ let flags = {
             "Hood",
             "Hatless"
         ]],
-    31: ["disable_loud_steps", "Stops the echoing step sound found in the ?????? area and Jevil's room.", basicBool],
+    31: ["disable_loud_steps", "Stops the echoing step sound found in the ?????? area, Great Door field, and Jevil's room.", basicBool],
     32: ["hide_equip_comments", "Prevents Susie and Ralsei from commenting on items you give them when in room_man.", basicBool],
     33: ["choice_time_taken", "Volatile. The time, in frames, you take to make a choice. Used by Sans."],
     34: ["disable_monster_acts", "Apparently initialized to 1, reset to 0 when unlocking S-Action and R-Action (?)", basicBool],
@@ -642,7 +642,7 @@ let flags = {
     108: ["got_ragger", "Whether you got the Ragger. Affects the Royal Coat Rack's dialogue about it.", basicBool],
     109: ["got_dice_brace", "Whether you got the Dice Brace.", basicBool],
     110: ["got_bloxer_money", "Whether you got the 40D$ from that room with Bloxers.", basicBool],
-    111: ["got_bloxer_mint", "Whether you got the Revive Mint from that room with Bloxers.", basicBool],
+    111: ["got_bloxer_mint", "Whether you got a Revive Mint from that room with Bloxers. Unused because there isn't actually a Revive Mint chest in that room.", basicBool],
     112: ["got_JEVIL_chest", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
     113: ["got_clubswich", "Whether you got the Clubs Sandwich from... take a guess.", basicBool],
     114: ["got_castle_mint", "Whether you got the Revive Mint from that chest that appears when you interact with the portraits.", basicBool],
@@ -814,7 +814,7 @@ let flags = {
     247: ["spared_king", "Whether you exhausted King rather than fighting him.", basicBool],
     248: ["massacre_end", "Whether you got the bad (beat people up) ending in Chapter 1. Minor dialogue differences in Castle Town.", basicBool],
     249: ["spared_lancer", "Whether you spared Lancer and Susie.", basicBool],
-    250: ["thrash_repeats", "The number of times you died to Lancer and Susie, thus requiring them to blow up another Thrash Machine. Unique dialogue at 1 and 2."],
+    250: ["thrash_repeats", "The number of times you fought Lancer and Susie, thus requiring them to blow up a Thrash Machine. Unique dialogue at 1 and 2."],
     251: ["shortcut_door_help", "Whether Jigsaw Joe helped restore the Warp Door. No functional change.", basicBool],
     252: ["inspected_beds_ch1", "Whether you inspected all four beds in Chapter 1, becoming a Bed Inspector.", basicBool],
     253: ["traded_topcake", "Whether you returned the TopCake, receiving a SpinCake in its place.", basicBool],
@@ -914,7 +914,7 @@ let flags = {
             "Not useful (Ch1)"
          ]],
     
-    290: ["solved_ragger_puzzle", "Whether you solved the suits puzzle to obtain Ragger.", basicBool],
+    290: ["solved_dice_puzzle", "Whether you solved the suits puzzle to obtain Dice Brace.", basicBool],
     291: ["maze_progress", "Volatile. Counts the number of correct rooms you've gone through in the maze, or something like that. Find Susie at 4, done at 9."],
     292: ["maze_fail_count", "Volatile. Counts how much you've taken the wrong choice in the forest maze. Jumps straight to 3 (dead end) if you got lost before or found Susie."],
     293: ["lancer_deadend", "The number of times you found the Lancer dead end."],
@@ -1217,11 +1217,11 @@ let flags = {
     // no 470-499
     
     500: ["times_rudinn_fought", "The number of times you've fought the first Rudinn. Changes its encounter text."],
-    501: ["triple_hathy_outcome", "Seems to be intended for some other, non-Hathy fight in room_field2. Changes the dialogue of... a nonexistent NPC in the room. And it's only set by enemies that don't appear in that room.", basicBool],
+    501: ["triple_hathy_outcome", "Seems to be intended for some other, non-Hathy fight in room_field2. Changes the dialogue of... a nonexistent NPC in the room. And it's only set by enemies that don't appear in that room.", enemyStates],
     502: ["times_ponman_fought", "The number of times you fought Ponmen. Minor changes to the overworld chasing Ponmen."],
     503: ["susie_complimented", "Whether Susie has attempted to compliment Rudinn Ranger. Free ham sandwich day does not repeat.", basicBool],
     504: ["susie_flirted", "The number of times you used X-Flirt on Head Hathy. She tries the first time, makes Ralsei try the second, and you take over from the third."],
-    505: ["fought_rabbick", "Whether you fought any Rabbicks. If so, they run slower in the forest maze.", basicBool],
+    505: ["fought_rabbick", "Whether you fought any Rabbicks. If so, they run slower in the forest maze. Also set when you fight Clover for some reason.", basicBool],
     506: ["fought_bloxer", "Whether you fought Bloxer. If so, they don't chase you as diligently.", basicBool],
     507: ["fought_rudinn_ranger", "Whether you fought Rudinn Ranger. If so, they don't chase you at all.", basicBool],
     508: ["fought_hathyx", "Whether you fought Head Hathy. If so, they don't chase you at all.", basicBool],
@@ -1502,7 +1502,7 @@ let flags = {
           ]],
     1002: ["fought_shadowmantle", "Whether you've started the Shadow Mantle fight. Speeds up repeat fights... but you die? idk if it's really used.", basicBool],
     1003: ["board_losses", "Number of Game Overs attained in Tenna's show."],
-    1004: ["got_crowd_treasure", "Whether you opened the chest in the lower-left corner of that maze with Zapper+Shuttah fights.
+    1004: ["got_crowd_treasure", "Whether you opened the chest in the lower-left corner of that maze with Zapper+Shuttah fights."],
     1005: ["found_maze_crowd", "Whether you triggered the cheering crowd in the upper-right corner of that maze with Zapper+Shuttah fights.", basicBool],
     1006: ["forest_cut_progress", "Number of repeating forest rooms passed through looking for the Ice Key."],
     1007: ["swordroute_evict", "Whether you've (recently) done something to get yourself kicked out of the original game. Like dying.", basicBool],
@@ -1582,7 +1582,7 @@ let flags = {
     1048: ["lancer_cost", "Amount spent on Lancer in Board 2. Decreases if he is photographed before purchase.", {
              0: "Uninitialized",
              9: "9 points",
-             99: "99 points"
+             99: "99 points",
              999: "999 points"
           }],
     1049: ["board_1_battles", "Number of battles engaged in on Board 1."],
@@ -1591,8 +1591,8 @@ let flags = {
     1052: ["tenna_deleted_grass", "Whether Tenna deleted the grass to keep Susie from wasting time on it in the unused Board 3.", basicBool],
     // 1053?
     1054: ["tenna_voice_pitch", "Appears to be a volatile factor applied to Tenna's voice bite. Only used for his flashback.", {
-             "0": "Uninitialized"
-             "0.8": "80% pitch"
+             "0": "Uninitialized",
+             "0.8": "80% pitch",
              "1": "Full pitch"
           }],
     1055: ["sword_route_progress", "Progress on the Sword Route, the Chapter 3 side quest for the Shadow Mantle.", {
@@ -1736,7 +1736,7 @@ let flags = {
     1133: ["parent_lock_1_start", "Whether you got a wrong answer for the first parental lock, activating the screen with the puzzle.", basicBool],
     1134: ["parent_lock_2_start", "Whether you've activated the second parental lock puzzle by interacting with it.", basicBool],
     1135: ["unlocked_stealth", "Whether Susie has suggested the use of stealth.", basicBool],
-    1136: TODO
+    1136: ["TODO", "TODO", basicBool],
     1137: ["found_b3b_switch", "Whether you've activated a switch in one of the unused Chapter 3 areas.", basicBool],
     1138: ["got_nothing", "Whether you got an undefined item from an unused watercooler room in Chapter 3.", basicBool],
     1139: ["got_ch3_mint", "Whether you got the puzzle-locked Revive Mint in Chapter 3.", basicBool],
