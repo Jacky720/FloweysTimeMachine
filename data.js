@@ -1244,7 +1244,7 @@ let flags = {
     // here be encounter flags
     525: ["encount_first_ww", "Tracks the state of the first random Werewire encounter.", enemyStates],
     526: ["encount_first_tasq", "Tracks the state of the first random Tasque encounter, the one that jumps out at you. Then it's reused for like Giga Queen deaths or something, which is a little broken."], // shoutout to Colinator27 for finding the reuse
-    527: ["encount_first_viro", "Tracks the state of the first Virovirokun encounter, the one en route to AGREE2ALL.", enemyStates],
+    527: ["encount_first_viro", "Tracks the state of the first Virovirokun encounter, the one en route to AGREE2ALL. Also reused for Giga Queen stuff.", enemyStates],
     528: ["encount_smorgas_2", "Tracks the state of the Smorgasboard 2 encounter.", enemyStates],
     529: ["encount_berdly_1", "Tracks the state of the first Berdly battle. Used to determine if he breaks his arm.", enemyStates],
     530: ["encount_poppup_1", "Tracks the state of the first Poppup encounter, before you meet Noelle.", enemyStates],
