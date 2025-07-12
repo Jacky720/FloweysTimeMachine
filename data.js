@@ -652,7 +652,7 @@ let flags = {
     118: ["got_glowwrist", "Whether you got the first Glow Wrist.", basicBool],
     119: ["got_nubert_treasure", "Whether you got the Fiber Scarf.", basicBool],
     120: ["got_glowwrist_2", "Whether you got that other Glow Wrist.", basicBool],
-    // 121: ["unused", "Suspiciously unused flag."],
+    121: ["encount_tenna", "Tracks the state of the Tenna battle, for some reason.", enemyStates],
     122: ["got_tension_bit", "Whether you got the Tension Bit.", basicBool],
     123: ["got_ch2_mint", "Whether you got the THIRD Revive Mint.", basicBool],
     // 124: ["unused", "Suspiciously unused flag."],
@@ -1196,7 +1196,7 @@ let flags = {
     453: ["talked_snowgrave_neo", "Whether you talked to Spamton through the basement door while he was changing forms. He doesn't repeat himself.", basicBool],
     454: ["got_dealmaker", "Whether you spared Spamton NEO. What, you thought that would be in flag 309?", basicBool],
     455: ["ride_with_me", "Whether you said 'Noelle will ride with me' on Snowgrave. Unaccessed.", basicBool],
-    456: ["beat_snowgrave_neo", "Whether you defeated Spamton NEO on Snowgrave. Unaccessed.", basicBool],
+    456: ["beat_snowgrave_neo", "Whether you defeated Spamton NEO on Snowgrave.", basicBool],
     457: ["spared_berdly", "Whether you spared Berdly all three times, keeping him from breaking his arm.", basicBool],
     458: ["houses_hit", "The number of houses you hit with the swan boat, converted to TP at the start of the Rouxls fight. Maximum 7."],
     459: ["put_disk_mannequin", "Whether you tried to put the LoadedDisk into the Mannequin. It doesn't repeat.", basicBool],
@@ -1227,8 +1227,8 @@ let flags = {
     508: ["fought_hathyx", "Whether you fought Head Hathy. If so, they don't chase you at all.", basicBool],
     // no 509-519? not in chapter 2
     
-    509: ["pippins_r_act", "Number of R-Actions used on Pippins, apparently multiplied by number of Pippins present. Unique dialogue first time."],
-    510: ["pippins_s_act", "Number of S-Actions used on Pippins, apparently multiplied by number of Pippins present. Unaccessed?"],
+    509: ["pippins_r_act", "Number of Bribe ACTs used on Pippins, apparently multiplied by number of Pippins present. Unique dialogue first time."],
+    510: ["pippins_s_act", "Number of Cheat ACTs used on Pippins, apparently multiplied by number of Pippins present. Unaccessed?"],
     511: ["shuttah_s_act", "Whether you've used S-Action during a Shuttah battle. Randomizes flavortext on repeat.", basicBool],
     512: ["shuttah_r_act", "Whether you've used R-Action during a Shuttah battle. Reduces flavortext on repeat.", basicBool],
     513: ["shuttah_kris_pic", "Whether you took a photo of Kris during the Shuttah fight. Alters repeat dialogue.", basicBool],
@@ -1292,6 +1292,14 @@ let flags = {
     571: ["encount_spamton_neo", "For some reason doesn't use 'encounterflag' but tracks the state of Spamton NEO in case that's ever needed later. There are already like 2 flags for him anyway.", enemyStates],
     572: ["encount_vase_poppup", "Tracks the state of the Poppup under the vase near where Susie and Ralsei leave you.", enemyStates],
     
+   // Chapter 3
+    585: ["encount_rouxls_weather", "Tracks the state of the Rouxls Kaard throuple battle.", enemyStates],
+    586: ["encount_zapper_shuttah", "Tracks the state of the Zapper + Shuttah encounter later in TV world.", enemyStates],
+    589: ["encount_first_zapper", "Tracks the state of the Zapper in front of the suspicious door.", enemyStates],
+    590: ["encount_first_shadowguy", "Tracks the state of the first Shadow Guy encounter in TV World.", enemyStates],
+    591: ["encount_first_ribbick", "Tracks the state of the first Ribbick encounter in TV World.", enemyStates],
+    592: ["encount_second_watercooler", "Tracks the state of the Water Cooler encounter in TV World.", enemyStates],
+    593: ["encount_second_ribbick", "Tracks the state of the second Ribbick encounter in TV World. Can turn into disguised rabbicks.", enemyStates],
     // recruits, can take fractional values or be -1 for LOST but the checkbox is alongside a number box anyway so whatever
     // 601: ["recruit_enemy", "Whether you recruited the Chapter 1 placeholder enemy. Unused x2.", basicBool],
     // 602: ["recruit_lancer", "Unused. He doesn't have recruit info anyway.", basicBool],
@@ -1494,13 +1502,13 @@ let flags = {
     // no 955-960
     961: ["failed_spam_crystal", "Whether you got JEVIL's Shadow Crystal but failed to find Spamton's, and told Seam. They seem quite dejected...", basicBool], // :(
     
-    1001: ["tiny_pyramid_state", "Progress finding the even tinier pyramid in Desert Board.", [
+    1001: ["tiny_pyramid_state", "Progress finding the even tinier pyramid in Desert Board. Resets to 0 if you enter Rouxls's shop.", [
              "Default state",
              "Tiny pyramid mentioned",
              "Rouxls evicted",
              "Locked out"
           ]],
-    1002: ["fought_shadowmantle", "Whether you've started the Shadow Mantle fight. Speeds up repeat fights... but you die? idk if it's really used.", basicBool],
+    1002: ["fought_shadowmantle", "Whether you've started the Shadow Mantle fight. Speeds up repeat fights, since this flag is set before the tempsave.", basicBool],
     1003: ["board_losses", "Number of Game Overs attained in Tenna's show."],
     1004: ["got_crowd_treasure", "Whether you opened the chest in the lower-left corner of that maze with Zapper+Shuttah fights."],
     1005: ["found_maze_crowd", "Whether you triggered the cheering crowd in the upper-right corner of that maze with Zapper+Shuttah fights.", basicBool],
@@ -1525,7 +1533,7 @@ let flags = {
     1022: ["tenna_board_absent", "Whether Tenna has left the current board, allowing for additional chicanery. Volatile?", basicBool],
     1023: ["cant_grab_ralsei", "Seems to? prevent Susie from picking up Ralsei in Tenna's minigames.", basicBool],
     1024: ["board_transitioning?", "Seems to be a volatile value to freeze characters on Chapter 3 minigame transitions.", basicBool],
-    1025: ["board_key_count", "Board 1 key count. Unaccessed. See flag 1122 instead."],
+    1025: ["board_key_count", "Board 1 key count. Unaccessed. See flag 1122 instead. Also incremented if you buy the useless board 2 key."],
     // 1026?
     1027: ["s_star_splat", "Whether you interacted with the stars in the S-Rank room, causing one of them to fall on the floor.", basicBool],
     1028: ["got_ramb_prize_1", "Whether you got the first board reward from Ramb (if available based on rank).", [
@@ -1533,10 +1541,10 @@ let flags = {
              "Got prize",
              "Got nothing (Z-Rank)"
           ]],
-    1029: ["ramb_back_talk_2", "How much you've talked with Ramb backstage after round 2. More complicated?", [
+    1029: ["ramb_back_talk_2", "How much you've talked with Ramb backstage. More complicated?", [
              "Default state",
-             "Moved Ramb",
-             "'I'm glad you're having REAL fun, Kris.'",
+             "Ramb moved away from the door the first time",
+             "'I'm glad you're having REAL fun, Kris. (moves for the second time)'",
              "Talked round 3 (unused?)"
           ]],
     1030: ["got_ramb_prize_2", "Whether you got the second board reward from Ramb (if available based on rank).", [
@@ -1546,7 +1554,7 @@ let flags = {
           ]],
     1031: ["entered_changing_room", "Whether you've interacted to enter the S- or Z-Rank room. Stops Susie's and Ralsei's dialogue on repeat.", basicBool],
     1032: ["ramb_first_talk", "Whether you've talked to Ramb at least once in the Green Room. Alters repeat interaction.", basicBool],
-    1033: ["tried_racing", "Whether you've tried the unseeable racing game at least once. Alters repeat interaction.", basicBool],
+    1033: ["tried_racing", "Whether you've interacted with the TV with the racing game at least once. Alters repeat interaction.", basicBool],
     1034: ["times_played_racing", "Number of times you played the unseeable racing game."],
     1035: ["won_racing", "Whether you won the racing game. Susie refuses to play any more afterward.", basicBool],
     // 1036?
@@ -1642,6 +1650,7 @@ let flags = {
     1080: ["suziezilla_losses", "Times lost at Suziezilla, up to 8."],
     1081: ["suziezilla_result", "Exactly how much you won at Suziezilla.", [
              "Default state",
+             "Destroyed by Spamton's bit shot without ever hitting him",
              "Declared win by Tenna",
              "Defeated final wave"
           ]],
@@ -1718,7 +1727,7 @@ let flags = {
     1118: ["last_minigame_points", "Seems to be? the number of points earned in the last PHYSICAL CHALLENGE, tracked into the overall round evaluation."],
     1119: ["cooler_beg_count", "Number of times begged for mercy from Watercooler. Alters repeat flavortext."],
     
-    1122: ["board_key_count_2", "Board 1 key count. Used to award bonuses for extra keys."],
+    1122: ["board_key_count_2", "Board 1 key count. Used to award bonuses for extra keys. Also incremented if you buy the useless board 2 key.", basicBool],
     1123: ["entered_parent_0", "Whether you've entered the room before the first Parental Lock, acknowledged by the party.", basicBool],
     1124: ["tenna_falling_stuff", "What Tenna last called the falling objects on Board 1. Alters Board 2 dialogue.", [
              "Default state",
@@ -1737,7 +1746,7 @@ let flags = {
     1134: ["parent_lock_2_start", "Whether you've activated the second parental lock puzzle by interacting with it.", basicBool],
     1135: ["unlocked_stealth", "Whether Susie has suggested the use of stealth.", basicBool],
     1136: ["TODO", "TODO", basicBool],
-    1137: ["found_b3b_switch", "Whether you've activated a switch in one of the unused Chapter 3 areas.", basicBool],
+    1137: ["found_trash_switch", "Whether you've activated the trash switch at the end of the first stealth section.", basicBool],
     1138: ["got_nothing", "Whether you got an undefined item from an unused watercooler room in Chapter 3.", basicBool],
     1139: ["got_ch3_mint", "Whether you got the puzzle-locked Revive Mint in Chapter 3.", basicBool],
     1140: ["got_one_point", "Whether you got the chest with a singular point in the room with the Zapper who takes you nowhere.", basicBool],
@@ -1850,18 +1859,18 @@ let flags = {
              "He's fun",
              "He sucks"
           ]],
-    1202: ["got_trash_ch3_1", "Whether you got the 1st trash reward in Chapter 3 (which item?)", basicBool],
-    1203: ["got_trash_ch3_2", "Whether you got the 2nd trash reward in Chapter 3 (which item?)", basicBool],
-    1204: ["got_trash_ch3_3", "Whether you got the 3rd trash reward in Chapter 3 (which item?)", basicBool],
-    1205: ["got_trash_ch3_4", "Whether you got the 4th trash reward in Chapter 3 (which item?)", basicBool],
-    1206: ["got_trash_ch3_5", "Whether you got the 5th trash reward in Chapter 3 (which item?)", basicBool],
-    1207: ["got_trash_ch3_6", "Whether you got the 6th trash reward in Chapter 3 (which item?)", basicBool],
+    1202: ["got_trash_ch3_1", "Whether you opened the 1st trash can in Chapter 3, with 10 points inside.", basicBool],
+    1203: ["got_trash_ch3_2", "Whether you opened the 2nd trash can in Chapter 3, with nothing inside.", basicBool],
+    1204: ["got_trash_ch3_3", "Whether you opened the 3rd trash can in Chapter 3, with the TVSlop.", basicBool],
+    1205: ["got_trash_ch3_4", "Whether you opened the 4th trash can in Chapter 3, with nothing inside.", basicBool],
+    1206: ["got_trash_ch3_5", "Whether you opened the 5th trash can in Chapter 3, with 2 points inside.", basicBool],
+    1207: ["got_trash_ch3_6", "Whether you opened the 6th trash can in Chapter 3, with 50 points inside.", basicBool],
     1208: ["susie_tenna_chat_2", "Progress with Susie questioning Tenna's show between boards.", [
              "Default state",
              "Started scene",
              "Finished scene"
           ]],
-    1209: ["got_trash_ch3_7", "Whether you got the 7th trash reward in Chapter 3 (which item?)", basicBool],
+    1209: ["got_trash_ch3_7", "Whether you opened the 7th trash can in Chapter 3, with nothing inside.", basicBool],
     1210: ["elnina_greenroom_comment", "What you told Elnina about her relationship in the Green Room.", [
              "Default state",
              "You're strong and independent",
@@ -1911,7 +1920,8 @@ let flags = {
     1219: ["tried_suziezilla", "Whether you completed the intro scene for the Susiezilla game.", basicBool],
     1220: ["beat_suziezilla?", "Whether you reached the elusive BOARD CLEAR of the Suziezilla game.", basicBool],
     1221: ["got_cooler_crater", "Whether you got the 200 points from underneath the C-Rank Watercooler.", basicBool],
-    
+    1222: ["got_tenna_statue", "Whether you got the Golden Tenna Statue from the Ball Machine.", basicBool],
+    1223: ["got_dog_dollar", "Whether you got the Dog Dollar from the Ball Machine.", basicBool],
     1224: ["opened_bonus_zone", "Whether you opened Tenna's secret bonus zone behind a green screen.", basicBool],
     1225: ["opened_sams_zone", "Whether you opened the secret zone where you can choose whether the talking cages love or hate. Behind a green screen.", basicBool],
     1226: ["got_1225_room", "Whether you entered the secret 1225 room in the Ball Machine game. Yes, the flag is so close.", basicBool],
@@ -1946,7 +1956,7 @@ let flags = {
           ]],
     1244: ["parent_got_camera", "Whether you got the camera in the Parental Lock 3 puzzle.", basicBool],
     1245: ["num_parent_photos", "Number of photos taken in the Parental Lock 3 puzzle. Crashes after 8."],
-    1246: ["got_100_dig", "Whether you dug up the rare 100-point hole. Which is probably unused?", basicBool],
+    1246: ["got_100_dig", "Whether you dug up the rare 100-point hole in the room with the many Lancers.", basicBool],
     // 1247?
     1248: ["times_leveled_ch3", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
     1249: ["times_gained_at_ch3", "The number of times your AT and Magic have increased due to leveling up (every ten encounters)."],
@@ -1959,16 +1969,16 @@ let flags = {
              "3": "1 became 3",
              "4": "Told of 3"
           }],
-    1252: ["goulden_son_destination", "Used for movement with Goulden Son.", [
+    1252: ["goulden_son_destination", "Used to determine which is Goulden Son and which is Goulden Son 2. The one you interact with first after the lights are gone will be Goulden Son.", [
              "Default state",
-             "Interacted left",
-             "Interacted right"
+             "Right is Goulden Son 2",
+             "Left is Goulden Son 2"
           ]],
-    1253: ["got_trash_ch3_8", "Whether you got the 8th trash reward in Chapter 3 (which item?)", basicBool],
+    1253: ["got_trash_ch3_8", "Whether you opened the 8th trash can in Chapter 3, with 120 points inside.", basicBool],
     1254: ["stone_lancer_ch3", "Whether you saw Lancer petrified in Chapter 3 (in the room where you get his controllers).", basicBool],
     1255: ["sword_route_kills", "Number of enemies killed using your sword in the Chapter 3 minigames. Appears in Kris's stats."],
     1256: ["times_plucked_grass", "The number of times Susie (Kris as Susie?) plucks grass in the Chapter 3 minigames. Appears in Susie's stats (up to 99)."],
-    1257: ["times_carried_ralsei", "The number of times you carry Ralsei in the Chapter 3 minigames. Appears in Ralsei's stats (up to 99)."],
+    1257: ["times_carried_ralsei", "The number of times Ralsei was carried in the Chapter 3 minigames. Appears in Ralsei's stats (up to 99)."],
     1258: ["ch3_run_reminder", "Whether Susie reminded you you can run at the start of Chapter 3.", basicBool],
     1259: ["ch3_run_reminder_2", "Whether Ralsei reminded you you can run in Chapter 3.", basicBool],
     1260: ["talked_ral_eye_puzzle", "Whether you've talked to Ralsei at the Chapter 3 starting eye puzzle. Alters repeat dialogue.", basicBool],
@@ -1978,7 +1988,7 @@ let flags = {
     1264: ["knight_deaths", "Number of times you died to the Knight -- it doesn't reset your save when you retry."],
     1265: ["phaser_cannons", "Whether you performed the Phaser Cannons Easter Egg in the cooking minigame.", basicBool],
     1266: ["moved_ramb_2", "Whether you've talked to Ramb after round 2 for him to move away from the door.", basicBool],
-    1267: ["lawnmower_score", "Score in Tenna's lawnmower minigame, minimum 1. Apparently used for a TVDinner chest too?"],
+    1267: ["lawnmower_score", "Score in Tenna's lawnmower minigame, minimum 1. Reused for a TVDinner chest."],
     1268: ["mini_attack_susie", "Whether the mini-Kris tried to attack Susie, causing her to offer to let Kris knaw her hair. Unaccessed?", basicBool],
     1269: ["shadow_home", "Whether you saw the smashed TV using the Shadow Crystal.", basicBool],
     1270: ["shadow_failed_ch3", "Whether you used the Shadow Crystal in Chapter 3 and saw nothing. 1269 is more interesting.", basicBool],
