@@ -1490,9 +1490,14 @@ let flags = {
     928: ["creepy_steps", "The number of steps you take toward Noelle (0-3) after the hospital scene on Snowgrave. Yeah, that's a thing."],
     
     930: ["got_ch3_egg", "Whether you got the Chapter 3 egg.", basicBool],
-    
+
+    932: ["amount_pain_ch1", "Number of times hit in Chapter 1, used for trophies."],
+    933: ["amount_ice_e_pain_ch1", "Number of times you looked at the ICE-E pain scale in Chapter 1, used for trophies."],
+    934: ["amount_pain_ch2", "Number of times hit in Chapter 2, used for trophies."],
+    935: ["amount_ice_e_pain_ch2", "Number of times you looked at the ICE-E pain scale in Chapter 2, used for trophies."],
     936: ["amount_pain_ch3", "Number of times hit in Chapter 3, used for trophies."],
-    
+    937: ["amount_pain_ch4", "Number of times hit in Chapter 4, used for trophies."],
+    938: ["amount_ice_e_pain_ch4", "Number of times you looked at the ICE-E pain scale in Chapter 4, used for trophies."],
     939: ["amount_treasure", "Number of chests opened, used for trophies."],
     
     950: ["shadow_failed_ch2", "Whether you used the Shadow Crystal in Chapter 2 and saw nothing. 952 is more interesting.", basicBool],
