@@ -1295,10 +1295,11 @@ let flags = {
    // Chapter 3
     585: ["encount_rouxls_weather", "Tracks the state of the Rouxls Kaard throuple battle.", enemyStates],
     586: ["encount_zapper_shuttah", "Tracks the state of the Zapper + Shuttah encounter later in TV world.", enemyStates],
+    587: ["encount_first_watercooler", "Tracks the state of the Watercooler in the C-rank room.", enemyStates],
     589: ["encount_first_zapper", "Tracks the state of the Zapper in front of the suspicious door.", enemyStates],
-    590: ["encount_first_shadowguy", "Tracks the state of the first Shadow Guy encounter in TV World.", enemyStates],
+    590: ["encount_first_shadowguy", "Tracks the state of the first Shadow Guy + Shuttah encounter in TV World.", enemyStates],
     591: ["encount_first_ribbick", "Tracks the state of the first Ribbick encounter in TV World.", enemyStates],
-    592: ["encount_second_watercooler", "Tracks the state of the Water Cooler encounter in TV World.", enemyStates],
+    592: ["encount_second_watercooler", "Tracks the state of the Watercooler encounter in TV World, along with the Shadowguys that drop down in the Susiezilla room.", enemyStates],
     593: ["encount_second_ribbick", "Tracks the state of the second Ribbick encounter in TV World. Can turn into disguised rabbicks.", enemyStates],
     // recruits, can take fractional values or be -1 for LOST but the checkbox is alongside a number box anyway so whatever
     // 601: ["recruit_enemy", "Whether you recruited the Chapter 1 placeholder enemy. Unused x2.", basicBool],
@@ -1508,7 +1509,7 @@ let flags = {
              "Rouxls evicted",
              "Locked out"
           ]],
-    1002: ["fought_shadowmantle", "Whether you've started the Shadow Mantle fight. Speeds up repeat fights, since this flag is set before the tempsave.", basicBool],
+    1002: ["fought_shadowmantle", "Whether you've started the Shadow Mantle fight. Speeds up repeat fights, as your death isn't a real Game Over and doesn't reload a save.", basicBool],
     1003: ["board_losses", "Number of Game Overs attained in Tenna's show."],
     1004: ["got_crowd_treasure", "Whether you opened the chest in the lower-left corner of that maze with Zapper+Shuttah fights."],
     1005: ["found_maze_crowd", "Whether you triggered the cheering crowd in the upper-right corner of that maze with Zapper+Shuttah fights.", basicBool],
@@ -1814,7 +1815,12 @@ let flags = {
              "Tried game",
              "Got controller"
           ]],
-    
+
+    1177: ["got_tenna_tie", "Whether you got the Tenna Tie from the Ball Machine.", basicBool],
+    1178: ["got_execbuffet", "Whether you got the Executive Buffet from the Ball Machine.", basicBool],
+    1179: ["got_tensionmax", "Whether you got the TensionMax from the Ball Machine.", basicBool],
+    1180: ["got_revivemint", "Whether you got the Revive Mint from the Ball Machine.", basicBool],
+    1181: ["got_blue_ribbon", "Whether you got the Blue Ribbon from the Ball Machine.", basicBool],
     1182: ["gacha_lastbet", "Amount previously spent on the gumball machine in Chapter 3, used to compute gold prize odds. Resets upon earning a gold prize."],
     // 1183?
     1184: ["sneaking_fast", "Whether the party has decided to sneak really fast.", basicBool],
