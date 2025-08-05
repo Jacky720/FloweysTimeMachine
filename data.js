@@ -1686,7 +1686,9 @@ let flags = {
              "Wardrobe mentioned",
              "Wardrobe appeared",
              "Wardrobe checked",
-             "Got TripTicket"
+             "Got TripTicket",
+             "Got post-Mantle hint",
+             "Got alternate TripTicket"
           ]],
     1093: ["jailed_cheater", "Whether you confessed to the Zapper that you are cheaters, and went into the highly escapable prison.", basicBool],
     1094: ["parent_lock_1", "Whether you solved the first parental lock in Chapter 3.", basicBool],
