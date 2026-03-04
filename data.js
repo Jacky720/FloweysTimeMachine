@@ -596,7 +596,7 @@ let flags = {
     40: ["violences", "Total number of enemies defeated through FIGHTing. Can be reduced by obtaining forgiveness from Rudinn or Hathy."],
     41: ["spares", "Total number of enemies SPAREd. Unaccessed."],
     42: ["pacifies", "Total number of enemies Pacify/Sleep Mist-ed. Unaccessed."],
-    43: ["autosusie_violences", "Violences committed by Susie while not under player control. Never set due to a bug, but it would be possible to get the Chapter 1 Overthrow ending even if this is 1."],
+    43: ["autosusie_violences", "Violences committed by Susie while not under player control. In SURVEY_PROGRAM and Chapter 1&2 it's never set due to a bug. It is possible to get the Chapter 1 Overthrow ending even if this is 1."],
     44: ["kills", "Total number of enemies you killed for realsies. Includes SnowGrave and killing Pipis."],
     45: ["freezes", "Total number of enemies you froze."],
     // no 46-48
