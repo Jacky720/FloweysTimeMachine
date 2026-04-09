@@ -5,7 +5,7 @@ const basicBool = "checkbox",
           "Spared",
           "Pacified",
           "In combat (Ch. 1)",
-          "Susie (unused)",
+          "Violenced by uncontrolled Susie (unused in demo due to a bug)",
           "Frozen"
       ],
       tennaRanks = {
@@ -374,7 +374,7 @@ const plotValues = [
         "49": "Bed skip",
         "50": "Entered Cyber World",
         "51": "Met Queen",
-        "52": "Seen Sweet", // I have no idea where
+        "52": "Seen Sweet", // After the first teacup ride.
         "33": "Arcade game introduced", // out of order
         "54": "Powers combined",
         "55": "Played arcade game",
@@ -497,7 +497,7 @@ const plotValues = [
         "127": "Ralsei acknowledges his is a summary",
         "128": "Glimpsed Gerson",
         "140": "Met Gerson",
-        "141": "Room after meeting Gerson",
+        "141": "Gerson entered next room",
         "145": "Ralsei stool form",
         "150": "Entered room Gerson gets lost in",
         "160": "Gerson went to the study",
@@ -574,6 +574,7 @@ let flags = {
     20: ["other_text_command", "Volatile. Controls how some characters' overworld sprites interact with their dialogue, among other things."],
     21: ["door_freeze_timer", "Volatile. Controls timing of room fades?"],
     22: ["disable_x_slowing", "Added in 1.08. Pressing Z while holding C in combat toggles it. Becomes debug-only in 1.09.", basicBool],
+    23: ["can_climb", "Whether you can climb walls using the Claimb Claws.", basicBool],
     29: ["susie_show_eyes", "Makes Susie show her eyes at the end of Chapter 1. Ignored in Chapter 2; she shows her eyes anyway.", basicBool],
     30: ["ralsei_hat_state", "Controls Ralsei's face selection. Ignored in Chapter 2; he's hatless anyway.", [
             "Hat",
@@ -592,7 +593,7 @@ let flags = {
     36: ["dojo_failure", "Set when losing Party Dojo battles (i.e. when flag 35 is 1). Affects prize and dialogue.", basicBool],
     37: ["dojo_active", "Alters battle win text and prevents you from gaining money outside of prizes.", basicBool],
     38: ["no_battle_end_msg", "Disables the battle end message. Used for SnowGraving Berdly and Party Dojo.", basicBool],
-    39: ["dojo_abort?", "Something to do with immediately ending Party Dojo battles.", basicBool],
+    39: ["dojo_abort?", "Something to do with immediately ending Party Dojo battles, also used in the Jackenstein fight.", basicBool],
     40: ["violences", "Total number of enemies defeated through FIGHTing. Can be reduced by obtaining forgiveness from Rudinn or Hathy."],
     41: ["spares", "Total number of enemies SPAREd. Unaccessed."],
     42: ["pacifies", "Total number of enemies Pacify/Sleep Mist-ed. Unaccessed."],
@@ -619,7 +620,7 @@ let flags = {
     61: ["disable_recruiting", "Prevents you from recruiting enemies in Party Dojo battles.", basicBool],
     62: ["nonnarrative_intro_text", "Used when Noelle enters her first battle and when Susie wants to demonstrate UltimateHeal to not use the normal battle introduction typer.", basicBool],
     63: ["violenced_last", "Volatile. Triggers 'You/Noelle became stronger' when violencing enemies.", basicBool],
-    64: ["storage_size", "The amount of items you can keep in your pockets. Always 24. No idea why this needed to be a flag."],
+    64: ["storage_size", "The amount of items you can keep in your pockets. Always 24 in Chapters 2 and 3, 36 in Chapter 4, code exists to set it to 48 in Chapter 6 and later."],
     65: ["times_leveled_ch2", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
     66: ["times_gained_at_ch2", "The number of times your AT and Magic have increased due to leveling up (every ten encounters). Used to prevent overly increasing them when sealing the fountain."],
     
@@ -646,7 +647,7 @@ let flags = {
     112: ["got_JEVIL_chest", "Whether you got the Jevilstail/Devilsknife from a chest. It appears outside the room if your inventory is full after the battle.", basicBool],
     113: ["got_clubswich", "Whether you got the Clubs Sandwich from... take a guess.", basicBool],
     114: ["got_castle_mint", "Whether you got the Revive Mint from that chest that appears when you interact with the portraits.", basicBool],
-    115: ["got_key_a", "Whether you got the Broken Key A.", basicBool],
+    115: ["got_key_a", "Whether you got the Broken Key A. Also set if you defeat the Knight in Chapter 3 due to an encounterflag reuse.", basicBool],
     116: ["got_key_b", "Whether you got the Broken Key B.", basicBool],
     117: ["got_key_c", "Whether you got the Broken Key C.", basicBool],
     118: ["got_glowwrist", "Whether you got the first Glow Wrist.", basicBool],
@@ -674,7 +675,11 @@ let flags = {
     140: ["got_trash_candy", "Whether you got a Dark Candy from the Dark Candy trash can.", basicBool],
     141: ["got_chain_mail", "Whether you got the Chain Mail armor.", basicBool],
     142: ["got_spamton_chest", "Whether you got the Dealmaker/Puppet Scarf from a chest. There's one immediately after you beat Spamton, and one back at My Castle Town.", basicBool],
-    
+
+    176: ["encount_sound_of_justice_1", "Tracks the state of the Susie-only stage of the Sound of Justice Battle, always 2.", enemyStates],
+    177: ["encount_titan_spawn", "Tracks the state of the Titan Spawn encounter.", enemyStates],
+    186: ["encount_sound_of_justice_2", "Tracks the state of the Kris stage of the Sound of Justice Battle, always 2.", enemyStates],
+
     200: ["ran_in_school", "Whether you ran to Susie in the Chapter 1 school scene. Unaccessed.", basicBool],
     201: ["solved_eye_puzzle", "Whether you solved the eye puzzle in the ?????? area.", basicBool],
     202: ["ran_in_dark", "How you proceeded once finding Susie in the ?????? area.", [
@@ -1034,7 +1039,7 @@ let flags = {
     354: ["bagels_purchased", "The number of CD Bagels you purchased from K_K. He stops selling them at six, in case somebody orders 400."],
     // no 355
     356: ["lancer_cared_for", "Whether statue-Lancer has been pushed to the table and given his adorable bib.", basicBool],
-    357: ["recruit_hacker", "Whether you collected all three Blue Checksmarks for Hacker.", basicBool],
+    357: ["recruit_hacker", "Whether you talked to Hacker after collecting all three Blue Checksmarks.", basicBool],
     358: ["entered_basement", "Tracks how many times you entered the basement alone. Does not go past 1 until you've seen Susie stealing Ralsei's glasses, after which it gets set to 2."],
     359: ["met_hacker", "Whether you talked to Hacker. Note that the 2 state isn't directly used; see flag 357.", [
             "Default state",
@@ -1244,7 +1249,7 @@ let flags = {
     // here be encounter flags
     525: ["encount_first_ww", "Tracks the state of the first random Werewire encounter.", enemyStates],
     526: ["encount_first_tasq", "Tracks the state of the first random Tasque encounter, the one that jumps out at you. Then it's reused for like Giga Queen deaths or something, which is a little broken."], // shoutout to Colinator27 for finding the reuse
-    527: ["encount_first_viro", "Tracks the state of the first Virovirokun encounter, the one en route to AGREE2ALL. Also reused for Giga Queen stuff.", enemyStates],
+    527: ["encount_first_viro", "Tracks the state of the first Virovirokun encounter, the one en route to AGREE2ALL. Also reused for Giga Queen stuff, doing Round 1 hitless causes this to be set to 1.", enemyStates],
     528: ["encount_smorgas_2", "Tracks the state of the Smorgasboard 2 encounter.", enemyStates],
     529: ["encount_berdly_1", "Tracks the state of the first Berdly battle. Used to determine if he breaks his arm.", enemyStates],
     530: ["encount_poppup_1", "Tracks the state of the first Poppup encounter, before you meet Noelle.", enemyStates],
@@ -1293,9 +1298,15 @@ let flags = {
     572: ["encount_vase_poppup", "Tracks the state of the Poppup under the vase near where Susie and Ralsei leave you.", enemyStates],
     
    // Chapter 3
+    580: ["encount_board1_2shadowguys", "Tracks the state of the Shadowguy encounter in the room on the left of the oasis in Board 1.", enemyStates],
+    581: ["encount_board1_3shadowguys", "Tracks the state of the Shadowguy encounter in the block-pushing room in Board 1.", enemyStates],
+    582: ["encount_board2_2pippins", "Tracks the state of the Pippins encounter in the room on the left of the Kodakoda shrine in Board 2.", enemyStates],
+    583: ["encount_board2_3pippins", "Tracks the state of the Pippins encounter that Susie runs into using Kris's controller in Board 2.", enemyStates],
+    584: ["encount_board2_shuttah", "Tracks the state of the Shuttah boss battle in Board 2.", enemyStates],
     585: ["encount_rouxls_weather", "Tracks the state of the Rouxls Kaard throuple battle.", enemyStates],
     586: ["encount_zapper_shuttah", "Tracks the state of the Zapper + Shuttah encounter later in TV world.", enemyStates],
     587: ["encount_first_watercooler", "Tracks the state of the Watercooler in the C-rank room.", enemyStates],
+    588: ["encount_b3bs_watercooler", "Never set, would have tracked the state of a Watercooler encounter in the unused room_dw_b3bs_watercooler.", enemyStates],
     589: ["encount_first_zapper", "Tracks the state of the Zapper in front of the suspicious door.", enemyStates],
     590: ["encount_first_shadowguy", "Tracks the state of the first Shadow Guy + Shuttah encounter in TV World.", enemyStates],
     591: ["encount_first_ribbick", "Tracks the state of the first Ribbick encounter in TV World.", enemyStates],
@@ -1368,7 +1379,213 @@ let flags = {
     668: ["recruit_organikk", "Recruit progress.", basicBool],
     669: ["recruit_ms_mizzle", "Recruit progress.", basicBool],
     
+    // Chapter 4 flags
+    700: ["did_sticker_fight", "Viewed the cutscene of Kris and Susie placing stickers on each other at the church. Unaccessed as of chapter 4.", basicBool],
+    701: ["had_diner_with_susie", "Finished the cutscene of the diner with Susie.", basicBool],
+    702: ["drew_susie", "Drew Susie during the diner cutscene.", basicBool],
+    703: ["wrote_in_corner", "Wrote something in the corner during the diner cutscene. Unaccessed as of chapter 4.", basicBool],
+    704: ["found_darkroom_wallswitch", "Activated the switch in the unused room_dw_church_darkroom1_old.", basicBool],
+    705: ["lit_all_unused_candles", "Whether all the candles were lit in an unused candle lighting room.", basicBool],
+    706: ["returned_castle_town_ch4", "Finished the cutscene of returning to Castle Town and greeting Ralsei at the start of chapter 4.", basicBool],
+    707: ["got_slapped_by_noelle_weird", "Aborted the Weird Route late enough for Noelle to yell and slap you for your 'prank'.", basicBool],
+    708: ["took_noelle_watch", "Kept Noelle's watch in your equipment or inventory at the end of chapter 2.", basicBool],
+    709: ["opened_holiday_gate", "Opened the gate of the Holiday residence. There is a bug where it is set to -1 if you kill a Titan Spawn because the game thinks it's recruitable.", basicBool],
+    710: ["saw_ralsei_room", "Whether you saw the emptiness of Ralsei's room in Castle Town.", {
+        "0": "Default state",
+        "1": "Susie ran off, followed by Ralsei",
+        "2": "Finished the Ralsei room cutscene"
+    }],
+    711: ["ralsei_wants_more_plushies", "Listened to Ralsei after interacting with his Ralsei plush (obtained in chapter 2) in his room.", basicBool],
+    712: ["sat_down_at_lake", "Progress in cutscene after sitting down by the lake at the end of chapter 4. Interrupted by getting up.", {
+        "0": "Default state",
+        "1": "Susie asks if you can hear a song",
+        "2": "Kris looks at Susie",
+        "3": "Susie asks if she got something on her face",
+        "4": "Given the option to say what's on your mind",
+        "5": "Susie gets up and says they should go"
+    }],
+    713: ["said_something_at_lake", "Which option you picked when asked to say what's on your mind or nothing at the lake. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "Say what's on your mind",
+        "2": "Say nothing"
+    }],
+    714: ["answered_berdly_call", "Progress in the Berdly phone call at Noelle's house.", {
+        "0": "Default state",
+        "1": "Picked up Noelle's phone",
+        "2": "Go with Berdly",
+        "3": "Sing the wrong number song"
+    }],
+    715: ["asked_alvin_about_shelter", "Talked to Alvin and picked 'Enter the shelter' after his sermon.", basicBool],
+    716: ["bangin_sermon_my_man", "Talked to Alvin and picked the best option after his sermon.", basicBool],
+    717: ["asked_alvin_about_asgore", "Talked to Alvin and picked 'Asgore' after his sermon.", basicBool],
+    718: ["talked_monster_kid_church", "What you said to Monster Kid after Alvin's sermon.", {
+        "0": "Default state",
+        "1": "Shelter",
+        "2": "Susie will not be tamed"
+    }],
+    719: ["made_alphys_juice", "Successfully created Alphys' juice combo at church.", basicBool],
+    720: ["brought_alphys_juice", "Whether you gave Alphys her juice combo… or not.", {
+        "0": "Default state",
+        "1": "Offer juice",
+        "2": "Drink juice in front of her"
+    }],
+    722: ["told_alphys_why_shelter", "The reason you gave to Alphys for asking about the shelter.", {
+        "0": "Default state",
+        "1": "Architectural history research",
+        "2": "Put hay inside new house for Susie"
+    }],
+    723: ["talked_alphys_about_undyne", "Talked to Alphys about Undyne at church. An extra value is available if we gave her Undyne's chocolate in chapter 2.", {
+        "0": "Default state",
+        "1": "Undyne / She gave you chocolates though",
+        "2": "It's because of me"
+    }],
+    726: ["noelle_santa_comment", "Whether Noelle has explained the Santas.", basicBool],
+    727: ["noelle_dead_santa_comment", "Whether Noelle commented on Kris trying to 'starve' the Santas.", basicBool],
+    728: ["activated_treat_launcher", "Viewed the cutscene of Noelle showing off the unused holiday treat launcher.", basicBool],
+    730: ["noelle_cactus_comment", "Whether Noelle commented on the cactus being called Tsuntsun by Berdly.", basicBool],
+    731: ["checked_noelle_history", "Checked Noelle's browsing history with Susie.", basicBool],
+    732: ["found_cat_petterz", "Noticed Cat Petterz 4 on Noelle's computer.", basicBool],
+    733: ["took_noelle_pencil", "Took the pencil from Noelle's homework desk.", basicBool],
+    // Back to Chapter 3 for this one flag for some reason
     734: ["ral_susie_festival_talk", "Whether you completed the talk between Susie and Ralsei prior to Tenna's introduction in Chapter 3.", basicBool],
+    
+    736: ["noelle_kitchen_phone_current_line", "Tracks the current line in the spooky phone call to Kris in Noelle's kitchen.", {
+        "0": "... dark... fountain... next...",
+        "1": "... Susie... must not get... guitar...",
+        "2": "... need... soul...",
+        "3": "Without... soul... Kris... will...",
+        "4": "... Susie... guitar... code... stop...",
+        "5": "... police... sacrifice... next week...",
+        "6": "... church... tonight...",
+        "7": "... Kris... dark world... no soul... can't...",
+        "8": "...... ...... ......"
+    }],
+    737: ["noelle_kitchen_soul_catch_progress", "Tracks the progress in the cutscene of Kris catching the Soul in Noelle's kitchen.", {
+        "0": "Default state",
+        "1": "Kris caught Soul in kitchen",
+        "2": "Kris put back Soul in closet"
+    }],
+    738: ["noelle_kitchen_piano_current_song", "Tracks the current piano song being played by Kris in Noelle's kitchen.", {
+        "0": "Default state",
+        "1": "kris_piano_sevenfour",
+        "2": "kris_piano_quiz",
+        "3": "kris_piano_lancer_waltz",
+        "4": "kris_piano_rouxls",
+        "5": "kris_piano_waitingroom",
+        "6": "kris_piano_shop",
+        "7": "kris_piano_last_prophecy",
+        "8": "kris_piano_prophecy",
+        "9": "Kris played all songs (unused?)"
+    }],
+    739: ["noelle_present1_x", "X coordinate of the first present in Noelle's present room."],
+    740: ["noelle_present2_x", "X coordinate of the second present in Noelle's present room."],
+    741: ["noelle_present3_x", "X coordinate of the third present in Noelle's present room."],
+    742: ["noelle_bathroom_asgore_current_line", "Tracks the current line in the Asgore cutscene in Noelle's bathroom.", {
+        "0": "Default state",
+        "1": "Dum dee dum...",
+        "2": "Phew! Cleaning up sure works up an appetite.",
+        "3": "... I wonder if the kitchen has any treats for me...",
+        "4": "... No. Not now. I can't afford to take a break.",
+        "5": "Now, more than ever... I need to concentrate.",
+        "6": "... to settle this once and for all.",
+        "7": "... I've got to go look again."
+    }],
+    744: ["showed_susie_family_photo", "Showed to Susie the old family photo on your fridge.", basicBool],
+    745: ["showed_susie_asriel_photo", "Showed to Susie the Asriel photo on your fridge.", basicBool],
+    746: ["susie_saw_dragon_book", "Opened the drawer containing How To Draw Dragons in front of Susie.", basicBool],
+    748: ["cleaned_up_stain", "Cleaned up the stain with Susie in Kris's room.", basicBool],
+    750: ["talked_berdly_librarby", "Talked to Berdly at the Librarby.", basicBool],
+    751: ["discussed_plans_berdly_librarby", "Discussed plans with Berdly at the Librarby.", basicBool],
+    752: ["introduced_susie_rudy_after_church", "Brought Susie to see Rudy at the hospital after church, if we didn't see him at the end of chapter 2 (flag 316).", basicBool],
+    753: ["brought_susie_rudy_after_church", "Brought Susie to see Rudy at the hospital after church, if we did see him at the end of chapter 2 (flag 316).", basicBool],
+    754: ["interacted_sink_ch4", "Interacted with Rudy's sink in chapter 4, after also doing it in chapter 1 (flag 278) and 2 (flag 461).", basicBool],
+    755: ["talked_berdly_hospital_ch4", "Visited Berdly's room at the hospital after church if his arm was injured in chapter 2.", basicBool],
+    756: ["changed_bottle_berdly_hospital", "Changed Berdly's water bottle at the hospital during the Weird Route.", basicBool],
+    757: ["turned_up_heater_berdly_hospital", "Turned up the space heater in Berdly's room at the hospital during the Weird Route.", basicBool],
+    758: ["talked_susie_berdly_visit", "Viewed the cutscene of Susie talking to Kris after exiting Berdly's hospital room if his arm was injured in chapter 2.", basicBool],
+    759: ["talked_susie_berdly_visit_weird", "Tracks Susie talking before and after we enter Berdly's hospital room in the Weird Route.", {
+        "0": "Default state",
+        "1": "Susie asked if Kris wants to go alone",
+        "2": "Susie talked to Kris after they come out"
+    }],
+    760: ["talked_catty_alley", "Talked to Catty in the alley.", basicBool],
+    761: ["eavesdropped_blue_bunny", "Eavesdropped on Blue Bunny at the diner.", basicBool],
+    762: ["talked_bratty_about_catty", "Talked to Bratty about Catty at the diner.", basicBool],
+    763: ["talked_to_alphys_ch4", "Talked to Alphys in Hometown in chapter 4, if we already talked to her in chapter 1 (flag 269).", basicBool],
+    764: ["talked_to_alphys_ch4_explain", "Talked to Alphys in Hometown in chapter 4 and asked her to explain herself, if we didn't talk to her in chapter 1 (flag 269).", basicBool],
+    765: ["scared_kid_after_knocking", "Viewed the cutscene of Susie scaring the kid behind one of the knockable doors.", basicBool],
+    767: ["talked_catti_about_susie", "Talked to Catti about Susie in Hometown.", basicBool],
+    768: ["interacted_gerson_grave_end_ch4", "Interacted with Gerson's grave with Susie at the end of chapter 4.", basicBool],
+    769: ["interacted_shelter_end_ch4", "Interacted with the Shelter with Susie at the end of chapter 4.", basicBool],
+    770: ["interacted_school_end_ch4", "Tried to enter the school at the end of chapter 4.", basicBool],
+    771: ["lake_cutscene_progress_ch4", "Tracks the progress of the lake cutscene with Susie in chapter 4.", {
+        "0": "Default state",
+        "1": "Susie remarks our weird friend is busy today",
+        "2": "Normal NPC when coming back",
+        "3": "Viewed the skipping stones cutscene"
+    }],
+    773: ["interacted_table_before_rain", "Interacted with the table near the lake with Susie, before it started raining.", basicBool],
+    774: ["interacted_table_after_rain", "Interacted with the table near the lake with Susie, after it started raining.", basicBool],
+    775: ["interacted_berdly_desk", "Interacted with Berdly's desk with the egg(s) on it in Alphys' class.", basicBool],
+    776: ["heard_more_burgerpants", "Picked 'Hear more' when talking to Burgerpants.", basicBool],
+    777: ["burgerpants_date_progress", "Tracks the progress of the Burgerpants date cutscene.", {
+        "0": "Default state",
+        "1": "Burgerpants got cookies and left",
+        "2": "Talked to Nice Cream Guy"
+    }],
+    778: ["toriel_blush", "Whether Toriel is blushing. Used for the end of chapter 4.", basicBool],
+    779: ["tenna_mettaton_progress", "Tracks the progress of giving Tenna to Mettaton.", {
+        "0": "Default state",
+        "1": "Offered to give our TV",
+        "2": "Gave our TV"
+    }],
+    780: ["tenna_brought_to_castle_town", "Brought Tenna to school.", basicBool],
+    782: ["interacted_treat_catcher_susie", "Interacted with the holiday treat catcher with Susie and Noelle at Noelle's house.", basicBool],
+    783: ["ornament_finished_rolling", "Whether the unused ornament in Noelle's house has finished rolling after falling.", basicBool],
+    784: ["noelle_fan_rotating", "Whether the unused rotating fan in Noelle's house is rotating.", basicBool],
+    785: ["noelle_fan_current_frame", "The current frame of the unused rotating fan in Noelle's house."],
+    786: ["talked_sans_grill", "Talked to Sans in front of his grill in Hometown.", basicBool],
+    787: ["noelle_kitchen_kris_piano_progress", "Tracks the progress of the cutscene of Kris walking to the piano in Noelle's kitchen.", {
+        "0": "Default state",
+        "1": "Entered kitchen again after getting caught",
+        "2": "Kris walks to the left",
+        "3": "Kris walks down",
+        "4": "Kris walks to the right"
+    }],
+    788: ["saw_lancer_room_ch4", "Viewed the cutscene about Lancer's room being renovated.", basicBool],
+    789: ["talked_king_about_knight", "Talked to King about the Knight.", basicBool],
+    790: ["tenna_entertained_king", "Viewed the cutscene of Tenna entertaining King.", basicBool],
+    791: ["talked_queen_drinking", "Viewed the cutscene of Queen drinking in front of the giant speakers.", basicBool],
+    792: ["addison_current_lineup", "Current lineup of the Addison booth in Castle Town.", {
+        "0": "Lineup 1",
+        "1": "Lineup 2",
+        "2": "Lineup 3",
+        "3": "Lineup 4"
+    }],
+    793: ["susie_carried_lancer", "Whether Susie carried Lancer on her back in Castle Town.", basicBool],
+    794: ["rain_state", "Activated when it's raining (mainly to control music and effects).", {
+        "0": "Default state",
+        "1": "Chapter 4 ending (becomes state 2 after setting some parameters)",
+        "2": "Rain initialized (overrides other states)",
+        "3": "Used for certain room transitions (set back to 2 immediately if rain exists in the next room)"
+    }],
+    795: ["stairs_prophecies_seen", "How many of the two prophecies were seen in the two unused room_dw_church_stairs_topleft and room_dw_church_stairs_topright.", {
+        "0": "Default state",
+        "1": "Saw one prophecy",
+        "2": "Saw both prophecies"
+    }],
+    797: ["checked_shelter_panel", "Checked the Shelter's panel.", basicBool],
+    798: ["sans_sign_progress", "Tracks the progress of the Sans sign shenanigans.", {
+        "0": "Default state",
+        "1": "Talked to Sans before checking the sign",
+        "2": "Checked Open sign",
+        "3": "Talked to Sans when sign says Open",
+        "4": "Went away and came back",
+        "5": "Talked to Sans when sign says Clopen",
+        "6": "Went away and came back",
+        "7": "Talked to Sans when sign is Sans"
+    }],
+    799: ["saw_man_in_diner", "Saw the Man in the diner, if you got the Egg in chapter 3.", basicBool],
     
     800: ["cafe_topleft", "The recruit seated in the top-left of the Cafe. Defaults to Jigsawry.", recruits],
     801: ["cafe_topright", "The recruit seated in the top-right of the Cafe. Defaults to Rudinn.", recruits],
@@ -1380,6 +1597,121 @@ let flags = {
     812: ["beat_tm_says", "Whether you beat the 'Tasque Manager Says' challenge in the Party Dojo.", basicBool],
     813: ["beat_allstars", "Whether you beat the Ch2 All Stars challenge in the Party Dojo.", basicBool],
     814: ["beat_joe", "Whether you defeated Jigsaw Joe in the Party Dojo and took his life savings.", basicBool],
+
+    815: ["beat_weather_duo", "Whether you defeated Lanino & Elnina in the chapter 4 Party/Love Dojo.", {
+        "0": "Default state",
+        "2": "Won"
+    }],
+
+    831: ["talked_toriel_after_church", "Viewed the cutscene of Toriel telling us to come by the church if we need anything.", basicBool],
+    832: ["took_azzy_money_ch4", "Whether you took five bucks from Asriel's drawer in chapter 4.", basicBool],
+    833: ["cant_afford_diner", "Tried to get diner while not having the money for it.", basicBool],
+    834: ["showed_compassion", "Showed compassion to Ralsei by splatting next to him in the church Dark World.", basicBool],
+    835: ["interacted_prophecy_savepoint", "Interacted with the save point under the prophecy panel at the start of the First Sanctuary.", basicBool],
+    836: ["talked_gerson_study", "Talked to Gerson once he's installed in his study.", basicBool],
+    837: ["talked_gerson_prejack_letter", "Asked Gerson in his study what he's doing, before healing Jackenstein.", basicBool],
+    838: ["talked_gerson_prejack_knight", "Asked Gerson in his study about the Knight, before healing Jackenstein.", basicBool],
+    841: ["unused_hide_elixir_study", "If activated, hides the elixir on the table of Gerson's study. Never set.", {
+        "0": "Default state",
+        "2": "Hide elixir"
+    }],
+    844: ["susie_copied_notes", "Viewed the cutscene of Susie talking to Gerson and writing down the music notes on the wall.", basicBool],
+    845: ["thought_about_knight", "Viewed the cutscene of Kris thinking about the Knight. Unaccessed as of chapter 4.", basicBool],
+    846: ["thought_about_noelle_weird", "Viewed the cutscene of Kris thinking about Noelle in the Weird Route. Unaccessed as of chapter 4.", basicBool],
+    847: ["sheetmusic_progress", "Tracks the progress of the cutscene of Kris playing the organ/piano and opening the central door in Gerson's study.", {
+        "0": "Default state",
+        "1": "Used sheet music (for some reason opens the door early, likely a leftover)",
+        "2": "Kris played piano",
+        "3": "Unused (relies on unused flag 848)"
+    }],
+    848: ["unused_organ_thing", "Set by unreachable code, might be related to a cut player-only solve."],
+    849: ["saw_jackenstein_face", "Saw Jackenstein's true face after defeating him. Unaccessed as of chapter 4.", basicBool],
+    850: ["jackenstein_progress", "Tracks the progress of the Jackenstein cutscenes.", {
+        "0": "Default state",
+        "0.5": "Found one set of four tones",
+        "1": "Found both sets of four tones",
+        "2": "Solved piano puzzle",
+        "3": "Fell into THE DARK ZONE",
+        "4": "Jackenstein hit chandelier",
+        "5": "Susie healed Jackenstein",
+        "6": "Susie offered Kris to heal again"
+    }],
+    851: ["gerson_progress", "Tracks the progress of the Gerson cutscenes.", {
+        "0": "Default state",
+        "1": "Solved secret piano puzzle",
+        "2": "Fought Gerson",
+        "3": "Viewed post-battle cutscene"
+    }],
+    852: ["beat_hammer_of_justice", "Whether you defeated the Hammer of Justice.", basicBool],
+    853: ["hammer_of_justice_fight_attempts", "Number of times you fought the Hammer of Justice."],
+    854: ["should_ralsei_have_feelings", "What you answered to Ralsei asking you if a Darkner should be starting to develop his own desires. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "Please be yourself",
+        "2": "Of course not"
+    }],
+    855: ["talked_seam_addisons", "Talked to Seam about taking everything from the Addisons to scare them.", basicBool],
+    856: ["gave_knight_crystal", "Whether you gave Seam the Knight's Shadow Crystal.", basicBool],
+    862: ["talked_rudy_about_asgore", "Talked to Rudy about Asgore at church.", basicBool],
+    863: ["got_sideclimb_chest", "Got the Power Band from the chest in the room with the Mizzle on top.", basicBool],
+    864: ["stole_ladder_for_ralsei", "Stole the ladder in the bookshelf puzzle room to decorate Ralsei's room.", basicBool],
+    865: ["stole_pillow_for_ralsei", "Stole the pillow in the right piano piece room to decorate Ralsei's room.", basicBool],
+    866: ["park_your_butt_mister", "Told Ralsei to park his butt.", basicBool],
+    867: ["talked_extinguisher", "Talked to the most important Darkner.", basicBool],
+    868: ["gerson_recruited_guei", "Whether Gerson recruited the Gueis.", basicBool],
+    869: ["solved_intropiano", "Solved the first piano puzzle.", basicBool],
+    871: ["got_darkmaze_chest", "Opened the empty chest in the dark maze room.", basicBool],
+    872: ["darker_candy_bowl", "Tracks what you did with the Darker Candy bowl.", {
+        "0": "Default state",
+        "1": "Took one candy",
+        "3": "Spilled the bowl"
+    }],
+    873: ["interacted_locked_church_door", "Interacted with the locked church door before Susie got an idea.", basicBool],
+    874: ["triggered_gerson_silhouette", "Triggered the silhouette of Gerson walking away in the intro dark maze room.", basicBool],
+    875: ["should_ralsei_smile", "What you told Ralsei after he told you he was smiling.", {
+        "0": "Default state",
+        "1": "It's okay not to smile",
+        "2": "Good. Keep smiling"
+    }],
+    876: ["bookshelfpuzzle_shelf1_x", "X coordinate of the first shelf in the bookshelf puzzle room."],
+    877: ["bookshelfpuzzle_shelf1_y", "Y coordinate of the first shelf in the bookshelf puzzle room."],
+    878: ["bookshelfpuzzle_shelf2_x", "X coordinate of the second shelf in the bookshelf puzzle room."],
+    879: ["bookshelfpuzzle_shelf2_y", "Y coordinate of the second shelf in the bookshelf puzzle room."],
+    880: ["bookshelfpuzzle_shelf3_x", "X coordinate of the third shelf in the bookshelf puzzle room."],
+    881: ["bookshelfpuzzle_shelf3_y", "Y coordinate of the third shelf in the bookshelf puzzle room."],
+    882: ["pianopiece_right_shelf1_x", "X coordinate of the first shelf in the right piano piece room."],
+    883: ["pianopiece_right_shelf1_y", "Y coordinate of the first shelf in the right piano piece room."],
+    884: ["pianopiece_right_shelf2_x", "X coordinate of the second shelf in the right piano piece room."],
+    885: ["pianopiece_right_shelf2_y", "Y coordinate of the second shelf in the right piano piece room."],
+    886: ["revealed_pianopuzzle_hint_right", "Revealed the right piano hint for the piano puzzle.", {
+        "0": "Default state",
+        "1": "Revealed hint",
+        "-1": "Solved piano puzzle"
+    }],
+    887: ["revealed_intropiano_hint_left", "Revealed the left piano hint in the intro piano room.", basicBool],
+    888: ["revealed_intropiano_hint_right", "Revealed the right piano hint in the intro piano room.", basicBool],
+    889: ["revealed_darkmaze_hint_bottom", "Revealed the bottom piano hint in the dark maze room.", basicBool],
+    890: ["revealed_darkmaze_hint_top", "Revealed the top piano hint in the dark maze room.", basicBool],
+    891: ["revealed_pianopuzzle_hint_left", "Revealed the left piano hint for the piano puzzle.", {
+        "0": "Default state",
+        "1": "Revealed hint",
+        "-1": "Solved piano puzzle"
+    }],
+    892: ["solved_pianopuzzle", "Solved the piano puzzle before Jackenstein.", basicBool],
+    893: ["tried_pianopuzzle_without_hint", "Tried to solve the piano puzzle without hint.", {
+        "0": "Default state",
+        "1": "Interacted with piano once",
+        "1.1": "Interacted with piano more than once"
+    }],
+    894: ["got_pianopiece_left_chest", "Got the Scarlixir from the chest in the left piano piece room.", basicBool],
+    895: ["susie_basement_current_line_weird", "Tracks the current line of Susie's dialogue alone in Noelle's basement during the Weird Route.", {
+        "0": "Default state",
+        "1": "... Damn, I've moved everything but I can't find anything...",
+        "2": "... wonder how Kris's search is going.",
+        "3": "... nothing to do but keep looking, I guess."
+    }],
+    897: ["prevent_piano_one_hint", "Flag never set, but would have prevented use of the piano if we had gotten one of the two hints?", basicBool],
+    898: ["moneyfountain_donation", "The amount of money you donated to the money fountain."],
+    899: ["encount_holywatercooler", "Tracks the state of the Holywatercooler encounter.", enemyStates],
     
     // wow things are really opening up now
     
@@ -1451,9 +1783,9 @@ let flags = {
             "Interacted with man"
          ]],
     911: ["got_ch1_egg", "Set when entering Chapter 2 if you had or deposited the Chapter 1 egg, but not if you dropped it. Maybe. It checks the key item.", basicBool],
-    912: ["language", "Damn it Toby you already have global.lang what more do you want", ["English", "Japanese"]],
+    912: ["language_name", "Language your name was entered in, used to display the correct font even if you change the game language later.", ["English", "Japanese"]],
     913: ["interacted_man_car", "Whether you saw the man wave at you from his car, if flag 910 up there was 2 (even if you refused the offer).", basicBool],
-    914: ["chapter_started", "The chapter you started your current save file on. Set to 1 when continuing a Chapter 1 file into 2. Only used for a little Light World stats text."],
+    914: ["chapter_started", "The chapter you started your current save file on, is 0 if the file was created on the current chapter."],
     915: ["snowgrave_plot", "Your progress on the Snowgrave Route. This is a big one.", {
             "0": "Default state",
             "1": "Froze tutor Virovirokun",
@@ -1490,6 +1822,7 @@ let flags = {
     928: ["creepy_steps", "The number of steps you take toward Noelle (0-3) after the hospital scene on Snowgrave. Yeah, that's a thing."],
     
     930: ["got_ch3_egg", "Whether you got the Chapter 3 egg.", basicBool],
+    931: ["got_ch4_egg", "Whether you got the Chapter 4 egg.", basicBool],
 
     932: ["amount_pain_ch1", "Number of times hit in Chapter 1, used for trophies."],
     933: ["amount_ice_e_pain_ch1", "Number of times you looked at the ICE-E pain scale in Chapter 1, used for trophies."],
@@ -1532,7 +1865,7 @@ let flags = {
              "Elnina",
              "Lanino"
           ]],
-    1018: ["tried_preegg_board", "Whether you tried the board that's a prerequisite for solving Nowhere. Unaccessed?", basicBool],
+    1018: ["seen_preegg_board", "Whether you saw the board that's a prerequisite for solving Nowhere. Unaccessed.", basicBool],
     1019: ["quiz_right_answers", "Number of correct answers (totalled on all characters) in the most recent of Tenna's quizzes. Slightly alters the Tenna-sphinx dialogue."],
     1020: ["got_power_croissant", "Whether Susie has obtained the Power Croissant, allowing her to pick up boxes, pots, weeds, and Ralsei.", basicBool],
     1021: ["ch3_couch_walkaway", "Whether the couch has begun walking away (if you go right then go back to it) at the start of Chapter 3.", basicBool],
@@ -1656,7 +1989,7 @@ let flags = {
     1080: ["suziezilla_losses", "Times lost at Suziezilla, up to 8."],
     1081: ["suziezilla_result", "Exactly how much you won at Suziezilla.", [
              "Default state",
-             "Destroyed by Spamton's bit shot without ever hitting him",
+             "Destroyed by Spamton's big shot without ever hitting him",
              "Declared win by Tenna",
              "Defeated final wave"
           ]],
@@ -1674,7 +2007,7 @@ let flags = {
              "Uninitialized",
              "1", "2", "3", "4", "5", "6"
           ]],
-    1089: ["cooking_losses", "Times lost at the cooking game (counted by Tenna)."],
+    1089: ["cooking_losses", "Times lost at the cooking game."],
     1090: ["parent_lock_1_scene", "Whether you've completed specifically the introductory scene activating the puzzle for Parental Lock 1.", basicBool],
     1091: ["susie_notice_sword", "Status of Susie noticing Kris has a sword in the minigame if the OddController was obtained.", [
              "Default state",
@@ -1693,7 +2026,7 @@ let flags = {
     1093: ["jailed_cheater", "Whether you confessed to the Zapper that you are cheaters, and went into the highly escapable prison.", basicBool],
     1094: ["parent_lock_1", "Whether you solved the first parental lock in Chapter 3.", basicBool],
     1095: ["parent_lock_2", "Whether you solved the second parental lock in Chapter 3.", basicBool],
-    1096: ["rhythm_game_tries", "Total number of attempts on the rock band game after Board 2 (not replays)."],
+    1096: ["rhythm_game_losses", "Total number of losses on the rock band game."],
     1097: ["idcard_puzz_found", "Whether you found something(?) with the water of the unused ID card puzzle.", basicBool],
     1098: ["cheater_pip_left", "Whether the unused dice-cheating Pippins have fled from being photographed.", basicBool],
     1099: ["lancer_control_num", "Number of Lancer Controllers obtained."],
@@ -1753,7 +2086,7 @@ let flags = {
     1133: ["parent_lock_1_start", "Whether you got a wrong answer for the first parental lock, activating the screen with the puzzle.", basicBool],
     1134: ["parent_lock_2_start", "Whether you've activated the second parental lock puzzle by interacting with it.", basicBool],
     1135: ["unlocked_stealth", "Whether Susie has suggested the use of stealth.", basicBool],
-    1136: ["TODO", "TODO", basicBool],
+    1136: ["unused_paannounce", "Never set, would have changed the logic of an incomplete 'PA' system.", basicBool],
     1137: ["found_trash_switch", "Whether you've activated the trash switch at the end of the first stealth section.", basicBool],
     1138: ["got_nothing", "Whether you got an undefined item from an unused watercooler room in Chapter 3.", basicBool],
     1139: ["got_ch3_mint", "Whether you got the puzzle-locked Revive Mint in Chapter 3.", basicBool],
@@ -1968,7 +2301,7 @@ let flags = {
              "Escaped"
           ]],
     1244: ["parent_got_camera", "Whether you got the camera in the Parental Lock 3 puzzle.", basicBool],
-    1245: ["num_parent_photos", "Number of photos taken in the Parental Lock 3 puzzle. Crashes after 8."],
+    1245: ["num_parent_photos", "Number of photos taken in the Parental Lock 3 puzzle. The in-game console crashes after 8."],
     1246: ["got_100_dig", "Whether you dug up the rare 100-point hole in the room with the many Lancers.", basicBool],
     // 1247?
     1248: ["times_leveled_ch3", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
@@ -2017,8 +2350,346 @@ let flags = {
              "Soda placed",
              "Soda collected"
           ]],
-    1279: ["raise_bat_hard_hiscore", "High score on Raise Up Your Bat, Hard Mode"],
-    1280: ["raise_bat_hard_hirank", "Highest rank on Raise Up Your Bat, Hard Mode", tennaRanks],
+    1279: ["raise_bat_hard_hiscore", "High score on Raise Up Your Bat, Hard Mode. (Unused in Chapter 3)"],
+    1280: ["raise_bat_hard_hirank", "Highest rank on Raise Up Your Bat, Hard Mode. (Unused in Chapter 3)", tennaRanks],
+
+    1500: ["moneyfountain_donation_over_100", "Donated at least 100 Dark Dollars to the money fountain.", basicBool],
+    1501: ["candy_bowl_progress", "Tracks your progress in the candy bowl cutscene.", {
+        "0": "Default state",
+        "1": "Approached candy bowl",
+        "2": "Spilled candy bowl"
+    }],
+    1502: ["rippleworship_progress", "Tracks your progress in the ripple worship room.", {
+        "0": "Default state",
+        "1": "Opened the north path",
+        "2": "Revealed the piano notes"
+    }],
+    1503: ["gerson_tea_finished", "Finished the tea party with Gerson.", basicBool],
+    1504: ["interacted_church_cupboard", "Interacted with the cupboard while looking for the code to the church's locked door.", basicBool],
+    1505: ["interacted_church_books", "Interacted with the books while looking for the code to the church's locked door.", basicBool],
+    1506: ["interacted_church_candles", "Interacted with the candles before going inside.", basicBool],
+    1507: ["who_kris_prayed_for", "Who you decided to pray for in front of the hope candles.", {
+        "0": "Default state",
+        "1": "Pray for Susie",
+        "2": "Pray for Noelle",
+        "3": "Pray for Asriel"
+    }],
+    1508: ["interacted_church_bookshelf", "Interacted with the bookshelf while looking for the code to the church's locked door.", basicBool],
+    1509: ["what_candles_are_for", "What you told Susie when she asked if the candles were for birthdays.", {
+        "0": "Default state",
+        "1": "That's right",
+        "2": "Prayer"
+    }],
+    1510: ["opened_church_closet", "Viewed the cutscene of opening the church closet and getting jumpscared by Jackenstein.", basicBool],
+    1511: ["listened_susie_piano_story", "Viewed the cutscene of Susie telling her story about smashing a piano.", {
+        "0": "Default state",
+        "1": "Listen (it might be long)",
+        "2": "Not now"
+    }],
+    1512: ["will_kris_play_again", "What you told Susie after her piano story. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "I'll play again someday",
+        "2": "If you play too",
+        "3": "I'll never play again"
+    }],
+    1513: ["talked_jackenstein_study", "Talked to Jackenstein in Gerson's study.", basicBool],
+    1514: ["would_you_like_sugar", "What you said to Ralsei asking if you would like sugar during his tea party.", {
+        "0": "Default state",
+        "1": "No",
+        "2": "Yes",
+        "3": "Two lumps please"
+    }],
+    1515: ["who_eats_the_cake", "What you said to Ralsei after he said he never had cake before during his tea party. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "Ralsei eat the cake",
+        "2": "That's my cake"
+    }],
+    1516: ["ralsei_has_a_surprise", "Whether Ralsei told you he had a surprise if we went into our rooms in Castle Town.", basicBool],
+    1517: ["got_worship_chest", "Got the Mystic Band / Power Band from the chest in the worship room.", basicBool],
+    1519: ["gerson_tea_fancy_a_drink", "What you said when Gerson asked if you would fancy a drink.", {
+        "0": "Default state",
+        "1": "Yes",
+        "2": "No",
+        "3": "We already had tea"
+    }],
+    1521: ["gerson_tea_drink_it", "What you did after getting sugar in your tea with Gerson.", {
+        "0": "Default state",
+        "1": "Drink it",
+        "2": "Don't drink it"
+    }],
+    1523: ["gerson_tea_are_you_sure", "What you said when Gerson asked you if you were sure you didn't want to have tea now.", {
+        "0": "Default state",
+        "1": "Not now",
+        "2": "Actually I will have tea"
+    }],
+    1524: ["climbing_challenge_first_time", "How fast you did the first climbing challenge."],
+    1525: ["climbing_challenge_second_time", "How fast you did the second climbing challenge."],
+    1526: ["awakened_mizzle_progress", "Tracks the progress of awakening the Mizzle protected by the cups.", {
+        "0": "Default state",
+        "1": "First cup started charging",
+        "2": "Mizzle left",
+        "3": "Started exiting (triggers shortened return path)"
+    }],
+    1527: ["finished_noelle_house_weird", "Viewed the cutscene after coming out of the Noelle's house during the Weird Route. Unaccessed as of chapter 4.", basicBool],
+    1528: ["hometown_weird_cutscene_progress", "Tracks the progress of the cutscene in the Weird Route when you walk with Susie in the rain.", {
+        "0": "Default state",
+        "1": "Got dialogue near Sans' store",
+        "2": "Got dialogue near church"
+    }],
+    1529: ["broke_knight_prophecy", "Broke the Knight prophecy in the north prophecies room.", basicBool],
+    1530: ["activated_trueclimbadventure_shortcut_left", "Rung the left bell to activate the left shortcut in the climbing room leading to the grand piano.", basicBool],
+    1531: ["talked_nubert_ch4", "Talked to Nubert in Castle Town in chapter 4.", basicBool],
+    1532: ["talked_rudinn_ch4", "Talked to Rudinn in Castle Town in chapter 4.", basicBool],
+    1533: ["slept_through_service", "Whether you chose to sleep through service at church. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "Sleep through service",
+        "2": "Watch service"
+    }],
+    1534: ["what_you_did_during_service", "What you chose to do during service at church. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "Let's play attention",
+        "2": "Look in pocket for fun"
+    }],
+    1535: ["interacted_church_choir_door", "Interacted with the church's choir room's door before going inside.", basicBool],
+    1536: ["interacted_church_office_door", "Interacted with the church's office's door before going inside.", basicBool],
+    1537: ["got_moneyfountain_chest", "Got the Darker Candy / Scarlixir / Revive Mint / Bitter Tear / Gold Widow from the chest in the money fountain room.", basicBool],
+    1538: ["moved_movable_piano", "Moved a movable piano.", basicBool],
+    1539: ["got_libraryconnector_chest", "Got the Rhapsotea from the chest in the Second Sanctuary's library connector room.", basicBool],
+    1540: ["got_library_chest", "Got the Revive Mint from the chest in the Second Sanctuary's library.", basicBool],
+    1541: ["breakable_bookshelves_state_alt", "Tracks the state of the breakable bookshelves in the unused alternate Second Sanctuary's library."],
+    1543: ["removed_piano_and_bookshelves", "Flag never set, but would have removed the moving piano and bookshelves in the Second Sanctuary's library.", basicBool],
+    1544: ["alerted_mizzles", "Prevented future Mizzles to start a battle tired, by ringing the bell or waking up an initially tired Mizzle.", basicBool],
+    1545: ["got_gallery_chest", "Got 500 Dark Dollars from the chest in the Second Sanctuary's gallery.", basicBool],
+    1547: ["solved_golden_piano", "Played the golden piano and opened the fireplace secret passage in Gerson's study.", basicBool],
+    1548: ["interacted_fireplace_mural", "Interacted with the mural in Gerson's study and read about the cool axe.", basicBool],
+    1549: ["talked_gerson_about_magic_axe", "Talked to Gerson in his study about the Magic Axe.", basicBool],
+    1550: ["got_ripseq1_chest", "Got the Scarlixir from the chest in the Gerson chase room.", basicBool],
+    1551: ["should_check_on_ralsei", "What you said to Susie when asked if you should check on Ralsei, after rain starts if you haven't returned to Castle Town in chapter 4 yet.", {
+        "0": "Default state",
+        "1": "Yeah",
+        "2": "Nah"
+    }],
+    1552: ["talked_napstablook_about_undyne", "Talked to Napstablook about Undyne.", basicBool],
+    1553: ["talked_napstablook_about_shelter", "Talked to Napstablook about the Shelter.", basicBool],
+    1554: ["talked_catti_about_susie", "Talked to Catti about Susie.", basicBool],
+    1555: ["kris_susie_locked_out", "Tried to enter Kris's house after rain started and realized it's locked.", basicBool],
+    1556: ["interacted_gerson_remains", "Interacted with the glass container containing Gerson's remains after the cutscene where it's discovered.", basicBool],
+    1557: ["why_we_should_enter_church", "What you said to Susie after she suggested waiting outside the church's Dark World. Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "1": "But we aren't logical",
+        "2": "But Mom could be in there"
+    }],
+    1558: ["noelle_bedroom_asgore_current_line", "Tracks the current line in the Asgore cutscene in Carol's bedroom.", {
+        "0": "Default state",
+        "1": "We're almost there, aren't we, old friend?",
+        "2": "This time for sure... Tori will finally see.",
+        "3": "... see what really happened.",
+        "4": "... that I just wanted to... protect everyone...",
+        "5": "And this time, she'll have to believe me.",
+        "6": "... they all will.",
+        "7": "Then...",
+        "8": "We'll all be a happy family again... won't we?",
+        "9": "...",
+        "10": "It sure is beautiful, isn't it...?",
+        "11": "... this black shard."
+    }],
+    1559: ["kept_noelle_waiting", "Whether you did something after opening the gate at Noelle's house while she was waiting for you.", {
+        "0": "Default state",
+        "1": "Had tea party with Ralsei",
+        "2": "Had diner with Susie"
+    }],
+    1560: ["gallery_cutscene_progress", "Tracks the progress of the unused Second Sanctuary's gallery cutscene. Mostly reused for the rotating tower monologue."],
+    1561: ["played_megalovania", "Tried playing Megalovania on the piano and got ran over by the Annoying Dog.", basicBool],
+    1562: ["dug_through_dess_stuff", "Dug through Dess' stuff in her room.", basicBool],
+    1563: ["talked_noelle_after_throwing_phone", "Talked to Noelle after Susie threw her phone.", basicBool],
+    1564: ["talked_susie_after_throwing_phone", "Talked to Susie after she threw Noelle's phone.", basicBool],
+    1565: ["talked_asgore_about_outfit", "Asked Asgore about his outfit after coming out of Noelle's house.", basicBool],
+    1566: ["talked_asgore_are_you_okay", "Asked Asgore if he's okay after coming out of Noelle's house.", basicBool],
+    1567: ["pressed_knightclimbpost_switch", "Pressed the switch making a bridge at the end of the Second Sanctuary.", basicBool],
+    1569: ["susie_got_betterheal", "Whether Susie's OKHeal spell improved to BetterHeal, by winning against Gerson or starting the fight against the Sound of Justice.", basicBool],
+    1570: ["interacted_item_fountain", "Interacted with the item fountain in Gerson's study.", basicBool],
+    1571: ["activated_trueclimbadventure_shortcut_right", "Rung the right bell to activate the right shortcut in the climbing room leading to the grand piano.", basicBool],
+    1572: ["susie_bellroom_progress", "Tracks the progress of Susie in the bell room cutscene.", {
+        "0": "Default state",
+        "1": "Moved to first point",
+        "2": "Moved to second point"
+    }],
+    1573: ["windows_looped", "Number of loops done in the Sanctuary's window room. At 8, the Egg door appears."],
+    1574: ["interacted_tv_broken", "Interacted with the TV at Kris's house, if it wasn't repaired.", basicBool],
+    1575: ["talked_mettaton_tv_broken", "Suggested Tenna to Mettaton, if it wasn't repaired.", basicBool],
+    1576: ["interacted_tv_fixed", "Interacted with the TV at Kris's house, if it was repaired.", basicBool],
+    1577: ["talked_swatch_cat_cafe", "Talked to Swatch in the Cafe, if you've recruited Tasque Manager, Tasque and Shadowguy.", basicBool],
+    1578: ["talked_jigsaw_joe_love_dojo", "Talked to Jigsaw Joe now that the dojo has become the Love Dojo.", basicBool],
+    1579: ["made_noise_in_noelle_house", "Number of times you touched a dancing Santa or a bell and made noise in Noelle's house."],
+    1580: ["times_leveled_ch4", "The number of times you have leveled up by violently defeating an encounter. Used for certain increases that only occur every 2, 4, or 10 encounters."],
+    1581: ["got_prophecymaze_chest", "Got the Scarlixir from the chest in the Second Sanctuary's statue maze room.", basicBool],
+    1582: ["got_bookshelfpuzzle_chest", "Got the Absorb Ax from the chest in the bookshelf puzzle room.", basicBool],
+    1583: ["times_killed_by_spawncloud", "Number of times you died from the spawns chasing you vertically (used to reduce their speed).", {
+        "0": "Default state",
+        "1": "Died once",
+        "2": "Died twice",
+        "3": "Died thrice or more"
+    }],
+    1584: ["breakable_bookshelves_state", "Tracks the state of the breakable bookshelves in the Second Sanctuary's library."],
+    1585: ["moving_piano_xy", "Combination of X and Y coordinates of the moving piano."],
+    1586: ["got_rightconnect_chest", "Got the Winglade from the chest in the room on the right of Gerson's study.", basicBool],
+    1587: ["got_minorlegend_chest", "Got the Rhapsotea from the chest in the Jockington prophecy room.", basicBool],
+    1588: ["got_pianopiece_right_chest", "Got the Revive Mint from the chest in the right piano piece room.", basicBool],
+    1589: ["got_trueclimbadventure_chest", "Got the Tension Gem from the chest in the climbing room.", basicBool],
+    1590: ["got_jackenstein_chest", "Got 500 Dark Dollars from the chest in the Jackenstein room.", basicBool],
+    1591: ["ralsei_bloody_face", "Whether Ralsei got blood on his face from Susie at the end of chapter 4.", basicBool],
+    1592: ["got_ch4_moss", "Whether you got the moss in chapter 4.", {
+        "0": "Default state",
+        "1": "Consumed with gusto",
+        "2": "Left for the next person"
+    }],
+    1593: ["interacted_gerson_table_second_sanctuary", "Interacted with the table in Gerson's study in the Second Sanctuary.", {
+        "0": "Default state",
+        "1": "Tried to take items",
+        "2": "Didn't try to take items"
+    }],
+    1594: ["rhapsotea_extra_dollars", "Number of dollars paid extra for the Rhapsoteas in Gerson's study in the Second Sanctuary."],
+    1595: ["wafer_room_state", "Tracks your progression in obtaining the Third Sanctuary Waferguard chest. See also flag 1616.", {
+        "0": "Default state",
+        "1": "Revealed chest",
+        "2": "Wafer obtained, area locked (nothing more to do, so the game has blocked off the area)"
+    }],
+    1596: ["seen_angel_prophecy", "Viewed the cutscene of the gang looking at the angel prophecy.", basicBool],
+    1597: ["purified_count", "Number of Titan spawns purified. The Purify ACT will always add two to this flag, even if you've already slain one."],
+    1598: ["slain_count", "Number of Titan spawns slain."],
+    1599: ["interacted_cupstack_lift", "Interacted with the cup stack lift.", basicBool],
+    1600: ["interacted_gersonstudy_savepoint", "Interacted with the save point in Gerson's study.", {
+        "0": "Default state",
+        "1": "First interaction",
+        "2": "Second interaction if mural wasn't checked yet"
+    }],
+    1601: ["interacted_nwconnect_savepoint", "Interacted with the save point in the north-west connector room.", basicBool],
+    1602: ["interacted_pianopuzzle_savepoint", "Interacted with the save point in the piano puzzle room before Jackenstein.", basicBool],
+    1603: ["interacted_superprophecies_savepoint", "Interacted with the save point in the room where the Third Sanctuary music starts playing.", basicBool],
+    1604: ["gerson_left_room_without_others", "Talked to Gerson after his walk is completed without Susie running ahead.", basicBool],
+    1605: ["talked_gerson_postsheet_knight", "Talked to Gerson in his study about the Knight after using the sheet music.", basicBool],
+    1606: ["third_sanctuary_missed_something", "Your interaction when asked if you missed something on the other side of your mind.", {
+        "0": "Default state",
+        "1": "Didn't miss anything (while not having the Egg)",
+        "2": "Already have the Egg"
+    }],
+    1607: ["talked_gerson_postjack_letter", "Talked to Gerson in his study and asked him what he's doing after healing Jackenstein and before getting the sheet music.", basicBool],
+    1608: ["talked_gerson_postsheet_letter", "Talked to Gerson in his study and asked him what he's doing after getting the sheet music.", basicBool],
+    1609: ["sanctuary_intro_tempsave", "Entered the room with the prophecies at the start of the First Sanctuary (makes a temporary save).", basicBool],
+    1610: ["got_prophecies_chest", "Got the Princess Ribbon from the chest next to the Tail of Hell prophecy.", basicBool],
+    1611: ["returned_second_jockington_prophecy", "Returned from the second Jockington prophecy room in the Third Sanctuary. Unaccessed as of chapter 4.", basicBool],
+    1612: ["interacted_gerson_table_first_sanctuary", "Interacted with the table in Gerson's study in the First Sanctuary.", basicBool],
+    1613: ["interacted_gerson_table_third_sanctuary", "Interacted with the table in Gerson's study in the Third Sanctuary.", basicBool],
+    1614: ["got_encounter2_chest", "Got 100 Dark Dollars from the chest in the Third Sanctuary's dark maze room. Inaccessible as there isn't actually a chest in this room.", basicBool],
+    1615: ["started_third_sanctuary_music", "Entered the room where the Third Sanctuary music plays.", basicBool],
+    1616: ["got_treasure_chest", "Got the Wafer Guard from the chest in the Third Sanctuary's treasure chest room.", basicBool],
+    1617: ["interacted_useless_gloves", "Interacted with the hidden chest with the gloves that make you worth at climbing.", basicBool],
+    1618: ["times_gained_at_ch4", "The number of times your AT and Magic have increased due to leveling up (every ten encounters)."],
+    1619: ["church_clues_gathered", "Number of clues gathered at church.", {
+        "0": "Default state",
+        "1": "1 clue",
+        "2": "2 clues, ready to tell Susie"
+    }],
+    1620: ["got_noelle_clue", "Talked to Noelle about the locked door at church.", basicBool],
+    1621: ["got_alphys_clue", "Talked to Alphys about the shelter at church.", basicBool],
+    1622: ["washed_hands_therapy", "Used the sink to wash your hands after getting the Egg in chapter 4. Unaccessed as of chapter 4.", basicBool],
+    1623: ["glass_noelle_whispering", "Used the Glass in Noelle's house in chapter 4.", basicBool],
+    1624: ["shadow_sanctuary", "Used the Shadow Crystal in the Sanctuary.", basicBool],
+    1625: ["shadow_final_prophecy", "Used the Shadow Crystal in front of the final prophecy in the Third Sanctuary.", basicBool],
+    1626: ["shadow_failed_ch4", "Whether you used the Shadow Crystal in Chapter 4 and saw nothing. 1624 and 1625 are more interesting.", basicBool],
+    1627: ["presents_checked", "Number of presents checked in Noelle's present room."],
+    1628: ["ch4_chair_skip", "Whether you used the chair to skip to the First Sanctuary in chapter 4.", basicBool],
+    1629: ["started_gerson_battle", "Started the battle against Gerson.", basicBool],
+    1630: ["talked_malius_about_new_fusions", "Talked to Malius at the Bakery about NEW FUSIONS.", basicBool],
+    1631: ["talked_malius_leave", "Selected Malius's Leave dialogue option in chapter 4.", basicBool],
+    1632: ["talked_malius_ch4", "Talked to Malius at the Bakery in chapter 4.", basicBool],
+    1633: ["talked_topchef_ch4", "Talked to Top Chef at the Bakery in chapter 4, if not currently eligible for a SpinCake.", basicBool],
+    1634: ["spooky_hand_pushed_back", "Tried to go back after the final prophecy cutscene, and was pushed back by a mysterious hand out of view.", basicBool],
+    1635: ["knocked_east_door_end_ch4", "Knocked on the door at the east of Hometown at the end of chapter 4.", basicBool],
+    1636: ["ch4_run_reminder", "Whether Susie reminded you you can run at the start of Chapter 4.", basicBool],
+    1637: ["pumpkin_progress", "Tracks the progress of Ralsei's interaction with the pumpkin NPC after the Jackenstein battle.", {
+        "0": "Default state",
+        "1": "Told a joke",
+        "2": "Told a story"
+    }],
+    1638: ["got_dogclimb_chest", "Got the Dog Dollar from the chest in the Annoying Dog climbing race room.", basicBool],
+    1639: ["used_act_guei", "Used S-Action or R-Action during the first Guei encounter, or was reminded if you didn't.", basicBool],
+    1640: ["titan_fight_attempts", "Number of times you fought the Titan."],
+    1641: ["sound_of_justice_fight_attempts", "Number of times you fought the Sound of Justice."],
+    1642: ["finished_annoying_dog_race", "Finished the climbing race against the Annoying Dog.", basicBool],
+    1643: ["times_entered_noelle_kitchen", "Number of times you entered Noelle's kitchen while being in the vent. Maximum 3."],
+    1644: ["took_shadow_crystal_in_cliff", "Whether there is a Shadow Crystal to grab in the left cliff. Also requires other save data.", basicBool],
+    1645: ["unlocked_mike_zone_door", "Unlocked the Mike zone door using the 6453 combination.", basicBool],
+    1646: ["got_shadow_crystal_ch1", "Obtained the Shadow Crystal from Jevil in chapter 1.", basicBool],
+    1647: ["got_shadow_crystal_ch2", "Obtained the Shadow Crystal from Spamton NEO in chapter 2.", basicBool],
+    1648: ["got_shadow_crystal_ch3", "Obtained the Shadow Crystal from the Knight in chapter 3.", basicBool],
+    1649: ["got_shadow_crystal_ch4", "Obtained the Shadow Crystal from Gerson in chapter 4.", basicBool],
+    1650: ["talked_cupstack_finalclimb", "Talked to the cup stack in the fragile tower room.", basicBool],
+    1651: ["temmie_song_current_line", "Tracks the current line of Temmie singing Don't forget in Alphys' classroom.", {
+        "0": "When the light is running low",
+        "1": "And the shadows start to grow",
+        "2": "And the places that you know",
+        "3": "Seem like fantasy"
+    }],
+    1652: ["talked_gerson_postbattle", "Talked to Gerson in his study after defeating him and before saying goodbye to him.", basicBool],
+    1654: ["interacted_chairiel_susie", "Interacted with Chairiel in front of Susie.", basicBool],
+    1655: ["first_added_juice", "Added juice to your glass at least once at church.", basicBool],
+    1656: ["weird_route_fail_ch4", "Aborted the Weird Route during chapter 4. Unaccessed as of chapter 4.", basicBool],
+    1657: ["talked_rudy_church_weird", "Talked to Rudy at church during the Weird Route.", basicBool],
+    1658: ["mike_portal_unlocked", "Unlocked the way back to Castle Town by finishing chapter 4 and returning to the Third Sanctuary.", basicBool],
+    1659: ["mike_portal_cutscene", "Viewed the cutscene of the pillar of light in the Third Sanctuary.", basicBool],
+    1660: ["mike_portal_return_choice", "Chose or not to return to Castle Town after getting to the pillar of light for the first time.", basicBool],
+    1661: ["mike_portal_how_many_trips", "How many times Kris went into the pillar of light to come back to Castle Town."],
+    1663: ["interacted_microphone_crystal", "Interacted with the microphone crystal in the Mike zone.", basicBool],
+    1664: ["interacted_krisroom_savepoint", "Interacted with the save point in Kris's room.", basicBool],
+    1665: ["interacted_rudy_flowers_ch4", "Interacted with the flowers in Rudy's hospital room in chapter 4.", basicBool],
+    1688: ["got_justiceaxe", "Got the Justice Axe after winning against Gerson.", {
+        "0": "Default state",
+        "1": "Got the axe",
+        "2": "Won the fight with inventory full"
+    }],
+    1689: ["entered_mike_zone_accompanied", "Went past the Mike locked door with Susie and Ralsei.", basicBool],
+    1690: ["pet_first_mike_statue", "Pet the first cat-eared statue in the Mike zone.", basicBool],
+    1691: ["didnt_pet_first_mike_statue", "If you chose not to pet the first statue in the Mike zone when prompted (looks like it should have been on flag 1690). Unaccessed as of chapter 4.", {
+        "0": "Default state",
+        "2": "Chose Don't pet"
+    }],
+    1692: ["saved_terrified_maus", "Viewed the cutscene of the MAUS turning into the MOUSE.", basicBool],
+    1693: ["pet_chest_mike_statue", "Pet the tall statue in the Mike hat room which had a chest behind it.", basicBool],
+    1694: ["mike_statues_state", "Tracks which statues have been pet."],
+    1695: ["started_mike_battle", "Started the battle against Mike.", basicBool],
+    1696: ["talked_mikes_postbattle", "Viewed the cutscene of the fake Mikes after defeating them.", basicBool],
+    1697: ["opened_mike_door", "Opened the volume-controlled door before the Mike battle.", basicBool],
+    1698: ["battat_high_score", "High score on the BATTAT minigame."],
+    1699: ["jongler_high_score", "High score on the JONGLER minigame."],
+    1700: ["pluey_high_score", "High score on the PLUEY minigame."],
+    1701: ["mic_sensitivity", "Flag never set, but would have been a microphone sensitivity setting."],
+    1702: ["unlocked_mike_minigames", "Unlocked the Mike minigames room after the Mike battle.", basicBool],
+    1703: ["got_tv_zone_3_chest", "Got the TV Dinner from the chest in the Mike hat room.", basicBool],
+    1704: ["kris_noelle_escape_weird_abort", "Failed to enter Kris's body in time during the Weird Route cutscene and let them escape with Noelle.", {
+        "0": "Default state",
+        "1": "Let Kris and Noelle escape",
+        "2": "Got put back in closet"
+    }],
+    1780: ["encount_balthizard", "Tracks the state of the Balthizard encounter at the start of the First Sanctuary.", enemyStates],
+    1781: ["encount_balthizard_oldman", "Tracks the state of the Balthizard encounter at the start of the First Sanctuary when coming back with Gerson.", enemyStates],
+    1782: ["encount_second_guei", "Tracks the state of the Guei encounter when Gerson turns the lights back on in the dark maze room.", enemyStates],
+    1783: ["encount_first_mizzle", "Tracks the state of the Mizzle encounter in the room to the right of Gerson's study.", enemyStates],
+    1784: ["encount_winglade", "Tracks the state of the Winglade encounter at the start of the Second Sanctuary.", enemyStates],
+    1785: ["encount_second_organikk", "Tracks the state of the Organikk encounter in the Second Sanctuary's library connector room.", enemyStates],
+    1786: ["encount_first_organikk", "Tracks the state of the Organikk encounter in the Second Sanctuary's worship room.", enemyStates],
+    1787: ["encount_steel", "Tracks the state of the Winglade/Organikk encounter in the Second Sanctuary's money fountain room.", enemyStates],
+    1788: ["encount_first_wicabel", "Tracks the state of the Wicabel encounter in the Second Sanctuary's bell room.", enemyStates],
+    1789: ["encount_first_cacophony", "Tracks the state of the Wicabel/Organikk encounter in the Second Sanctuary's gallery.", enemyStates],
+    1790: ["encount_second_cacophony", "Tracks the state of the Wicabel/Organikk encounter in the Second Sanctuary's room to the right of Gerson's study.", enemyStates],
+    1791: ["encount_flapping", "Tracks the state of the Bibliox/Winglade encounter in the Third Sanctuary's bookshelf maze room.", enemyStates],
+    1792: ["encount_third_cacophony", "Tracks the state of the Organikk/Organikk/Wicabel encounter in the Third Sanctuary's dark maze room.", enemyStates],
+    1793: ["encount_elements", "Tracks the state of the Balthizard/Mizzle/Guei encounter in the Third Sanctuary's angel prophecy room.", enemyStates],
+    1794: ["encount_second_wicabel", "Tracks the state of the Wicabel encounter in the Third Sanctuary's golden piano room.", enemyStates],
+    1795: ["encount_first_guei", "Tracks the state of the Guei encounter at the start of the First Sanctuary.", enemyStates],
+    1796: ["encount_bibliox", "Tracks the state of the Bibliox encounter in the library.", enemyStates],
+    1797: ["encount_scented_candles", "Tracks the state of the Guei/Balthizard encounter if you touch a roaming flame in the library.", enemyStates],
+    1798: ["encount_second_mizzle", "Tracks the state of the Mizzle encounter in the watercooler room.", enemyStates],
     
 };
 
